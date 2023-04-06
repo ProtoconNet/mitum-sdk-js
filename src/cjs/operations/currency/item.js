@@ -1,17 +1,17 @@
-import { Amount } from "./amount.js";
+const { Amount } = require("./amount.js");
 
-import { Item } from "../item.js";
+const { Item } = require("../item.js");
 
-import { MAX_AMOUNTS_IN_ITEM } from "../../mitum.config.js";
-import {
+const { MAX_AMOUNTS_IN_ITEM } = require("../../mitum.config.js");
+const {
 	assert,
 	error,
 	EC_INVALID_AMOUNT,
 	EC_INVALID_AMOUNTS,
 	EC_INVALID_ITEM,
-} from "../../base/error.js";
+} = require("../../base/error.js");
 
-export class CurrencyItem extends Item {
+class CurrencyItem extends Item {
 	constructor(hint, amounts) {
 		super(hint);
 
@@ -45,3 +45,4 @@ export class CurrencyItem extends Item {
 		this.amounts = amounts;
 	}
 }
+exports.CurrencyItem = CurrencyItem

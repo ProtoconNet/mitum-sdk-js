@@ -1,9 +1,9 @@
 {
 	"name": "mitum-sdk",
-	"version": "0.0.1",
+	"version": "0.0.4",
 	"description": "Javascript SDK for mitum",
-	"main": "index.js",
-	"type": "module",
+	"main": "src/cjs/index.js",
+	"module": "src/esm/index.js",
 	"scripts": {
 		"test": "jest"
 	},
