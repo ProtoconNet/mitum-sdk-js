@@ -70,6 +70,15 @@ export class M2NodeFactSign extends FactSign {
 		this.node = new Address(node);
 	}
 
+	bytes() {
+		return Buffer.concat([
+			this.node.bytes(),
+			this.signer.bytes(),
+			this.sign,
+			this.signedAt.hashBytes(),
+		]);
+	}
+
 	dict() {
 		return {
 			...super.dict(),
