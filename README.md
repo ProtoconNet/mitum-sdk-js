@@ -121,7 +121,7 @@ var ekp3 = KPGen.fromPrivateKey(/* string private key */);
 var ekp4 = KPGen.fromSeed(/* string seed */);
 
 // m2 key pair
-const m2 = KPGen;
+const m2 = KPGen.m2;
 var skp1 = m2.random();
 var skp2 = m2.randomN(/* the number of keypairs */);
 var skp3 = m2.fromPrivateKey(/* string private key */);
