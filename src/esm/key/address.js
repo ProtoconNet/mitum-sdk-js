@@ -1,5 +1,6 @@
 import { m1 } from "./m1-keypair.js";
 import { m2 } from "./m2-keypair.js";
+import { m2ether } from "./m2-ether-keypair.js";
 import { isAddress, isNodeAddress } from "./validation.js";
 import { Keys, PublicKey } from "./key.js";
 
@@ -54,7 +55,7 @@ const randomN = (n, f) => {
 	}
 
 	return {
-		keys: new Keys(ks, MAX_THRESHOLD),
+		keys: new Keys(ks, MAX_THRESHOLD, ks[0].keyType),
 		keypairs: kps,
 	};
 };
@@ -65,4 +66,8 @@ export const M1RandomN = (n) => {
 
 export const M2RandomN = (n) => {
 	return randomN(n, m2.random);
+};
+
+export const M2EtherRandomN = (n) => {
+	return randomN(n, m2ether.random);
 };

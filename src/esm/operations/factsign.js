@@ -8,7 +8,7 @@ import { assert, error, EC_INVALID_PUBLIC_KEY } from "../base/error.js";
 
 import { Key } from "../key/key.js";
 import { Address } from "../key/address.js";
-import { isPublicKey } from "../key/validation.js";
+import { isM2EtherPublicKey, isMitumPublicKey } from "../key/validation.js";
 
 import { FullTimeStamp } from "../utils/time.js";
 
@@ -19,7 +19,7 @@ export class FactSign extends IBytesDict {
 		this.signedAt = new FullTimeStamp(signedAt);
 
 		assert(
-			isPublicKey(signer),
+			isMitumPublicKey(signer) || isM2EtherPublicKey(signer),
 			error.format(EC_INVALID_PUBLIC_KEY, "not public key")
 		);
 		this.signer = new Key(signer);

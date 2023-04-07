@@ -1,6 +1,6 @@
 import { useV, useId, SIG_TYPE } from "./utils/config.js";
 import { TimeStamp, FullTimeStamp } from "./utils/time.js";
-import { sha256, sum256 } from "./utils/hash.js";
+import { sha256, sum256, keccak256 } from "./utils/hash.js";
 import { Big, Float } from "./utils/number.js";
 import { sortStringAsBuf, sortBuf } from "./utils/string.js";
 
@@ -8,6 +8,10 @@ import {
 	SUFFIX_KEY_PRIVATE,
 	SUFFIX_KEY_PUBLIC,
 	SUFFIX_ACCOUNT_ADDRESS,
+	SUFFIX_KEY_ETHER_PRIVATE,
+	SUFFIX_KEY_ETHER_PUBLIC,
+	SUFFIX_ETHER_ACCOUNT_ADDRESS,
+	SUFFIX_NODE_ADDRESS,
 } from "./alias/key.js";
 
 import { ID, CurrencyID, ContractID } from "./base/ID.js";
@@ -18,8 +22,9 @@ import { Token } from "./base/token.js";
 
 import { m1 } from "./key/m1-keypair.js";
 import { m2 } from "./key/m2-keypair.js";
+import { m2ether } from "./key/m2-ether-keypair.js";
 import { PublicKey, Keys } from "./key/key.js";
-import { Address, M2RandomN, M1RandomN } from "./key/address.js";
+import { Address, M2RandomN, M1RandomN, M2EtherRandomN } from "./key/address.js";
 
 import { Item } from "./operations/item.js";
 import { Fact, OperationFact, NodeFact } from "./operations/fact.js";
@@ -74,6 +79,10 @@ const KPGen = {
 		...m2,
 		randomN: M2RandomN,
 	},
+	m2ether: {
+		...m2ether,
+		randomN: M2EtherRandomN,
+	},
 	...m1,
 	randomN: M1RandomN,
 };
@@ -106,6 +115,10 @@ const alias = {
 		SUFFIX_KEY_PRIVATE,
 		SUFFIX_KEY_PUBLIC,
 		SUFFIX_ACCOUNT_ADDRESS,
+		SUFFIX_KEY_ETHER_PRIVATE,
+		SUFFIX_KEY_ETHER_PUBLIC,
+		SUFFIX_ETHER_ACCOUNT_ADDRESS,
+		SUFFIX_NODE_ADDRESS,
 	},
 };
 
@@ -123,6 +136,7 @@ const base = {
 const util = {
 	sha256,
 	sum256,
+	keccak256,
 	sortStringAsBuf,
 	sortBuf,
 };

@@ -1,7 +1,7 @@
 import bs58 from "bs58";
 
 import { Address } from "./address.js";
-import { parseKey } from "./validation.js";
+import { isM2EtherKeySuffix, isMitumKeySuffix, parseKey } from "./validation.js";
 
 import {
 	MAX_KEYS_IN_ADDRESS,
@@ -10,7 +10,7 @@ import {
 	MIN_THRESHOLD,
 	MIN_WEIGHT,
 } from "../mitum.config.js";
-import { HINT_KEY, HINT_KEYS, SUFFIX_ACCOUNT_ADDRESS } from "../alias/key.js";
+import { HINT_KEY, HINT_KEYS, SUFFIX_ACCOUNT_ADDRESS, SUFFIX_ETHER_ACCOUNT_ADDRESS } from "../alias/key.js";
 
 import { Hint } from "../base/hint.js";
 import { IBytes, IBytesDict } from "../base/interface.js";
@@ -20,11 +20,15 @@ import {
 	EC_INVALID_KEYS,
 	EC_INVALID_THRESHOLD,
 	EC_INVALID_WEIGHT,
+	EC_INVALID_KEY,
 } from "../base/error.js";
 
 import { Big } from "../utils/number.js";
-import { sum256 } from "../utils/hash.js";
+import { keccak256, sum256 } from "../utils/hash.js";
 import { sortStringAsBuf } from "../utils/string.js";
+
+const TYPE_MITUM = "btc";
+const TYPE_ETHER = "ether";
 
 export class Key extends IBytes {
 	constructor(s) {
@@ -32,6 +36,15 @@ export class Key extends IBytes {
 		const { key, suffix } = parseKey(s);
 		this.key = key;
 		this.suffix = suffix;
+		this.keyType = null;
+
+		if (isMitumKeySuffix(suffix)) {
+			this.keyType = TYPE_MITUM;
+		} else if (isM2EtherKeySuffix(suffix)) {
+			this.keyType = TYPE_ETHER;
+		} else {
+			throw error.format(EC_INVALID_KEY, "invalid key");
+		}
 	}
 
 	toString() {
@@ -72,7 +85,7 @@ export class PublicKey extends Key {
 }
 
 export class Keys extends IBytesDict {
-	constructor(keys, threshold) {
+	constructor(keys, threshold, addressType) {
 		super();
 		assert(
 			typeof threshold === "number",
@@ -111,11 +124,15 @@ export class Keys extends IBytesDict {
 		this.hint = new Hint(HINT_KEYS);
 		this.keys = keys;
 		this.threshold = new Big(threshold);
-		this.hash = sum256(this.bytes());
+		this.addressType = addressType;
 	}
 
 	get address() {
-		return new Address(bs58.encode(this.hash) + SUFFIX_ACCOUNT_ADDRESS);
+		if (this.addressType === TYPE_ETHER) {
+			return new Address(keccak256(this.bytes()).subarray(12).toString('hex') + SUFFIX_ETHER_ACCOUNT_ADDRESS);
+		}
+
+		return new Address(bs58.encode(sum256(this.bytes())) + SUFFIX_ACCOUNT_ADDRESS);
 	}
 
 	bytes() {
@@ -128,9 +145,17 @@ export class Keys extends IBytesDict {
 	}
 
 	dict() {
+		let hash = null;
+
+		if (this.addressType === TYPE_ETHER) {
+			hash = keccak256(this.bytes()).toString('hex');
+		} else {
+			hash = bs58.encode(sum256(this.bytes()));
+		}
+
 		return {
 			_hint: this.hint.toString(),
-			hash: bs58.encode(this.hash),
+			hash,
 			keys: this.keys.map((k) => k.dict()),
 			threshold: this.threshold.v,
 		};

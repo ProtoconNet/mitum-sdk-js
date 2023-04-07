@@ -524,6 +524,33 @@ describe("test: address generation", () => {
 			},
 		];
 
+		const ethertcs = [
+			{
+				hash: "b605d9324056794002cc6e401ea5eabf747d85e7",
+				keys: [
+					{
+						key: "041ef0576a44839df8c54aad7d9884309b5fc06a6466e8ae370e7bf3ce4e04b1451159b93ffcf18cd59cfcf2569d9cd753adff5f398febf7f17f8cb49a47059637epu",
+						weight: 100
+					},
+				],
+				threshold: 100,
+				address1: "b605d9324056794002cc6e401ea5eabf747d85e7eca",
+				address2: "GWPWN39WqvLpDYWerXkkd8DLUikvT8GuPHxur6SbsPjJmca",
+			},
+			{
+				hash: "3d4789d2ba81ed81ecce2500f73e502f63669816",
+				keys: [
+					{
+						key: "0401937683df383522a8342812534e161e9f6891bd6589b3b74e1dbd52c5895ea304c6f11b5ba9e50024029e0325f577d477431b24581f923beaef21dd6bad22e1epu",
+						weight: 100
+					},
+				],
+				threshold: 100,
+				address1: "3d4789d2ba81ed81ecce2500f73e502f63669816eca",
+				address2: "ifsiqQHJBaP3epyNMCpn3mY5aiWFBU3hZxgKswy7Mqamca",
+			}
+		]
+
 		tcs.forEach((tc) => {
 			const ks = tc.keys.map((k) => new PublicKey(k.key, k.weight));
 			const keys = new Keys(ks, tc.threshold);
@@ -532,6 +559,19 @@ describe("test: address generation", () => {
 			expect(keys.keys.length).toBe(10);
 			expect(keys.threshold.v).toBe(tc.threshold);
 			expect(keys.address.toString()).toBe(tc.address);
+		});
+
+		ethertcs.forEach((tc) => {
+			const ks = tc.keys.map((k) => new PublicKey(k.key, k.weight));
+			const keys1 = new Keys(ks, tc.threshold, "ether");
+			const keys2 = new Keys(ks, tc.threshold);
+
+			expect(keys1.hint.s).toBe(HINT_KEYS);
+			expect(keys1.keys.length).toBe(1);
+			expect(keys1.threshold.v).toBe(tc.threshold);
+
+			expect(keys1.address.toString()).toBe(tc.address1);
+			expect(keys2.address.toString()).toBe(tc.address2);
 		});
 	});
 

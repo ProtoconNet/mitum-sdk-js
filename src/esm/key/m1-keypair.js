@@ -2,6 +2,10 @@ import bs58 from "bs58";
 import bs58check from "bs58check";
 import secureRandom from "secure-random";
 
+import { hmac } from "@noble/hashes/hmac";
+import { sha256 as nobleSha256} from "@noble/hashes/sha256";
+import * as secp256k1 from "@noble/secp256k1";
+
 import { Key } from "./key.js";
 import { K, KeyPair } from "./keypair.js";
 
@@ -22,6 +26,14 @@ import { isM1PrivateKey } from "./validation.js";
 class M1KeyPair extends KeyPair {
 	constructor(privateKey) {
 		super(privateKey);
+	}
+
+	sign(msg) {
+		secp256k1.utils.hmacSha256Sync = (key, ...msgs) =>
+			hmac(nobleSha256, key, secp256k1.utils.concatBytes(...msgs));
+		secp256k1.utils.sha256Sync = (...msgs) =>
+			nobleSha256(secp256k1.utils.concatBytes(...msgs));
+		return secp256k1.signSync(sha256(sha256(msg)), this.signer);
 	}
 
 	_generateSigner() {
