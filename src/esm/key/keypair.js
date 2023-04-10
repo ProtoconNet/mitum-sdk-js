@@ -2,7 +2,7 @@ import bs58 from "bs58";
 import * as secp256k1 from "@noble/secp256k1";
 import { getPublicCompressed } from "eccrypto-js";
 
-import { Key } from "./key.js";
+import { Key, KEY_TYPE } from "./key.js";
 
 import { SUFFIX_KEY_ETHER_PUBLIC, SUFFIX_KEY_PUBLIC } from "../alias/key.js";
 import {
@@ -26,7 +26,7 @@ export class KeyPair {
 		this.privateKey = privateKey;
 		this.signer = this._generateSigner();
 
-		if (privateKey.keyType === "ether") {
+		if (privateKey.keyType === KEY_TYPE.ether) {
 			this.publicKey = new Key(
 				'04' + this.signer.getPublicKeyString().substring(2) + SUFFIX_KEY_ETHER_PUBLIC
 			);

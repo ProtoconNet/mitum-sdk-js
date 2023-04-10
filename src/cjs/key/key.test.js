@@ -59,7 +59,7 @@ describe("test: address generation", () => {
 		});
 	});
 
-	it("case: address = require(keys", () => {
+	it("case: address from keys", () => {
 		const tcs = [
 			{
 				keys: [

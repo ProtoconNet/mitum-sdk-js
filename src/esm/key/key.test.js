@@ -563,15 +563,14 @@ describe("test: address generation", () => {
 
 		ethertcs.forEach((tc) => {
 			const ks = tc.keys.map((k) => new PublicKey(k.key, k.weight));
-			const keys1 = new Keys(ks, tc.threshold, "ether");
-			const keys2 = new Keys(ks, tc.threshold);
+			const keys = new Keys(ks, tc.threshold);
 
-			expect(keys1.hint.s).toBe(HINT_KEYS);
-			expect(keys1.keys.length).toBe(1);
-			expect(keys1.threshold.v).toBe(tc.threshold);
+			expect(keys.hint.s).toBe(HINT_KEYS);
+			expect(keys.keys.length).toBe(1);
+			expect(keys.threshold.v).toBe(tc.threshold);
 
-			expect(keys1.address.toString()).toBe(tc.address1);
-			expect(keys2.address.toString()).toBe(tc.address2);
+			expect(keys.etherAddress.toString()).toBe(tc.address1);
+			expect(keys.address.toString()).toBe(tc.address2);
 		});
 	});
 

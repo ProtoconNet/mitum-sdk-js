@@ -23,8 +23,8 @@ import { Token } from "./base/token.js";
 import { m1 } from "./key/m1-keypair.js";
 import { m2 } from "./key/m2-keypair.js";
 import { m2ether } from "./key/m2-ether-keypair.js";
-import { PublicKey, Keys } from "./key/key.js";
-import { Address, M2RandomN, M1RandomN, M2EtherRandomN } from "./key/address.js";
+import { PublicKey, Keys, KEY_TYPE } from "./key/key.js";
+import { Address, M2RandomN, M1RandomN, M2EtherRandomN, ADDRESS_TYPE } from "./key/address.js";
 
 import { Item } from "./operations/item.js";
 import { Fact, OperationFact, NodeFact } from "./operations/fact.js";
@@ -36,11 +36,12 @@ import { Signer } from "./operations/signer.js";
 
 import { Amount } from "./operations/currency/amount.js";
 import {
-	CreateAccountsItem,
+	M1CreateAccountsItem,
+	M2CreateAccountsItem,
 	CreateAccountsFact,
 } from "./operations/currency/create-accounts.js";
 
-import { KeyUpdaterFact } from "./operations/currency/key-updater.js";
+import { M1KeyUpdaterFact, M2KeyUpdaterFact } from "./operations/currency/key-updater.js";
 
 import {
 	TransfersItem,
@@ -65,7 +66,8 @@ import {
 } from "./operations/currency/suffrage-inflation.js";
 
 import {
-	CreateContractAccountsItem,
+	M1CreateContractAccountsItem,
+	M2CreateContractAccountsItem,
 	CreateContractAccountsFact,
 } from "./operations/currency/create-contract-accounts.js";
 
@@ -90,9 +92,11 @@ const KPGen = {
 const PubKey = PublicKey;
 
 const Currency = {
-	CreateAccountsItem,
+	M1CreateAccountsItem,
+	M2CreateAccountsItem,
 	CreateAccountsFact,
-	KeyUpdaterFact,
+	M1KeyUpdaterFact,
+	M2KeyUpdaterFact,
 	TransfersItem,
 	TransfersFact,
 	CurrencyDesign,
@@ -104,7 +108,8 @@ const Currency = {
 	CurrencyPolicyUpdaterFact,
 	SuffrageInflationItem,
 	SuffrageInflationFact,
-	CreateContractAccountsItem,
+	M1CreateContractAccountsItem,
+	M2CreateContractAccountsItem,
 	CreateContractAccountsFact,
 	WithdrawsItem,
 	WithdrawsFact,
@@ -152,6 +157,8 @@ export {
 	TimeStamp,
 	FullTimeStamp,
 	KPGen,
+	KEY_TYPE,
+	ADDRESS_TYPE,
 	PubKey,
 	Keys,
 	Amount,

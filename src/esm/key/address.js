@@ -1,13 +1,19 @@
 import { m1 } from "./m1-keypair.js";
 import { m2 } from "./m2-keypair.js";
 import { m2ether } from "./m2-ether-keypair.js";
+
+import { KEY_TYPE, Keys, PublicKey } from "./key.js";
 import { isAddress, isNodeAddress } from "./validation.js";
-import { Keys, PublicKey } from "./key.js";
 
 import { MAX_KEYS_IN_ADDRESS, MAX_THRESHOLD } from "../mitum.config.js";
 
 import { IBytes } from "../base/interface.js";
 import { assert, error, EC_INVALID_ADDRESS } from "../base/error.js";
+
+export const ADDRESS_TYPE = {
+	btc: "address/btc",
+	ether: "address/ether",
+}
 
 export class Address extends IBytes {
 	constructor(s) {
@@ -55,7 +61,7 @@ const randomN = (n, f) => {
 	}
 
 	return {
-		keys: new Keys(ks, MAX_THRESHOLD, ks[0].keyType),
+		keys: new Keys(ks, MAX_THRESHOLD),
 		keypairs: kps,
 	};
 };

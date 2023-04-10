@@ -1,6 +1,9 @@
+import bs58 from "bs58";
+
 import { CurrencyItem } from "./item.js";
 import { OperationFact } from "../fact.js";
 
+import { SUFFIX_ACCOUNT_ADDRESS, SUFFIX_ETHER_ACCOUNT_ADDRESS } from "../../alias/key.js";
 import {
 	HINT_CREATE_CONTRACT_ACCOUNTS_ITEM_MUL_AMOUNTS,
 	HINT_CREATE_CONTRACT_ACCOUNTS_ITEM_SIN_AMOUNT,
@@ -13,13 +16,15 @@ import {
 	error,
 	EC_INVALID_ITEM,
 	EC_INVALID_KEYS,
+	EC_INVALID_ADDRESS_TYPE,
 } from "../../base/error.js";
 
 import { Keys } from "../../key/key.js";
+import { ADDRESS_TYPE } from "../../key/address.js";
 
 import { sortBuf } from "../../utils/string.js";
 
-export class CreateContractAccountsItem extends CurrencyItem {
+class CreateContractAccountsItem extends CurrencyItem {
 	constructor(keys, amounts) {
 		super(
 			Array.isArray(amounts) && amounts.length > 1
@@ -36,13 +41,6 @@ export class CreateContractAccountsItem extends CurrencyItem {
 		this.keys = keys;
 	}
 
-	bytes() {
-		return Buffer.concat([
-			this.keys.bytes(),
-			Buffer.concat(this.amounts.sort(sortBuf).map((amt) => amt.bytes())),
-		]);
-	}
-
 	dict() {
 		return {
 			_hint: this.hint.toString(),
@@ -52,7 +50,59 @@ export class CreateContractAccountsItem extends CurrencyItem {
 	}
 
 	toString() {
-		return this.keys.address.toString();
+		return bs58.encode(this.keys.bytes());
+	}
+}
+
+export class M1CreateContractAccountsItem extends CreateContractAccountsItem {
+	constructor(keys, amounts) {
+		super(keys, amounts);
+	}
+
+	bytes() {
+		return Buffer.concat([
+			this.keys.bytes(),
+			Buffer.concat(this.amounts.sort(sortBuf).map((amt) => amt.bytes())),
+		]);
+	}
+}
+
+export class M2CreateContractAccountsItem extends CreateContractAccountsItem {
+	constructor(keys, amounts, addressType) {
+		super(keys, amounts);
+
+		if (!addressType) {
+			addressType = ADDRESS_TYPE.btc;
+		}
+
+		assert(
+			addressType === ADDRESS_TYPE.ether || addressType === ADDRESS_TYPE.btc,
+			error.format(EC_INVALID_ADDRESS_TYPE, "invalid address type"),
+		)
+
+		switch(addressType) {
+			case ADDRESS_TYPE.ether:
+				this.addressType = SUFFIX_ETHER_ACCOUNT_ADDRESS;
+				break
+			case ADDRESS_TYPE.btc:
+			default:
+				this.addressType = SUFFIX_ACCOUNT_ADDRESS;
+		}
+	}
+
+	bytes() {
+		return Buffer.concat([
+			this.keys.bytes(),
+			Buffer.from(this.addressType),
+			Buffer.concat(this.amounts.sort(sortBuf).map((amt) => amt.bytes())),
+		]);
+	}
+
+	dict() {
+		return {
+			...super.dict(),
+			addrtype: this.addressType,
+		};
 	}
 }
 

@@ -27,7 +27,7 @@ describe("test: keys and keypairs generation", () => {
 			const pks = keys.keys.map(
 				(k) => new PublicKey(k.toString(), k.weight.v)
 			);
-			const pkeys = new Keys(pks, keys.threshold.v, "btc");
+			const pkeys = new Keys(pks, keys.threshold.v);
 
 			expect(pkeys.address.toString()).toBe(keys.address.toString());
 
@@ -46,9 +46,9 @@ describe("test: keys and keypairs generation", () => {
 				(k) => new PublicKey(k.toString(), k.weight.v)
 			);
 
-			const pkeys = new Keys(pks, keys.threshold.v, "ether");
+			const pkeys = new Keys(pks, keys.threshold.v);
 
-			expect(pkeys.address.toString()).toBe(keys.address.toString());
+			expect(pkeys.etherAddress.toString()).toBe(keys.etherAddress.toString());
 
 			const pubKeys = keys.keys.map((k) => k.toString());
 			const kpPubKeys = keypairs.map((kp) => kp.publicKey.toString());

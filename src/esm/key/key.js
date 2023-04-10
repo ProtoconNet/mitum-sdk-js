@@ -27,8 +27,10 @@ import { Big } from "../utils/number.js";
 import { keccak256, sum256 } from "../utils/hash.js";
 import { sortStringAsBuf } from "../utils/string.js";
 
-const TYPE_MITUM = "btc";
-const TYPE_ETHER = "ether";
+export const KEY_TYPE = {
+	btc: "key/btc",
+	ether: "key/ether",
+}
 
 export class Key extends IBytes {
 	constructor(s) {
@@ -36,12 +38,11 @@ export class Key extends IBytes {
 		const { key, suffix } = parseKey(s);
 		this.key = key;
 		this.suffix = suffix;
-		this.keyType = null;
 
 		if (isMitumKeySuffix(suffix)) {
-			this.keyType = TYPE_MITUM;
+			this.keyType = KEY_TYPE.btc;
 		} else if (isM2EtherKeySuffix(suffix)) {
-			this.keyType = TYPE_ETHER;
+			this.keyType = KEY_TYPE.ether;
 		} else {
 			throw error.format(EC_INVALID_KEY, "invalid key");
 		}
@@ -85,7 +86,7 @@ export class PublicKey extends Key {
 }
 
 export class Keys extends IBytesDict {
-	constructor(keys, threshold, addressType) {
+	constructor(keys, threshold) {
 		super();
 		assert(
 			typeof threshold === "number",
@@ -124,15 +125,14 @@ export class Keys extends IBytesDict {
 		this.hint = new Hint(HINT_KEYS);
 		this.keys = keys;
 		this.threshold = new Big(threshold);
-		this.addressType = addressType;
 	}
 
 	get address() {
-		if (this.addressType === TYPE_ETHER) {
-			return new Address(keccak256(this.bytes()).subarray(12).toString('hex') + SUFFIX_ETHER_ACCOUNT_ADDRESS);
-		}
-
 		return new Address(bs58.encode(sum256(this.bytes())) + SUFFIX_ACCOUNT_ADDRESS);
+	}
+
+	get etherAddress() {
+		return new Address(keccak256(this.bytes()).subarray(12).toString('hex') + SUFFIX_ETHER_ACCOUNT_ADDRESS);
 	}
 
 	bytes() {
@@ -145,17 +145,9 @@ export class Keys extends IBytesDict {
 	}
 
 	dict() {
-		let hash = null;
-
-		if (this.addressType === TYPE_ETHER) {
-			hash = keccak256(this.bytes()).toString('hex');
-		} else {
-			hash = bs58.encode(sum256(this.bytes()));
-		}
-
 		return {
 			_hint: this.hint.toString(),
-			hash,
+			hash: bs58.encode(sum256(this.bytes())),
 			keys: this.keys.map((k) => k.dict()),
 			threshold: this.threshold.v,
 		};

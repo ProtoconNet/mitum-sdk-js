@@ -4,12 +4,13 @@ import { TimeStamp } from "./time";
 import { useId, useV } from "./config";
 
 import { TEST_ACCOUNT, TEST_GENESIS } from "../mitum.config";
+
 import { Keys, PublicKey } from "../key/key";
 
 import { Amount } from "../operations/currency/amount";
 import {
 	CreateAccountsFact,
-	CreateAccountsItem,
+	M1CreateAccountsItem,
 } from "../operations/currency/create-accounts";
 import { Operation } from "../operations/operation";
 
@@ -44,7 +45,7 @@ describe("test: config", () => {
 		const amount = new Amount("MCC", "100");
 		const key = new PublicKey(TEST_ACCOUNT.public, 100);
 		const keys = new Keys([key], 100);
-		const item = new CreateAccountsItem(keys, [amount]);
+		const item = new M1CreateAccountsItem(keys, [amount]);
 		const fact = new CreateAccountsFact(
 			new TimeStamp().UTC(),
 			TEST_GENESIS.m1.address,
