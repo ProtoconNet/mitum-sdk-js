@@ -70,7 +70,7 @@ export class Signer {
             ]);
 
             json.hash = sum256(msg);
-        } else if (this.kp.type === "m2") {
+        } else if (["m2", "m2ether"].includes(this.kp.type)) {
             const fs = new M2FactSign(
                 this.kp.keypair.publicKey.toString(),
                 this.kp.keypair.sign(
@@ -136,7 +136,7 @@ export class Signer {
         this.checkOperation(json);
 
         assert(
-            this.kp.type === "m2",
+            ["m2", "m2ether"].includes(this.kp.type),
             error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 private key")
         );
 
@@ -234,7 +234,7 @@ export class Signer {
             );
         } else if (exist(json, "signs")) {
             assert(
-                this.kp.type === "m2",
+                ["m2", "m2ether"].includes(this.kp.type),
                 error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 private key")
             );
         }

@@ -179,19 +179,19 @@ export class Operation extends IBytesDict {
 				factSign = getM1FactSign(kp.keypair, this.fact.hash, this.id);
 				break;
 			case SIG_TYPE.M2:
-				assert(kp.type === "m2", error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 keypair"));
+				assert(["m2", "m2ether"].includes(kp.type), error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 keypair"));
 				factSign = getM2FactSign(kp.keypair, this.fact.hash, this.id);
 				break;
 			case SIG_TYPE.M2_NODE:
-				assert(kp.type === "m2", error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 keypair"));
+				assert(["m2", "m2ether"].includes(kp.type), error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 keypair"));
 				factSign = getM2NodeFactSign(node, kp.keypair, this.fact.hash, this.id);
 				break;
 			default:
 				if (kp.type === "m1") {
 					factSign = getM1FactSign(kp.keypair, this.fact.hash, this.id);
-				} else if (kp.type === "m2" && node) {
+				} else if (node && ["m2", "m2ether"].includes(kp.type)) {
 					factSign = getM2NodeFactSign(node, kp.keypair, this.fact.hash, this.id);
-				} else if (kp.type === "m2") {
+				} else if (["m2", "m2ether"].includes(kp.type)) {
 					factSign = getM2FactSign(kp.keypair, this.fact.hash, this.id);
 				}
 		}
