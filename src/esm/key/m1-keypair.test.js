@@ -154,6 +154,9 @@ describe("test: m1; sign", () => {
 			const kp = m1.fromPrivateKey(tc.priv);
 			const sig = bs58.encode(kp.sign(tc.msg));
 
+			expect(kp.verify(sig, tc.msg));
+			expect(kp.verify(tc.sig, tc.msg));
+			
 			expect(sig).toBe(tc.sig);
 		});
 	});

@@ -44,6 +44,13 @@ export class KeyPair {
 		);
 	}
 
+	verify(_) {
+		throw error.nimplement(
+			EC_NOT_IMPLEMENTED_METHOD,
+			"unimplemented method verify(msg)"
+		);
+	}
+
 	_generateSigner() {
 		throw error.nimplement(
 			EC_NOT_IMPLEMENTED_METHOD,

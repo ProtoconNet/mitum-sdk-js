@@ -36,6 +36,14 @@ class M1KeyPair extends KeyPair {
 		return secp256k1.signSync(sha256(sha256(msg)), this.signer);
 	}
 
+	verify(sig, msg) {
+		if (typeof sig === "string") {
+            sig = bs58.decode(sig);
+        }
+
+		return secp256k1.verify(sig, sha256(sha256(msg)), secp256k1.getPublicKey(this.signer));
+	}
+
 	_generateSigner() {
 		let dk = bs58check.decode(this.privateKey.key);
 		dk = Buffer.from(dk.subarray(1, dk.length - 1));

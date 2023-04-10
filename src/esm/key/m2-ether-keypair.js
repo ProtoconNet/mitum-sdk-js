@@ -1,3 +1,4 @@
+import bs58 from "bs58";
 import ethWallet from "ethereumjs-wallet";
 import { hmac } from "@noble/hashes/hmac";
 import { sha256 } from "@noble/hashes/sha256";
@@ -41,6 +42,36 @@ class M2EtherKeyPair extends KeyPair {
 
         return buf;
 	}
+
+    verify(sig, msg) {
+        if (typeof sig === "string") {
+            sig = bs58.decode(sig);
+        }
+
+        const rlen = new Big(sig.subarray(0, 4).reverse());
+        const r = Buffer.alloc(rlen.v);
+
+        const rb = new Big(sig.subarray(4, 4 + rlen.v));
+        rb.bytes().copy(r, rlen.v - rb.byteLen());
+
+        const s = sig.subarray(4 + rlen.v);
+        const slen = new Big(s.length);
+
+        const base = Buffer.from([48, sig.length, 2]);
+        
+        const buf = Buffer.alloc(sig.length + 2);
+        base.copy(buf, 0, 0, 4);
+
+        rlen.bytes().copy(buf, 3);
+        r.copy(buf, 4);
+
+        Buffer.from([2]).copy(buf, 4 + rlen.v);
+
+        slen.bytes().copy(buf, 5 + rlen.v);
+        s.copy(buf, 6 + rlen.v);
+
+        return secp256k1.verify(buf, sha256(msg), secp256k1.getPublicKey(this.signer.getPrivateKey()));
+    }
 
     _generateSigner() {
         return ethWallet.fromPrivateKey(Buffer.from(this.privateKey.key, 'hex'));

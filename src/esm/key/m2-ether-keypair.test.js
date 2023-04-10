@@ -1,4 +1,3 @@
-// import bs58 from "bs58";
 import { m2ether } from "./m2-ether-keypair";
 
 describe("test: m2 ether; keypair generation", () => {
@@ -105,61 +104,59 @@ describe("test: m2 ether; keypair generation", () => {
 	});
 });
 
-// describe("test: m2; sign", () => {
-// 	it("case: sign string msg", () => {
-// 		const tcs = [
-// 			{
-// 				msg: "mitum",
-// 				priv: "BhWt1hqkkxUHspcvSfJKaH2HQ7Ns4n1oHzAv7s7P75Y1mpr",
-// 				sig: "AN1rKvtV12snAHf2KHUeBFrCL58w1P51sKjQAH21AppRn3xHyJQ2XHVL8wrAeEybWmcFz7ZFxGvbYpMEDYtxm44jvntSRvv9J",
-// 			},
-// 			{
-// 				msg: "this is a msg to test",
-// 				priv: "4ZGWj8KLh4cRjXErqABYLARHxhruQmJNCMwucgD6wLL4mpr",
-// 				sig: "AN1rKvt9KZCeynd4faPM4q61k2aP58YEQokKz4hgZQafsvgvin8VRcRZ6y9vjwgBpv9LwhKEp9i2jZ5Uco4Z1Q9dBvZyedbDQ",
-// 			},
-// 			{
-// 				msg: "te스타 forever~",
-// 				priv: "6LQmHvc7dpG5eQtbX858CLeYrB8jSy3XUmV59puytnNPmpr",
-// 				sig: "AN1rKvtheftA54ngmgzMb7LVKXotsSBMDsv9ocsgFBkBF5VJffctT8tLXC4o3w7JauiNJkbE2c7oj1wWXrKXpLwTgrzBnNJLo",
-// 			},
-// 			{
-// 				msg: "drill",
-// 				priv: "HoTnYPSHC5hJW2jWNJXfuhNEQjqYFdhLbchQij3E42UNmpr",
-// 				sig: "AN1rKvtmT7ZskdqVSrmbBjfNs79bA51X4NFWFUtC62tDvKiP7zJagiDNE6cdcAPZhrnokzXV24hC4sBMRtwPGN86uW7XhBVEd",
-// 			},
-// 			{
-// 				msg: "kim rabbit",
-// 				priv: "4RVwW7w1JE9DCjs4dB37fge36xdRb4Qr5jeYb8zsStPkmpr",
-// 				sig: "AN1rKvtWpfj7fDwiRX7SZruhkzLyAAAK5nJmNWVq1yWKuw3jbsNJ6G2NJDxxmx8BWwZf2g6Uprj98u1pKniEpN4q4wGu4qxQf",
-// 			},
-// 			{
-// 				msg: "mabeopsonyeon",
-// 				priv: "6gZXpmZvsQeDkcxg7m9WXrNFNjF8vCLwHrUHWPV2sddempr",
-// 				sig: "381yXZPZCQfjU1UgMkMXCSz8ULuoq5sM7eV7Bxwpc5iG8uySpJ6fddkrkEbLSkNN1qedjA2HcS8ccSFEiCfAPKKtYffdETtB",
-// 			},
-// 			{
-// 				msg: "baehamzzi",
-// 				priv: "EEqNCm69hXEGkvxmhiqxJHh8ZczqTouW9fdXUHT8n9Etmpr",
-// 				sig: "381yXZK1j8xc8dML9vEDsGUnqczGGZqidT4yAazwoif6xrjfifKFFnDjmrygugtEEtEPBztuP99YEaCQYKCuF3vQkW8EEMKX",
-// 			},
-// 			{
-// 				msg: "dynamite",
-// 				priv: "HMQeEk38norYUW6CAqZqimoS7xRMAzdFjkciL1SnA7onmpr",
-// 				sig: "381yXZ1DccWd1Jt7M9SmAdVoxq52gCYBk6RuiCWMAPRWDdz9rxqXhM5SMEWEPULvfz7o6RZk7uN72MLqmyS8ixj3gGcPyAgD",
-// 			},
-// 			{
-// 				msg: "txt",
-// 				priv: "3zDXJfqJut9G3FLzeTWyeCfgrQruEywQT32tWZxTrrPDmpr",
-// 				sig: "381yXZ9taXw3sjNTSswr1FZHTPcRD6YMnAnuFrBewyhttDKwthUGNx2MGEcGhzgu9kW6cUB73JdVjzZf5teRj7Kxj982XRqb",
-// 			},
-// 		];
+describe("test: m2 ether; sign", () => {
+	it("case: sign string msg", () => {
+		const tcs = [
+			{
+				msg: "mitum",
+				priv: "7b312acf5d492443a2c9bcd2a1a183ae05c3589f65edb5c7e193ccb4988462d7epr",
+				sig: "5BpRZ8211S7P4cuuSKhW5GbRKanVcVdmnYdAa1gnHtaQQHKY6zo4i1U5AbBhWU4ewqNGB1hKb1xQYpSZeX2FXKXUcxaXL",
+			},
+			{
+				msg: "this is a msg to test",
+				priv: "6357526124ff36c4b61cd547f0f0cf2042883e6ff54b8915d0a1f4b2c9127a09epr",
+				sig: "5BpRZ4Ttzna35QZc4Be8QjYtWjDP47hvEVnZ1gxJa2p8aH1yHmJHJJ2mxCk9hi5qJZX3Aj1kFh2Hix9tELRB58cDk3MCH",
+			},
+			{
+				msg: "te스타 forever~",
+				priv: "40b631b47f865bc87cdcc82016c6ca8a55372098795ecd3e9d6bd1d5b9f0f67depr",
+				sig: "5BpRZ8saHdvgjQJMBKY3dLRGQyFxZSYxM4saxjVmGdDHbqNq7bRPq7EnhBC2MUwdasv46Y4UvTbZMM1diZ3NSiSX1rmWh",
+			},
+			{
+				msg: "drill",
+				priv: "1f5bb4b18057dc0aede8ed117702275048b82e05705b409b290bcfab9ba84e63epr",
+				sig: "5BpRZ8SwBt7mqMDBmLndo7nuZtF44KCKCyz4BcyYkxKWvX4Z65zuKgJ7q8PrbUT98QyPakRfWKXCNyVfuh6ponDg7w2TX",
+			},
+			{
+				msg: "kim rabbit",
+				priv: "a0c855326961a20b25b994e6c7d210f434a56d81dad6d491cbe3429488511dc2epr",
+				sig: "5BpRZ4shBS9MNcSAfdw5qZ6dV1SmhNLXgNRpAsR7Ui2nAeGtHEz3zz6SHS4iaFXujqgvsEnw2qqdZMXDMX5w1DL8eQoct",
+			},
+			{
+				msg: "mabeopsonyeon",
+				priv: "92766a2f7932878c63850750ada55936a867674ddd15bfcde405d0cb9d8c7424epr",
+				sig: "5BpRZ7odvkuCajN3LAYiazXCd9XRG7agqosAMX9ZeP1iS7tRQEJM9qFzK6K9MTUUB5Ggpr75XAHPiYBFLNPu89eTqn5A3",
+			},
+			{
+				msg: "baehamzzi",
+				priv: "c6fbbb48381066021905781add28b06efbef487002f93308bf8eead991b20d11epr",
+				sig: "5BpRZ7Vmf1v5MhbDNGJpK5XjRgmsupFji9owmeBcBDddvnyvJDx4RQ626ce1vrwrd8kbZruLR135f4iNFYDK7SQ6HwrEy",
+			},
+			{
+				msg: "dynamite",
+				priv: "5e30e8ea3902df780fc32ff12d06f486ab5b08ec3d5ff5a02b083dfe3427460cepr",
+				sig: "5BpRZ75nQu9dVLprFmJswohLVEaEWzn6ih9Vs7J3gkeWJhjtmq54gsGFUXcfKPNGkSYLBB2eDA7huLzuu2VfY7dEZEaFW",
+			},
+			{
+				msg: "txt",
+				priv: "836496353af1626dad98694f2dc66cba950d294b108010f1abca74aa52aaca9eepr",
+				sig: "5BpRZ7byeMxBy428ExTX6dBfqiAQ7mZm1KsU32sAY5tJ6oF6Az69STyphyFwLPx2oNjRSzSYDdjC8ue6DVj7Ft6WwCz9L",
+			},
+		];
 
-// 		tcs.forEach((tc) => {
-// 			const kp = m2.fromPrivateKey(tc.priv);
-// 			const sig = bs58.encode(kp.sign(tc.msg));
-
-// 			expect(sig).toBe(tc.sig);
-// 		});
-// 	});
-// });
+		tcs.forEach((tc) => {
+			const kp = m2ether.fromPrivateKey(tc.priv);
+			expect(kp.verify(kp.sign(tc.msg), tc.msg)).toBe(true);
+		});
+	});
+});
