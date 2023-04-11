@@ -24,8 +24,8 @@ import { ADDRESS_TYPE, Address } from "../../key/address.js";
 
 import { sortBuf } from "../../utils/string.js";
 
-class CreateAccountsItem extends CurrencyItem {
-	constructor(keys, amounts) {
+export class CreateAccountsItem extends CurrencyItem {
+	constructor(keys, amounts, addressType) {
 		super(
 			Array.isArray(amounts) && amounts.length > 1
 				? HINT_CREATE_ACCOUNTS_ITEM_MUL_AMOUNTS
@@ -38,55 +38,19 @@ class CreateAccountsItem extends CurrencyItem {
 			error.instance(EC_INVALID_KEYS, "not Keys instance")
 		);
 
-		this.keys = keys;
-	}
-
-	dict() {
-		return {
-			_hint: this.hint.toString(),
-			keys: this.keys.dict(),
-			amounts: this.amounts.sort(sortBuf).map((amount) => amount.dict()),
-		};
-	}
-
-	toString() {
-		return bs58.encode(this.keys.bytes());
-	}
-}
-
-export class M1CreateAccountsItem extends CreateAccountsItem {
-	constructor(keys, amounts) {
-		super(keys, amounts);
-	}
-
-	bytes() {
-		return Buffer.concat([
-			this.keys.bytes(),
-			Buffer.concat(this.amounts.sort(sortBuf).map((amt) => amt.bytes())),
-		]);
-	}
-}
-
-export class M2CreateAccountsItem extends CreateAccountsItem {
-	constructor(keys, amounts, addressType) {
-		super(keys, amounts);
-
-		if (!addressType) {
-			addressType = ADDRESS_TYPE.btc;
-		}
-
 		assert(
-			addressType === ADDRESS_TYPE.ether || addressType === ADDRESS_TYPE.btc,
-			error.format(EC_INVALID_ADDRESS_TYPE, "invalid address type"),
+			[ADDRESS_TYPE.ether, ADDRESS_TYPE.btc].includes(addressType) || !addressType,
+			error.instance(EC_INVALID_ADDRESS_TYPE, "invalid address type"),
 		)
 
-		switch(addressType) {
-			case ADDRESS_TYPE.ether:
-				this.addressType = SUFFIX_ETHER_ACCOUNT_ADDRESS;
-				break
-			case ADDRESS_TYPE.btc:
-			default:
-				this.addressType = SUFFIX_ACCOUNT_ADDRESS;
+		this.keys = keys;
+
+		if (addressType === ADDRESS_TYPE.ether) {
+			this.addressType = SUFFIX_ETHER_ACCOUNT_ADDRESS;
+		} else if (addressType === ADDRESS_TYPE.btc) {
+			this.addressType = SUFFIX_ACCOUNT_ADDRESS;
+		} else{
+			this.addressType = '';
 		}
 	}
 
@@ -99,10 +63,21 @@ export class M2CreateAccountsItem extends CreateAccountsItem {
 	}
 
 	dict() {
-		return {
-			...super.dict(),
-			addrtype: this.addressType,
+		const item = {
+			_hint: this.hint.toString(),
+			keys: this.keys.dict(),
+			amounts: this.amounts.sort(sortBuf).map((amount) => amount.dict()),
 		};
+
+		if (this.addressType) {
+			item.addrtype = this.addressType;
+		}
+
+		return item;
+	}
+
+	toString() {
+		return bs58.encode(this.keys.bytes());
 	}
 }
 

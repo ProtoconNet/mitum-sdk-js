@@ -36,12 +36,11 @@ import { Signer } from "./operations/signer.js";
 
 import { Amount } from "./operations/currency/amount.js";
 import {
-	M1CreateAccountsItem,
-	M2CreateAccountsItem,
+	CreateAccountsItem,
 	CreateAccountsFact,
 } from "./operations/currency/create-accounts.js";
 
-import { M1KeyUpdaterFact, M2KeyUpdaterFact } from "./operations/currency/key-updater.js";
+import { KeyUpdaterFact } from "./operations/currency/key-updater.js";
 
 import {
 	TransfersItem,
@@ -66,8 +65,7 @@ import {
 } from "./operations/currency/suffrage-inflation.js";
 
 import {
-	M1CreateContractAccountsItem,
-	M2CreateContractAccountsItem,
+	CreateContractAccountsItem,
 	CreateContractAccountsFact,
 } from "./operations/currency/create-contract-accounts.js";
 
@@ -92,11 +90,9 @@ const KPGen = {
 const PubKey = PublicKey;
 
 const Currency = {
-	M1CreateAccountsItem,
-	M2CreateAccountsItem,
+	CreateAccountsItem,
 	CreateAccountsFact,
-	M1KeyUpdaterFact,
-	M2KeyUpdaterFact,
+	KeyUpdaterFact,
 	TransfersItem,
 	TransfersFact,
 	CurrencyDesign,
@@ -108,8 +104,7 @@ const Currency = {
 	CurrencyPolicyUpdaterFact,
 	SuffrageInflationItem,
 	SuffrageInflationFact,
-	M1CreateContractAccountsItem,
-	M2CreateContractAccountsItem,
+	CreateContractAccountsItem,
 	CreateContractAccountsFact,
 	WithdrawsItem,
 	WithdrawsFact,

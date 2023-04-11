@@ -1,7 +1,7 @@
 import bs58 from "bs58";
 
 import { Amount } from "./amount";
-import { CreateAccountsFact, M1CreateAccountsItem , M2CreateAccountsItem } from "./create-accounts";
+import { CreateAccountsFact, CreateAccountsItem } from "./create-accounts";
 
 import { Operation } from "../operation";
 
@@ -19,7 +19,7 @@ describe("test: create-account", () => {
 		const fact = new CreateAccountsFact(
 			"2022-11-16T06:05:14.889691Z",
 			TEST_GENESIS.m1.address,
-			[new M1CreateAccountsItem(keys, amounts)]
+			[new CreateAccountsItem(keys, amounts)]
 		);
 		const operation = new Operation(fact, "");
 		operation.sign(TEST_GENESIS.m1.private, null);
@@ -36,10 +36,10 @@ describe("test: create-account", () => {
 		const fact = new CreateAccountsFact(
 			"2022-10-25 03:52:32.461515 +0000 UTC",
 			TEST_GENESIS.m2.address,
-			[new M2CreateAccountsItem(keys, amounts)]
+			[new CreateAccountsItem(keys, amounts, ADDRESS_TYPE.btc)]
 		);
 		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m2.private, null);
+		operation.sign(TEST_GENESIS.m2.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"4hQnx3YTV4YGNXfoDYDUdx5Q1inFgzNAc8wy6dVoaDAd"
@@ -53,7 +53,7 @@ describe("test: create-account", () => {
 		const fact = new CreateAccountsFact(
 			"2022-10-25 03:52:32.461515 +0000 UTC",
 			TEST_GENESIS.m2ether.address,
-			[new M2CreateAccountsItem(keys, amounts, ADDRESS_TYPE.ether)]
+			[new CreateAccountsItem(keys, amounts, ADDRESS_TYPE.ether)]
 		);
 		const operation = new Operation(fact, "");
 		operation.sign(TEST_GENESIS.m2ether.private, null);
@@ -69,8 +69,8 @@ describe("test: create-account", () => {
 		const keys = new Keys([new PublicKey(TEST_ACCOUNT_R.public, 100)], 100);
 
 		const items = [
-			new M2CreateAccountsItem(keys, amounts),
-			new M2CreateAccountsItem(keys, amounts),
+			new CreateAccountsItem(keys, amounts),
+			new CreateAccountsItem(keys, amounts),
 		];
 
 		expect(

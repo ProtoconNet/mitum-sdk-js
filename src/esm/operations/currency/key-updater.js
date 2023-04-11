@@ -14,8 +14,8 @@ import { CurrencyID } from "../../base/ID.js";
 import { Keys } from "../../key/key.js";
 import { Address, ADDRESS_TYPE } from "../../key/address.js";
 
-class KeyUpdaterFact extends Fact {
-	constructor(token, target, keys, currency) {
+export class KeyUpdaterFact extends Fact {
+	constructor(token, target, keys, currency, addressType) {
 		super(HINT_KEY_UPDATER_OPERATION_FACT, token);
 		this.target = new Address(target);
 
@@ -23,65 +23,24 @@ class KeyUpdaterFact extends Fact {
 			keys instanceof Keys,
 			error.instance(EC_INVALID_KEYS, "not Keys instance")
 		);
-		this.keys = keys;
-		this.currency = new CurrencyID(currency);
-	}
-
-	dict() {
-		return {
-			_hint: this.hint.toString(),
-			hash: bs58.encode(this.hash),
-			token: this.token.toString(),
-			target: this.target.toString(),
-			keys: this.keys.dict(),
-			currency: this.currency.toString(),
-		};
-	}
-
-	get opHint() {
-		return HINT_KEY_UPDATER_OPERATION;
-	}
-}
-
-export class M1KeyUpdaterFact extends KeyUpdaterFact {
-	constructor(token, target, keys, currency) {
-		super(token, target, keys, currency);
-		this.hash = this.hashing();
-	}
-
-	bytes() {
-		return Buffer.concat([
-			this.token.bytes(),
-			this.target.bytes(),
-			this.keys.bytes(),
-			this.currency.bytes(),
-		]);
-	}
-}
-
-export class M2KeyUpdaterFact extends KeyUpdaterFact {
-	constructor(token, target, keys, currency, addressType) {
-		super(token, target, keys, currency);
-
-		if (!addressType) {
-			addressType = ADDRESS_TYPE.btc;
-		}
 
 		assert(
-			addressType === ADDRESS_TYPE.ether || addressType === ADDRESS_TYPE.btc,
-			error.format(EC_INVALID_ADDRESS_TYPE, "invalid address type"),
+			[ADDRESS_TYPE.ether, ADDRESS_TYPE.btc].includes(addressType) || !addressType,
+			error.instance(EC_INVALID_ADDRESS_TYPE, "invalid address type"),
 		)
 
-		switch(addressType) {
-			case ADDRESS_TYPE.ether:
-				this.addressType = SUFFIX_ETHER_ACCOUNT_ADDRESS;
-				break
-			case ADDRESS_TYPE.btc:
-			default:
-				this.addressType = SUFFIX_ACCOUNT_ADDRESS;
+		this.keys = keys;
+
+		if (addressType === ADDRESS_TYPE.ether) {
+			this.addressType = SUFFIX_ETHER_ACCOUNT_ADDRESS;
+		} else if (addressType === ADDRESS_TYPE.btc) {
+			this.addressType = SUFFIX_ACCOUNT_ADDRESS;
+		} else{
+			this.addressType = '';
 		}
 
-		this.hash = this.hashing()
+		this.currency = new CurrencyID(currency);
+		this.hash = this.hashing();
 	}
 
 	bytes() {
@@ -95,9 +54,23 @@ export class M2KeyUpdaterFact extends KeyUpdaterFact {
 	}
 
 	dict() {
-		return {
-			...super.dict(),
-			addrtype: this.addressType,
+		const fact = {
+			_hint: this.hint.toString(),
+			hash: bs58.encode(this.hash),
+			token: this.token.toString(),
+			target: this.target.toString(),
+			keys: this.keys.dict(),
+			currency: this.currency.toString(),
 		};
+
+		if (this.addressType) {
+			fact.addrtype = this.addressType;
+		}
+
+		return fact;
+	}
+
+	get opHint() {
+		return HINT_KEY_UPDATER_OPERATION;
 	}
 }

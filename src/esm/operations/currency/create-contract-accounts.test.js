@@ -3,7 +3,7 @@ import bs58 from "bs58";
 import { Amount } from "./amount";
 import {
 	CreateContractAccountsFact,
-	M1CreateContractAccountsItem,
+	CreateContractAccountsItem,
 } from "./create-contract-accounts";
 import { Operation } from "../operation";
 
@@ -16,7 +16,7 @@ describe("test: create-contract-account", () => {
 	it("case: m1; operation", () => {
 		const amounts = [new Amount("MCC", "1000"), new Amount("PEN", "1000")];
 		const keys = new Keys([new PublicKey(TEST_ACCOUNT.public, 100)], 100);
-		const item = new M1CreateContractAccountsItem(keys, amounts);
+		const item = new CreateContractAccountsItem(keys, amounts);
 		const fact = new CreateContractAccountsFact(
 			"2022-11-16T06:59:44.986806Z",
 			TEST_GENESIS.m1.address,
@@ -38,8 +38,8 @@ describe("test: create-contract-account", () => {
 		const keys = new Keys([new PublicKey(TEST_ACCOUNT.public, 100)], 100);
 
 		const items = [
-			new M1CreateContractAccountsItem(keys, amounts),
-			new M1CreateContractAccountsItem(keys, amounts),
+			new CreateContractAccountsItem(keys, amounts),
+			new CreateContractAccountsItem(keys, amounts),
 		];
 
 		expect(

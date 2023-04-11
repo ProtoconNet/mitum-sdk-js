@@ -1,6 +1,6 @@
 import bs58 from "bs58";
 
-import { M1KeyUpdaterFact, M2KeyUpdaterFact } from "./key-updater";
+import { KeyUpdaterFact } from "./key-updater";
 import { Operation } from "../operation";
 
 import { TEST_GENESIS, TEST_ACCOUNT } from "../../mitum.config";
@@ -11,7 +11,7 @@ describe("test: key-updater", () => {
 	it("case: m1; operation", () => {
 		const keys = new Keys([new PublicKey(TEST_ACCOUNT.public, 100)], 100);
 
-		const fact = new M1KeyUpdaterFact(
+		const fact = new KeyUpdaterFact(
 			"2022-11-16T06:16:51.97284Z",
 			TEST_GENESIS.m1.address,
 			keys,
