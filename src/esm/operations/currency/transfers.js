@@ -11,12 +11,14 @@ import {
 	assert,
 	error,
 	EC_INVALID_ITEM,
+	EC_INVALID_AMOUNT,
 } from "../../base/error.js";
 
-import { Address } from "../../key/address.js";
+import { Address, ZeroAddress } from "../../key/address.js";
 
 import { sortBuf } from "../../utils/string.js";
 import { OperationFact } from "../fact.js";
+import { isZeroAddress } from "../../key/validation.js";
 
 export class TransfersItem extends CurrencyItem {
 	constructor(receiver, amounts) {
@@ -26,7 +28,16 @@ export class TransfersItem extends CurrencyItem {
 				: HINT_TRANSFERS_ITEM_SIN_AMOUNT,
 			amounts
 		);
-		this.receiver = new Address(receiver);
+
+		if (isZeroAddress(receiver)) {
+			this.receiver = new ZeroAddress(receiver);
+			amounts.forEach(am =>
+				assert(am.currency.equal(this.receiver.currency),
+					error.runtime(EC_INVALID_AMOUNT, "invalid amount currency for giventzero address"))
+			);
+		} else {
+			this.receiver = new Address(receiver);
+		}
 	}
 
 	bytes() {

@@ -1,4 +1,5 @@
 export const SUFFIX_LENGTH = 3;
+export const SUFFIX_ZERO_ADDRESS_LENGTH = 5;
 
 export const MIN_CURRENCY_ID_LENGTH = 3;
 export const MAX_CURRENCY_ID_LENGTH = 10;
@@ -18,6 +19,17 @@ export const MAX_AMOUNTS_IN_ITEM = 10;
 export const MAX_ITEMS_IN_FACT = 10;
 
 export const MAX_OPERATIONS_IN_SEAL = 10;
+
+export const TEST_CURRENCY = {
+	PEN: {
+		currency: "PEN",
+		zero: "PEN-Xmca",
+	},
+	MCC: {
+		currency: "MCC",
+		zero: "MCC-Xmca",
+	},
+};
 
 export const TEST_NODE = {
 	m1: "KxaTHDAQnmFeWWik5MqWXBYkhvp5EpWbsZzXeHDdTDb5NE1dVw8wmpr",

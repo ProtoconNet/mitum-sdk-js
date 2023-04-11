@@ -1,4 +1,4 @@
-import { SUFFIX_LENGTH } from "../mitum.config.js";
+import { SUFFIX_LENGTH, SUFFIX_ZERO_ADDRESS_LENGTH } from "../mitum.config.js";
 import {
 	SUFFIX_ACCOUNT_ADDRESS,
 	SUFFIX_ETHER_ACCOUNT_ADDRESS,
@@ -7,6 +7,7 @@ import {
 	SUFFIX_KEY_PRIVATE,
 	SUFFIX_KEY_PUBLIC,
 	SUFFIX_NODE_ADDRESS,
+	SUFFIX_ZERO_ADDRESS,
 } from "../alias/key.js";
 
 import { assert, error, EC_INVALID_KEY } from "../base/error.js";
@@ -54,6 +55,10 @@ export const isMitumAddressSuffix = (s) => {
 export const isM2EtherAddressSuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_ETHER_ACCOUNT_ADDRESS;
 };
+
+export const isZeroAddressSuffix = (s) => {
+	return typeof s === "string" && s === SUFFIX_ZERO_ADDRESS;
+}
 
 export const isAddressSuffix = (s) => {
 	return isMitumAddressSuffix(s) || isM2EtherAddressSuffix(s);
@@ -161,6 +166,14 @@ export const isNodeAddress = (s) => {
 	}
 
 	return isNodeAddressSuffix(s.substring(s.length - SUFFIX_LENGTH));
+}
+
+export const isZeroAddress = (s) => {
+	if (typeof s !== "string" || s.length < 8 || s.length > 15) {
+		return false;
+	}
+
+	return isZeroAddressSuffix(s.substring(s.length - SUFFIX_ZERO_ADDRESS_LENGTH));
 }
 
 export const parseKey = (s) => {

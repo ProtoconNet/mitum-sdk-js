@@ -20,6 +20,10 @@ export class ID extends IBytes {
 		this.s = s;
 	}
 
+	equal(id) {
+		return this.toString() === id.toString();
+	}
+
 	bytes() {
 		return Buffer.from(this.s);
 	}

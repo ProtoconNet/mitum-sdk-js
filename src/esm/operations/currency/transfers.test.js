@@ -4,7 +4,7 @@ import { Amount } from "./amount";
 import { TransfersFact, TransfersItem } from "./transfers";
 import { Operation } from "../operation";
 
-import { TEST_ACCOUNT, TEST_ACCOUNT_R, TEST_GENESIS } from "../../mitum.config";
+import { TEST_ACCOUNT, TEST_ACCOUNT_R, TEST_CURRENCY, TEST_GENESIS } from "../../mitum.config";
 import { TimeStamp } from "../../utils/time";
 
 describe("test: transfers", () => {
@@ -41,6 +41,23 @@ describe("test: transfers", () => {
 			"k1vnR6xnWBPoehfZGcbnfXBD8yZRmT4jsGfquRUPzjx"
 		);
 	});
+
+	it("case: transfer to zero address", () => {
+		const amounts = [new Amount(TEST_CURRENCY.MCC.currency, "1000")];
+		const item = new TransfersItem(TEST_CURRENCY.MCC.zero, amounts);
+		const fact = new TransfersFact(
+			"2022-11-19 23:44:30.883651 +0000 UTC",
+			TEST_GENESIS.m2.address,
+			[item]
+		);
+
+		const operation = new Operation(fact, "");
+		operation.sign(TEST_GENESIS.m2.private, null);
+
+		expect(bs58.encode(fact.hash)).toBe(
+			"5F1hhzhi7rtjJmjdbUjDkio8niGiftKJLCxqAmXWvkDv"
+		);
+	})
 
 	it("case: duplicate items", () => {
 		const items = [
