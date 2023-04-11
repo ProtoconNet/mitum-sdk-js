@@ -22,6 +22,7 @@ import {
 	EC_INVALID_OPERATION,
 	EC_INVALID_PRIVATE_KEY,
 	EC_INVALID_NETWORK_ID,
+	EC_INVALID_KEY_TYPE,
 } from "../base/error.js";
 import { ID } from "../base/ID.js";
 import { Hint } from "../base/hint.js";
@@ -34,6 +35,10 @@ import { id, SIG_TYPE } from "../utils/config.js";
 import { exist, findKeyPair } from "../utils/tools.js";
 
 import { Address } from "../key/address.js";
+
+import { CreateAccountsFact } from "./currency/create-accounts.js";
+import { CreateContractAccountsFact } from "../../cjs/operations/currency/create-contract-accounts.js";
+import { KeyUpdaterFact } from "./currency/key-updater.js";
 
 export class Operation extends IBytesDict {
 	constructor(fact, memo) {
@@ -74,35 +79,46 @@ export class Operation extends IBytesDict {
 			);
 			return fs.signer.toString();
 		});
+
 		const fset = new Set(farr);
 		assert(
 			farr.length === fset.size,
 			error.duplicate(EC_INVALID_FACTSIGN, "duplicate fact signs")
 		);
 
-		const fsTypes = factSigns.map(
-			(fs) => Object.getPrototypeOf(fs).constructor.name
-		);
-		const fsSet = new Set(fsTypes);
-		assert(
-			fsSet.size === 1,
-			error.duplicate(
-				EC_INVALID_OPERATION,
-				"multiple sig-type in operation"
-			)
-		);
+		const sigType = this._findSigType(factSigns);
+		if (this.fact instanceof CreateAccountsFact
+			|| this.fact instanceof CreateContractAccountsFact
+			|| this.fact instanceof KeyUpdaterFact
+		) {
+			switch (sigType) {
+				case SIG_TYPE.M1:
+					assert(this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "m1 fact sign for m2 fact"));
+					break
+				case SIG_TYPE.M2:
+				case SIG_TYPE.M2_NODE:
+					assert(!this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "m2 fact sign for m1 fact"));
+					break
+				default:
+					throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type in fact signs");
+			}
+		}
 
 		this.factSigns = factSigns;
 
 		this.hash = this.hashing();
 	}
 
-	_findSigType() {
-		if (this.factSigns.length < 1) {
+	_findSigType(factSigns) {
+		if (!factSigns) {
+			factSigns = this.factSigns;
+		}
+
+		if (!factSigns || factSigns.length < 1) {
 			return null;
 		}
 
-		const fsTypes = this.factSigns.map(
+		const fsTypes = factSigns.map(
 			(fs) => Object.getPrototypeOf(fs).constructor.name
 		);
 		const fsSet = new Set(fsTypes);
@@ -118,7 +134,7 @@ export class Operation extends IBytesDict {
 	}
 
 	hashing() {
-		const sigType = this._findSigType();
+		const sigType = this._findSigType(this.factSigns);
 
 		if (!sigType) {
 			throw error.runtime(EC_INVALID_SIG_TYPE, "empty fact signs");
@@ -133,7 +149,7 @@ export class Operation extends IBytesDict {
 			case SIG_TYPE.M2_NODE:
 				return sum256(this.bytes());
 			default:
-				throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type");
+				throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type in fact signs");
 		}
 	}
 
@@ -149,7 +165,7 @@ export class Operation extends IBytesDict {
 				this.hash = sum256(this.bytes());
 				break;
 			default:
-				throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type");
+				throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type in fact signs");
 		}
 	}
 
@@ -171,29 +187,60 @@ export class Operation extends IBytesDict {
 			);
 		}
 
+		if (!sigType && (
+			this.fact instanceof CreateAccountsFact || this.fact instanceof CreateContractAccountsFact || this.fact instanceof KeyUpdaterFact
+		)) {
+			{
+				switch (kp.type) {
+					case 'm1':
+						assert(this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "trying to sign m2 fact with m1 keypair"));
+						break
+					case 'm2':
+					case 'm2ether':
+						assert(!this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "trying to sign m1 fact with m2 keypair"));
+						break
+					default:
+						throw error.runtime(EC_INVALID_KEY_TYPE, "wrong key-type of signing key");
+				}
+			}
+		}
+
 		let factSign = null;
 
-		switch (sigType) {
-			case SIG_TYPE.M1:
-				assert(kp.type === "m1", error.runtime(EC_INVALID_PRIVATE_KEY, "not m1 keypair"));
-				factSign = getM1FactSign(kp.keypair, this.fact.hash, this.id);
-				break;
-			case SIG_TYPE.M2:
-				assert(["m2", "m2ether"].includes(kp.type), error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 keypair"));
-				factSign = getM2FactSign(kp.keypair, this.fact.hash, this.id);
-				break;
-			case SIG_TYPE.M2_NODE:
-				assert(["m2", "m2ether"].includes(kp.type), error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 keypair"));
-				factSign = getM2NodeFactSign(node, kp.keypair, this.fact.hash, this.id);
-				break;
-			default:
-				if (kp.type === "m1") {
+		if (sigType) {
+			switch (sigType) {
+				case SIG_TYPE.M1:
+					assert(kp.type === "m1", error.runtime(EC_INVALID_PRIVATE_KEY, "not m1 keypair"));
 					factSign = getM1FactSign(kp.keypair, this.fact.hash, this.id);
-				} else if (node && ["m2", "m2ether"].includes(kp.type)) {
-					factSign = getM2NodeFactSign(node, kp.keypair, this.fact.hash, this.id);
-				} else if (["m2", "m2ether"].includes(kp.type)) {
+					break;
+				case SIG_TYPE.M2:
+					assert(["m2", "m2ether"].includes(kp.type), error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 keypair"));
 					factSign = getM2FactSign(kp.keypair, this.fact.hash, this.id);
-				}
+					break;
+				case SIG_TYPE.M2_NODE:
+					assert(["m2", "m2ether"].includes(kp.type), error.runtime(EC_INVALID_PRIVATE_KEY, "not m2 keypair"));
+					factSign = getM2NodeFactSign(node, kp.keypair, this.fact.hash, this.id);
+					break;
+				default:
+					throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type in fact signs");
+			}
+		} else {
+			switch(kp.type) {
+				case "m1":
+					factSign = getM1FactSign(kp.keypair, this.fact.hash, this.id);
+					break;
+				case "m2":
+				case "m2ether":
+					if (node) {
+						factSign = getM2NodeFactSign(node, kp.keypair, this.fact.hash, this.id);
+					} else {
+						factSign = getM2FactSign(kp.keypair, this.fact.hash, this.id);
+					}
+					break;
+				default:
+					throw error.runtime(EC_INVALID_KEY_TYPE, "invalid key-type of signing key");
+				
+			}
 		}
 
 		assert(
@@ -261,7 +308,7 @@ export class Operation extends IBytesDict {
 					: [];
 				break;
 			default:
-				throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type");
+				throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type in fact signs");
 		}
 
 		return op;
@@ -316,7 +363,7 @@ const getM2FactSign = (kp, hash, id) => {
 
 const getM2NodeFactSign = (node, kp, hash, id) => {
 	const now = new TimeStamp();
-	
+
 	try {
 		return new M2NodeFactSign(
 			node.toString(),

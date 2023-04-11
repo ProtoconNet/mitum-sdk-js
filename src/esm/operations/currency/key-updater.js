@@ -41,6 +41,8 @@ export class KeyUpdaterFact extends Fact {
 
 		this.currency = new CurrencyID(currency);
 		this.hash = this.hashing();
+
+		this.isMitum1 = this.addressType === '';
 	}
 
 	bytes() {

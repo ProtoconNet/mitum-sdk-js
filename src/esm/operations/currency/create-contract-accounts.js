@@ -17,6 +17,7 @@ import {
 	EC_INVALID_ITEM,
 	EC_INVALID_KEYS,
 	EC_INVALID_ADDRESS_TYPE,
+	EC_INVALID_ITEMS,
 } from "../../base/error.js";
 
 import { Keys } from "../../key/key.js";
@@ -85,15 +86,27 @@ export class CreateContractAccountsFact extends OperationFact {
 	constructor(token, sender, items) {
 		super(HINT_CREATE_CONTRACT_ACCOUNTS_OPERATION_FACT, token, sender, items);
 
-		items.forEach((item) =>
+		const ats = new Set(items.map((item) => {
 			assert(
 				item instanceof CreateContractAccountsItem,
 				error.instance(
 					EC_INVALID_ITEM,
 					"not CreateContractAccountsItem instance"
 				)
+			);
+
+			return item.addressType !== '';
+		}));
+
+		assert(
+			ats.size === 1,
+			error.runtime(
+				EC_INVALID_ITEMS,
+				"not unified mitum versions of items"
 			)
 		);
+
+		this.isMitum1 = items[0].addressType === '';
 	}
 
 	get opHint() {

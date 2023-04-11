@@ -17,6 +17,7 @@ import {
 	EC_INVALID_ITEM,
 	EC_INVALID_KEYS,
 	EC_INVALID_ADDRESS_TYPE,
+	EC_INVALID_ITEMS,
 } from "../../base/error.js";
 
 import { Keys } from "../../key/key.js";
@@ -49,7 +50,7 @@ export class CreateAccountsItem extends CurrencyItem {
 			this.addressType = SUFFIX_ETHER_ACCOUNT_ADDRESS;
 		} else if (addressType === ADDRESS_TYPE.btc) {
 			this.addressType = SUFFIX_ACCOUNT_ADDRESS;
-		} else{
+		} else {
 			this.addressType = '';
 		}
 	}
@@ -86,15 +87,27 @@ export class CreateAccountsFact extends OperationFact {
 		super(HINT_CREATE_ACCOUNTS_OPERATION_FACT, token, sender, items);
 		this.sender = new Address(sender);
 
-		items.forEach((item) =>
+		const ats = new Set(items.map((item) => {
 			assert(
 				item instanceof CreateAccountsItem,
 				error.instance(
 					EC_INVALID_ITEM,
 					"not CreateAccountsItem instance"
 				)
+			);
+
+			return item.addressType !== '';
+		}));
+
+		assert(
+			ats.size === 1,
+			error.runtime(
+				EC_INVALID_ITEMS,
+				"not unified mitum versions of items"
 			)
 		);
+
+		this.isMitum1 = items[0].addressType === '';
 	}
 
 	get opHint() {
