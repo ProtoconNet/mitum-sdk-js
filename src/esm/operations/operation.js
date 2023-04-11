@@ -38,7 +38,6 @@ import { Address } from "../key/address.js";
 
 import { CreateAccountsFact } from "./currency/create-accounts.js";
 import { CreateContractAccountsFact } from "../../cjs/operations/currency/create-contract-accounts.js";
-import { KeyUpdaterFact } from "./currency/key-updater.js";
 
 export class Operation extends IBytesDict {
 	constructor(fact, memo) {
@@ -87,10 +86,7 @@ export class Operation extends IBytesDict {
 		);
 
 		const sigType = this._findSigType(factSigns);
-		if (this.fact instanceof CreateAccountsFact
-			|| this.fact instanceof CreateContractAccountsFact
-			|| this.fact instanceof KeyUpdaterFact
-		) {
+		if (this.fact instanceof CreateAccountsFact || this.fact instanceof CreateContractAccountsFact) {
 			switch (sigType) {
 				case SIG_TYPE.M1:
 					assert(this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "m1 fact sign for m2 fact"));
@@ -187,21 +183,17 @@ export class Operation extends IBytesDict {
 			);
 		}
 
-		if (!sigType && (
-			this.fact instanceof CreateAccountsFact || this.fact instanceof CreateContractAccountsFact || this.fact instanceof KeyUpdaterFact
-		)) {
-			{
-				switch (kp.type) {
-					case 'm1':
-						assert(this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "trying to sign m2 fact with m1 keypair"));
-						break
-					case 'm2':
-					case 'm2ether':
-						assert(!this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "trying to sign m1 fact with m2 keypair"));
-						break
-					default:
-						throw error.runtime(EC_INVALID_KEY_TYPE, "wrong key-type of signing key");
-				}
+		if (!sigType && (this.fact instanceof CreateAccountsFact || this.fact instanceof CreateContractAccountsFact)) {
+			switch (kp.type) {
+				case 'm1':
+					assert(this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "trying to sign m2 fact with m1 keypair"));
+					break
+				case 'm2':
+				case 'm2ether':
+					assert(!this.fact.isMitum1, error.runtime(EC_INVALID_FACTSIGN, "trying to sign m1 fact with m2 keypair"));
+					break
+				default:
+					throw error.runtime(EC_INVALID_KEY_TYPE, "wrong key-type of signing key");
 			}
 		}
 
@@ -225,7 +217,7 @@ export class Operation extends IBytesDict {
 					throw error.runtime(EC_INVALID_SIG_TYPE, "invalid sig-type in fact signs");
 			}
 		} else {
-			switch(kp.type) {
+			switch (kp.type) {
 				case "m1":
 					factSign = getM1FactSign(kp.keypair, this.fact.hash, this.id);
 					break;
@@ -239,7 +231,7 @@ export class Operation extends IBytesDict {
 					break;
 				default:
 					throw error.runtime(EC_INVALID_KEY_TYPE, "invalid key-type of signing key");
-				
+
 			}
 		}
 

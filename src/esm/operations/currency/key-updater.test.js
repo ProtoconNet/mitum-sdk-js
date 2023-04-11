@@ -26,21 +26,21 @@ describe("test: key-updater", () => {
 		expect(keys.address.toString()).toBe(TEST_ACCOUNT.address);
 	});
 
-	// it("case: m2; operation", () => {
-	// 	const keys = new Keys([new PublicKey(TEST_ACCOUNT.public, 100)], 100);
+	it("case: m2; operation", () => {
+		const keys = new Keys([new PublicKey(TEST_ACCOUNT.public, 100)], 100);
 
-	// 	const fact = new M2KeyUpdaterFact(
-	// 		"2022-12-13 02:40:48.520067 +0000 UTC",
-	// 		TEST_GENESIS.m2.address,
-	// 		keys,
-	// 		"MCC"
-	// 	);
-	// 	const operation = new Operation(fact, "");
-	// 	operation.sign(TEST_GENESIS.m2.private, null);
+		const fact = new KeyUpdaterFact(
+			"2022-12-13 02:40:48.520067 +0000 UTC",
+			TEST_GENESIS.m2.address,
+			keys,
+			"MCC"
+		);
+		const operation = new Operation(fact, "");
+		operation.sign(TEST_GENESIS.m2.private, null);
 
-	// 	expect(bs58.encode(fact.hash)).toBe(
-	// 		"6U99URNut8rLxBU5d9taQwP6Dd9LaDUpxq83zffdNAWX"
-	// 	);
-	// 	expect(keys.address.toString()).toBe(TEST_ACCOUNT.address);
-	// });
+		expect(bs58.encode(fact.hash)).toBe(
+			"6U99URNut8rLxBU5d9taQwP6Dd9LaDUpxq83zffdNAWX"
+		);
+		expect(keys.address.toString()).toBe(TEST_ACCOUNT.address);
+	});
 });
