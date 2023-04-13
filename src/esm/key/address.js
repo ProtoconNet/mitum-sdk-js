@@ -56,8 +56,7 @@ export class ZeroAddress extends BaseAddress {
 
 		assert(isZeroAddress(s), error.format(EC_INVALID_ADDRESS, "not zero address"));
 		
-		this.currency = new CurrencyID(this.s.substring(0, this.s.length - SUFFIX_ZERO_ADDRESS_LENGTH));
-		console.log(this.currency);
+		this.currency = new CurrencyID(this.s.substring(0, this.s.length - SUFFIX_ZERO_ADDRESS_LENGTH));s
 	}
 }
 
