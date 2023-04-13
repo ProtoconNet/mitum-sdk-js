@@ -11,10 +11,10 @@ This project has been developed in the following environments:
 
 ```sh
 $ node --version
-v18.9.0
+v19.8.1
 
 $ npm --version
-8.5.0
+9.5.1
 ```
 
 You can install this package locally using this command:
@@ -38,33 +38,53 @@ You can test __mitum-sdk__ using this command:
 ```sh
 $ npm test
 
-> mitum-sdk@0.0.1 test
+> mitum-sdk@0.0.4 test
 > jest
 
- PASS  operations/signer.test.js
- PASS  key/m1-keypair.test.js
- PASS  operations/seal.test.js
- PASS  key/m2-keypair.test.js
- PASS  operations/currency/currency-register.test.js
- PASS  operations/currency/key-updater.test.js
- PASS  operations/currency/create-contract-accounts.test.js
- PASS  operations/factsign.test.js
- PASS  operations/currency/create-accounts.test.js
- PASS  utils/config.test.js
- PASS  operations/currency/currency-policy-updater.test.js
- PASS  operations/currency/transfers.test.js
- PASS  operations/currency/suffrage-inflation.test.js
- PASS  operations/currency/withdraws.test.js
- PASS  operations/operation.test.js
- PASS  key/key.test.js
- PASS  utils/time.test.js
- PASS  operations/currency/item.test.js
- PASS  key/address.test.js (10.588 s)
+ PASS  src/cjs/key/m1-keypair.test.js
+ PASS  src/cjs/key/m2-keypair.test.js
+ PASS  src/esm/key/key.test.js
+ PASS  src/cjs/key/key.test.js
+ PASS  src/esm/key/m2-keypair.test.js
+ PASS  src/esm/key/m2-ether-keypair.test.js
+ PASS  src/esm/key/m1-keypair.test.js
+ PASS  src/cjs/operations/currency/currency-register.test.js
+ PASS  src/esm/operations/currency/create-accounts.test.js
+ PASS  src/esm/key/address.test.js
+ PASS  src/esm/operations/signer.test.js
+ PASS  src/esm/operations/currency/currency-register.test.js
+ PASS  src/cjs/utils/config.test.js
+ PASS  src/esm/operations/currency/transfers.test.js
+ PASS  src/esm/operations/currency/key-updater.test.js
+ PASS  src/cjs/operations/signer.test.js
+ PASS  src/esm/operations/currency/create-contract-accounts.test.js
+ PASS  src/esm/operations/seal.test.js
+ PASS  src/esm/operations/currency/currency-policy-updater.test.js
+ PASS  src/esm/utils/config.test.js
+ PASS  src/esm/operations/currency/withdraws.test.js
+ PASS  src/cjs/operations/currency/withdraws.test.js
+ PASS  src/cjs/operations/currency/create-contract-accounts.test.js
+ PASS  src/esm/operations/currency/suffrage-inflation.test.js
+ PASS  src/cjs/operations/currency/transfers.test.js
+ PASS  src/cjs/operations/seal.test.js
+ PASS  src/cjs/operations/currency/create-accounts.test.js
+ PASS  src/esm/operations/factsign.test.js
+ PASS  src/cjs/operations/currency/currency-policy-updater.test.js
+ PASS  src/cjs/operations/currency/suffrage-inflation.test.js
+ PASS  src/cjs/operations/factsign.test.js
+ PASS  src/cjs/operations/currency/key-updater.test.js
+ PASS  src/esm/operations/operation.test.js
+ PASS  src/cjs/key/address.test.js
+ PASS  src/cjs/operations/operation.test.js
+ PASS  src/cjs/operations/currency/item.test.js
+ PASS  src/esm/operations/currency/item.test.js
+ PASS  src/cjs/utils/time.test.js
+ PASS  src/esm/utils/time.test.js
 
-Test Suites: 19 passed, 19 total
-Tests:       61 passed, 61 total
+Test Suites: 39 passed, 39 total
+Tests:       128 passed, 128 total
 Snapshots:   0 total
-Time:        10.941 s
+Time:        5.156 s
 Ran all test suites.
 ```
 
@@ -97,8 +117,8 @@ To set the mitum version of all hints and the network id, refer to [Set version 
 
 __mitum-sdk__ supports two signature methods:
 
-- mitum1: m1
-- mitum2: m2
+- mitum1: m1 (btc)
+- mitum2: m2 (btc, ether)
 
 You can generate key pairs in the following ways:
 
@@ -106,29 +126,39 @@ You can generate key pairs in the following ways:
 * Generate a KeyPair from a private key
 * Generate a KeyPair from a seed
 
-* private key: [key]mpr
-* public key: [key]mpu 
+* btc private key: [key]mpr
+* btc public key: [key]mpu 
+
+* ether private key: [key]epr
+* ether public key: [key]epu
 
 The following functions are prepared for key pair generation.
 
 ```js
 const { KPGen } from "mitum-sdk";
 
-// m1 key pair
+// m1 btc key pair
 var ekp1 = KPGen.random();
 var ekp2 = KPGen.randomN(/* the number of keypairs */);
 var ekp3 = KPGen.fromPrivateKey(/* string private key */);
 var ekp4 = KPGen.fromSeed(/* string seed */);
 
-// m2 key pair
-const m2 = KPGen.m2;
+// m2 btc key pair
+const { m2 } = KPGen;
 var skp1 = m2.random();
 var skp2 = m2.randomN(/* the number of keypairs */);
 var skp3 = m2.fromPrivateKey(/* string private key */);
 var skp4 = m2.fromSeed(/* string seed */);
+
+// m2 ether key pair
+const { m2ether } = KPGen;
+var ukp1 = m2ether.random();
+var ukp2 = m2ether.randomN(/* the number of keypairs */);
+var ukp3 = m2ether.fromPrivateKey(/* string private key */);
+var ukp4 = m2ether.fromSeed(/* string seed */);
 ```
 
-_If you need a key pair for m2 signatures, use `KPGen.m2.(function)` instead of `KPGen.(function)`._
+_If you need a key pair for m2 and m2-ether signatures, use `KPGen.m2.(function)` and `KPGen.m2ether.(function)` instead of `KPGen.(function)`._
 
 ### Random KeyPair
 
@@ -206,7 +236,9 @@ In the case of a __multi-sig__ account, the sum of the weights of all public key
 Each weight and threshold range is __0 < weight, threshold <= 100__.
 An account can have up to __10 public keys__.
 
-* mitum general address: [address]mca 
+* __btc__ address: [address]mca 
+* __ether__ address: [address]eca 
+* zero address: [address]-Xmca
 
 To obtain an address from public keys, you must use the following classes:
 
@@ -215,7 +247,8 @@ const { PubKey, Keys } from "mitum-sdk";
 
 var pub = new PubKey(/* public key; string */, /* weight; number */);
 var keys = new Keys(/* pub keys; PubKey Array */, /* threshold; number */);
-var address = keys.address.toString();
+var address = keys.address.toString(); // btc
+var etherAddress = keys.etherAddress.toString(); // ether
 ```
 
 Let's do the following as an example.
@@ -256,8 +289,11 @@ const threshold = 60;
 const mpubs = pubs.map(pub => new PubKey(pub.key, pub.weight));
 const mkeys = new Keys(mpubs, threshold); // Keys[Keys] instance
 
-const address = mkeys.address // Address instance;
-const stringAddress = address.toString(); // string address
+const address = mkeys.address // (btc) Address instance
+const stringAddress = address.toString(); // btc type string address
+
+const etherAddress = mkeys.etherAddress // (ether) Address instance
+const etherStringAddress = etherAddress.toString(); // ether type string address
 ```
 
 ## Generate Currency Operations
@@ -271,6 +307,11 @@ For general accounts:
 * create-account
 * key-updater
 * transfer
+
+For contract accounts:
+
+* create-contract-account
+* withdraw
   
 For node:
 
@@ -338,6 +379,23 @@ const key2 = new PubKey(pub2, /* weight; number */);
 const keys = new Keys([key1, key2, ...], /* threshold; number */)
 
 const item = new Currency.CreateAccountsItem(keys, /* amounts; Amount Array */);
+```
+
+The example above is for mitum1.
+
+When creating an item for sending to __mitum2__, you must specify the `address-type` as follows.
+
+If you are creating an item for __mitum1__, put emtpy string in the `address-type` or leave it blank at all.
+
+```js
+const { ..., Currency, ADDRESS_TYPE } from "mitum-sdk";
+
+const m1Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount]); // m1 btc type account
+// const m1Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], '');
+// const m1Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], null);
+
+const m2Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], ADDRESS_TYPE.btc); // m2 btc type account
+const m2etherItem = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], ADDRESS_TYPE.ether); // m2 ether type account
 ```
 
 ### key-updater
@@ -563,6 +621,21 @@ const fact = new Currency.CreateContractAccountsFact(token, senderAddress, [item
 const memo = ""; // any string
 const operation = new Operation(fact, memo);
 operation.sign(senderPrivate, null);
+```
+
+Like __create-account__, the item creation method of __create-contact-account__ for mitum1 and mitum2 is distinguished.
+
+The method of creating an item is exactly the same as __create-account__.
+
+```js
+const { ..., Currency, ADDRESS_TYPE } from "mitum-sdk";
+
+const m1Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount]); // contract account with m1 btc type address
+// const m1Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], '');
+// const m1Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], null);
+
+const m2Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], ADDRESS_TYPE.btc); // contract account with m2 btc type address
+const m2etherItem = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], ADDRESS_TYPE.ether); // contract account with m2 ether type address
 ```
 
 ### withdraw
