@@ -321,6 +321,8 @@ For node:
 
 See [Appendix](#appendix) for other instructions on how to use `Operation`.
 
+If you are wondering how to enter the `memo` field when creating an operation, please refer to part, [Is memo essential for operation generation?](#is-memo-essential-for-operation-generation).
+
 ### create-account
 
 __create-account__ is an operation to create a new general account.
@@ -350,8 +352,7 @@ const senderPrivate = "KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr";
 const item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount]);
 const fact = new Currency.CreateAccountsFact(token, senderAddress, [item]);
 
-const memo = ""; // any string
-const operation = new Operation(fact, memo);
+const operation = new Operation(fact);
 operation.sign(senderPrivate, null);
 
 // see appendix
@@ -423,8 +424,7 @@ const targetPrivate = "KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr";
 
 const fact = new Currency.KeyUpdaterFact(token, targetAddress, new Keys(keys, 100), "MCC");
 
-const memo = ""; // any string
-const operation = new Operation(fact, memo);
+const operation = new Operation(fact);
 operation.sign(targetPrivate, null);
 ```
 
@@ -453,8 +453,7 @@ const senderPrivate = "KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr";
 const item = new Currency.TransfersItem(receiver, [mccAmount, penAmount]);
 const fact = new Currency.TransfersFact(token, senderAddress, [item]);
 
-const memo = ""; // any string
-const operation = new Operation(fact, memo);
+const operation = new Operation(fact);
 operation.sign(senderPrivate, null);
 ```
 
@@ -514,8 +513,7 @@ const design = new Currency.CurrencyDesign(amount, genesis, policy);
 const token = new TimeStamp().UTC(); // any unique string
 const fact = new Currency.CurrencyRegisterFact(token, design);
 
-const memo = ""; // any string
-const operation = new Operation(fact, memo);
+const operation = new Operation(fact);
 operation.sign("KxaTHDAQnmFeWWik5MqWXBYkhvp5EpWbsZzXeHDdTDb5NE1dVw8wmpr", { node: "node0sas" }); // node private, node address
 ```
 
@@ -540,8 +538,7 @@ const policy = new Currency.CurrencyPolicy(minBalance, feeer); // feeer: NilFeee
 const token = new TimeStamp().UTC(); // any unique string
 const fact = new Currency.CurrencyPolicyUpdaterFact(token, currency, policy);
 
-const memo = ""; // any string
-const operation = new Operation(fact, memo);
+const operation = new Operation(fact);
 operation.sign("KxaTHDAQnmFeWWik5MqWXBYkhvp5EpWbsZzXeHDdTDb5NE1dVw8wmpr", { node: "node0sas" }); // node private, node address
 ```
 
@@ -582,8 +579,7 @@ const itst = new Currency.SuffrageInflationItem(receiver5, tst);
 const token = new TimeStamp().UTC(); // any unique string
 const fact = new Currency.SuffrageInflationFact(token, [imcc, ipen, itxt, ibts, itst]);
 
-const memo = ""; // any string
-const operation = new Operation(fact, memo);
+const operation = new Operation(fact);
 operation.sign("KxaTHDAQnmFeWWik5MqWXBYkhvp5EpWbsZzXeHDdTDb5NE1dVw8wmpr", { node: "node0sas" }); // node private, node address
 ```
 
@@ -618,8 +614,7 @@ const senderPrivate = "KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr";
 const item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount]);
 const fact = new Currency.CreateContractAccountsFact(token, senderAddress, [item]);
 
-const memo = ""; // any string
-const operation = new Operation(fact, memo);
+const operation = new Operation(fact);
 operation.sign(senderPrivate, null);
 ```
 
@@ -663,8 +658,7 @@ const senderPrivate = "KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr";
 const item = new Currency.WithdrawsItem(contractAccount, [mccAmount, penAmount]);
 const fact = new Currency.WithdrawsFact(token, senderAddress, [item]);
 
-const memo = "";
-const operation = new Operation(fact, memo);
+const operation = new Operation(fact);
 operation.sign(senderPrivate, null);
 ```
 
@@ -701,6 +695,27 @@ const m2node = signer.M2NodeSign(json, "node address"); // m2 node operation
 ```
 
 ## Appendix
+
+### Is memo essential for operation generation?
+
+For the operation of __mitum1__, the `memo` field is required and is always included in the seed bytes when the operation hash is created.
+
+If there's no `memo` field or the value is `null`, it is considered an empty string.
+
+On the other hand, for operation of __mitum2__, the `memo` field is considered an extra field and a field name other than `memo` is also available.
+
+However, in this case, when you create an operation hash, all extra fields are not included in the seed bytes at all.
+
+In other words, `memo` in __mitum1__ affects the operating hash value, but not at all in __mitum2__.
+
+When you create an operation with __mitum-sdk__, if the `memo` value is empty or if you don't need it at all, you can omit the parameter, and you only need to insert the value if necessary.
+
+For example:
+
+```js
+const operation = new Operation(fact); // memo = null || memo = ''
+const operation = new Operation(fact, memo); // memo -> not empty
+```
 
 ### Set version of hints
 

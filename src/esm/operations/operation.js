@@ -51,6 +51,10 @@ export class Operation extends IBytesDict {
 		this.hint = new Hint(fact.opHint);
 		this.fact = fact;
 
+		if (!memo) {
+			memo = '';
+		}
+
 		assert(
 			typeof memo === "string",
 			error.type(EC_INVALID_MEMO, "not string")
