@@ -48,7 +48,8 @@ class WithdrawsItem extends CurrencyItem {
 		return this.target.toString();
 	}
 }
-exports.WithdrawsItem = WithdrawsItem
+exports.WithdrawsItem = WithdrawsItem;
+
 class WithdrawsFact extends OperationFact {
 	constructor(token, sender, items) {
 		super(HINT_WITHDRAWS_OPERATION_FACT, token, sender, items);
@@ -65,4 +66,4 @@ class WithdrawsFact extends OperationFact {
 		return HINT_WITHDRAWS_OPERATION;
 	}
 }
-exports.WithdrawsFact = WithdrawsFact
+exports.WithdrawsFact = WithdrawsFact;

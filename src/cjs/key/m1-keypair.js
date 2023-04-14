@@ -2,7 +2,7 @@ const bs58 = require("bs58");
 const bs58check = require("bs58check");
 const secureRandom = require("secure-random");
 
-const Key = require("./key.js");
+const keyJ = require("./key.js");
 const { K, KeyPair } = require("./keypair.js");
 
 const { MIN_SEED_LENGTH } = require("../mitum.config.js");
@@ -46,7 +46,7 @@ const fromPrivateKey = (privateKey) => {
 		isM1PrivateKey(privateKey),
 		error.format(EC_INVALID_PRIVATE_KEY, "invalid length or key suffix")
 	);
-	return new M1KeyPair(new Key.Key(privateKey));
+	return new M1KeyPair(new keyJ.Key(privateKey));
 };
 
 const fromSeed = (seed) => {
@@ -56,7 +56,7 @@ const fromSeed = (seed) => {
 		error.range(EC_INVALID_SEED, "seed length out of range")
 	);
 
-	return new M1KeyPair(new Key.Key(encK(K(seed)) + SUFFIX_KEY_PRIVATE));
+	return new M1KeyPair(new keyJ.Key(encK(K(seed)) + SUFFIX_KEY_PRIVATE));
 };
 
 const encK = (k) => {
@@ -71,4 +71,4 @@ module.exports = {
 	random,
 	fromPrivateKey,
 	fromSeed,
-}
+};

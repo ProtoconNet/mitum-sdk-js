@@ -13,7 +13,7 @@ const { CurrencyID } = require("../../base/ID.js");
 const { Keys } = require("../../key/key.js");
 const { Address } = require("../../key/address.js");
 
-class KeyUpdaterFact extends Fact {
+exports.KeyUpdaterFact = class KeyUpdaterFact extends Fact {
 	constructor(token, target, keys, currency) {
 		super(HINT_KEY_UPDATER_OPERATION_FACT, token);
 		this.target = new Address(target);
@@ -51,5 +51,4 @@ class KeyUpdaterFact extends Fact {
 	get opHint() {
 		return HINT_KEY_UPDATER_OPERATION;
 	}
-}
-exports.KeyUpdaterFact = KeyUpdaterFact
+};

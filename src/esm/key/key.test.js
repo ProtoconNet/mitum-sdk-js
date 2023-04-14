@@ -549,7 +549,7 @@ describe("test: address generation", () => {
 				address1: "3d4789d2ba81ed81ecce2500f73e502f63669816eca",
 				address2: "ifsiqQHJBaP3epyNMCpn3mY5aiWFBU3hZxgKswy7Mqamca",
 			}
-		]
+		];
 
 		tcs.forEach((tc) => {
 			const ks = tc.keys.map((k) => new PublicKey(k.key, k.weight));

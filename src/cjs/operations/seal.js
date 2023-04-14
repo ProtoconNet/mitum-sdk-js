@@ -2,10 +2,11 @@ const fs = require("fs");
 const axios = require("axios");
 const bs58 = require("bs58");
 
+const { HINT_BASE_SEAL } = require("../alias/sign.js");
+
 const { ID } = require("../base/ID.js");
 const { Hint } = require("../base/hint.js");
 const { IBytesDict } = require("../base/interface.js");
-const { HINT_BASE_SEAL } = require("../alias/sign.js");
 const {
 	assert,
 	error,
@@ -28,7 +29,7 @@ const { id, SIG_TYPE } = require("../utils/config.js");
 const { Operation } = require("./operation.js");
 const { MAX_OPERATIONS_IN_SEAL } = require("../mitum.config.js");
 
-class Seal extends IBytesDict {
+exports.Seal = class Seal extends IBytesDict {
 	constructor(operations) {
 		super();
 		this.hint = new Hint(HINT_BASE_SEAL);
@@ -169,5 +170,4 @@ class Seal extends IBytesDict {
 		}
 		return axios.post(url, this.dict());
 	}
-}
-exports.Seal = Seal
+};

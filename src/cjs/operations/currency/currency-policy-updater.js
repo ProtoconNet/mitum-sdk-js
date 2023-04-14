@@ -12,7 +12,7 @@ const {
 const { assert, error, EC_INVALID_CURRENCY_POLICY } = require("../../base/error.js");
 const { CurrencyID } = require("../../base/ID.js");
 
-class CurrencyPolicyUpdaterFact extends NodeFact {
+exports.CurrencyPolicyUpdaterFact = class CurrencyPolicyUpdaterFact extends NodeFact {
 	constructor(token, currency, policy) {
 		super(HINT_CURRENCY_POLICY_UPDATER_OPERATION_FACT, token);
 		this.currency = new CurrencyID(currency);
@@ -46,5 +46,4 @@ class CurrencyPolicyUpdaterFact extends NodeFact {
 	get opHint() {
 		return HINT_CURRENCY_POLICY_UPDATER_OPERATION;
 	}
-}
-exports.CurrencyPolicyUpdaterFact = CurrencyPolicyUpdaterFact
+};

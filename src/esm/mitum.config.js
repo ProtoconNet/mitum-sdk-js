@@ -65,4 +65,4 @@ export const TEST_ACCOUNT_R = {
 export const TEST_ACCOUNT_ETHER = {
 	public: "0477c8ea663217870e3a93a01ceb47ce0fcaef5e3f0459f161a7fc70be8b417846d7a01b24c0211e86f5d748ec346e9455f41037420f0038f5cf26eb6ec69bfc63epu",
 	address: "fc44aa45090109854ffdcac424408271a57d631ceca"
-}
+};

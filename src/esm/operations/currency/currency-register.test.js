@@ -93,9 +93,9 @@ describe("test: currency-register", () => {
 		expect(r2).toBe("DLsvsfkRGpHXrMXSyxYMGGmT48Jhhuro4bVNSojHJ7DB");
 	});
 
-	it("case: m2; nil feeer", () => {});
+	// it("case: m2; nil feeer", () => {});
 
-	it("case: m2; fixed feeer", () => {});
+	// it("case: m2; fixed feeer", () => {});
 
-	it("case: m2; ratio feeer", () => {});
+	// it("case: m2; ratio feeer", () => {});
 });

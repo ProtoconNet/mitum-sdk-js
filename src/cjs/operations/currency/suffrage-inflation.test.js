@@ -36,7 +36,7 @@ describe("test: suffrage-inflation", () => {
 		);
 	});
 
-	it("case: m2; operation", () => {});
+	// it("case: m2; operation", () => {});
 
 	it("case: duplicate items", () => {
 		const items = [

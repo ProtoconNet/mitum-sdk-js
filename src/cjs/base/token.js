@@ -1,7 +1,7 @@
 const { IBytes } = require("./interface.js");
 const { assert, error, EC_INVALID_TOKEN } = require("./error.js");
 
-class Token extends IBytes {
+exports.Token = class Token extends IBytes {
 	constructor(s) {
 		super();
 		assert(
@@ -18,5 +18,4 @@ class Token extends IBytes {
 	toString() {
 		return Buffer.from(this.s, "utf8").toString("base64");
 	}
-}
-exports.Token = Token
+};

@@ -7,7 +7,7 @@ const { assert, error, EC_INVALID_AMOUNT } = require("../../base/error.js");
 
 const { Big } = require("../../utils/number.js");
 
-class Amount extends IBytesDict {
+exports.Amount = class Amount extends IBytesDict {
 	constructor(currency, big) {
 		super();
 		this.hint = new Hint(HINT_AMOUNT);
@@ -27,5 +27,4 @@ class Amount extends IBytesDict {
 			amount: this.big.toString(),
 		};
 	}
-}
-exports.Amount = Amount
+};

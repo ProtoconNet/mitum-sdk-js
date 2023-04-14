@@ -1,7 +1,8 @@
 const m1 = require("./m1-keypair.js");
 const m2 = require("./m2-keypair.js");
+
+const keyJ = require("./key.js");
 const { isAddress, isNodeAddress } = require("./validation.js");
-const Key = require("./key.js");
 
 const { MAX_KEYS_IN_ADDRESS, MAX_THRESHOLD } = require("../mitum.config.js");
 
@@ -30,7 +31,7 @@ exports.Address = class Address extends IBytes {
 	toString() {
 		return this.s;
 	}
-}
+};
 
 const randomN = (n, f) => {
 	if (typeof n !== "number") {
@@ -50,11 +51,11 @@ const randomN = (n, f) => {
 	const kps = [];
 	for (let i = 0; i < n; i++) {
 		kps.push(f());
-		ks.push(new Key.PublicKey(kps[i].publicKey.toString(), weight));
+		ks.push(new keyJ.PublicKey(kps[i].publicKey.toString(), weight));
 	}
 
 	return {
-		keys: new Key.Keys(ks, MAX_THRESHOLD),
+		keys: new keyJ.Keys(ks, MAX_THRESHOLD),
 		keypairs: kps,
 	};
 };

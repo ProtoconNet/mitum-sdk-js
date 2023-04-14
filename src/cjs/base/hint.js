@@ -1,7 +1,7 @@
 const { assert, error, EC_INVALID_HINT } = require("./error.js");
 const { v } = require("../utils/config.js");
 
-class Hint {
+exports.Hint = class Hint {
 	constructor(hint) {
 		assert(
 			typeof hint === "string",
@@ -13,6 +13,4 @@ class Hint {
 	toString() {
 		return this.s + "-" + v();
 	}
-}
-
-exports.Hint = Hint
+};

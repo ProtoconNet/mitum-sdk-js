@@ -1,6 +1,6 @@
 const bs58 = require("bs58");
 
-const Address = require("./address.js");
+const addrJ = require("./address.js");
 const { parseKey } = require("./validation.js");
 
 const {
@@ -41,7 +41,7 @@ exports.Key = class Key extends IBytes {
 	bytes() {
 		return Buffer.from(this.toString());
 	}
-}
+};
 
 exports.PublicKey = class PublicKey extends exports.Key {
 	constructor(s, weight) {
@@ -69,7 +69,7 @@ exports.PublicKey = class PublicKey extends exports.Key {
 			key: this.toString(),
 		};
 	}
-}
+};
 
 exports.Keys = class Keys extends IBytesDict {
 	constructor(keys, threshold) {
@@ -115,7 +115,7 @@ exports.Keys = class Keys extends IBytesDict {
 	}
 
 	get address() {
-		return new Address.Address(bs58.encode(this.hash) + SUFFIX_ACCOUNT_ADDRESS);
+		return new addrJ.Address(bs58.encode(this.hash) + SUFFIX_ACCOUNT_ADDRESS);
 	}
 
 	bytes() {
@@ -135,4 +135,4 @@ exports.Keys = class Keys extends IBytesDict {
 			threshold: this.threshold.v,
 		};
 	}
-}
+};

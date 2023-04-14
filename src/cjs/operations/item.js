@@ -1,7 +1,7 @@
 const { Hint } = require("../base/hint.js");
 const { IBytesDict } = require("../base/interface.js");
 
-class Item extends IBytesDict {
+exports.Item = class Item extends IBytesDict {
 	constructor(hint) {
 		super();
 		this.hint = new Hint(hint);
@@ -13,5 +13,4 @@ class Item extends IBytesDict {
 			"unimplemented method toString()"
 		);
     }
-}
-exports.Item = Item
+};

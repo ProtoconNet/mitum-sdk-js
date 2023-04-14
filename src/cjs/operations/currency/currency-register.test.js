@@ -9,6 +9,7 @@ const {
 	RatioFeeer,
 } = require("./currency-design");
 const { CurrencyRegisterFact } = require("./currency-register");
+
 const { Operation } = require("../operation");
 
 const { TEST_GENESIS, TEST_NODE } = require("../../mitum.config");
@@ -93,9 +94,9 @@ describe("test: currency-register", () => {
 		expect(r2).toBe("DLsvsfkRGpHXrMXSyxYMGGmT48Jhhuro4bVNSojHJ7DB");
 	});
 
-	it("case: m2; nil feeer", () => {});
+	// it("case: m2; nil feeer", () => {});
 
-	it("case: m2; fixed feeer", () => {});
+	// it("case: m2; fixed feeer", () => {});
 
-	it("case: m2; ratio feeer", () => {});
+	// it("case: m2; ratio feeer", () => {});
 });

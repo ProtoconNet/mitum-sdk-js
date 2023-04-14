@@ -2,6 +2,7 @@ const bs58 = require("bs58");
 
 const { Amount } = require("./amount");
 const { WithdrawsFact, WithdrawsItem } = require("./withdraws");
+
 const { Operation } = require("../operation");
 
 const { TEST_ACCOUNT, TEST_GENESIS } = require("../../mitum.config");
@@ -25,7 +26,7 @@ describe("test: withdraw", () => {
 		);
 	});
 
-	it("case: m2; operation", () => {});
+	// it("case: m2; operation", () => {});
 
 	it("case: duplicate items", () => {
 		const item = [

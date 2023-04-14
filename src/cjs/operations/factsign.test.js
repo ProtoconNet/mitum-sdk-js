@@ -4,7 +4,7 @@ const m2 = require("../key/m2-keypair");
 const { TimeStamp } = require("../utils/time");
 
 describe("test: factsign", () => {
-	it("case: m1", () => {});
+	// it("case: m1", () => {});
 
 	it("case: m2", () => {
 		const tcs = [

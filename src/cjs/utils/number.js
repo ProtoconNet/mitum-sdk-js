@@ -78,7 +78,7 @@ exports.Big = class Big extends IBytes {
 	toString() {
 		return this.big.toString();
 	}
-}
+};
 
 exports.Float = class Float extends IBytes {
 	constructor(n) {
@@ -99,4 +99,4 @@ exports.Float = class Float extends IBytes {
 	toString() {
 		return `${this.n}`;
 	}
-}
+};

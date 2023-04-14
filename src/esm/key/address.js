@@ -14,7 +14,7 @@ import { assert, error, EC_INVALID_ADDRESS } from "../base/error.js";
 export const ADDRESS_TYPE = {
 	btc: "address/btc",
 	ether: "address/ether",
-}
+};
 
 class BaseAddress extends IBytes {
 	constructor(s) {

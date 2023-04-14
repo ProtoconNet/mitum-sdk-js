@@ -30,7 +30,7 @@ import { sortStringAsBuf } from "../utils/string.js";
 export const KEY_TYPE = {
 	btc: "key/btc",
 	ether: "key/ether",
-}
+};
 
 export class Key extends IBytes {
 	constructor(s) {

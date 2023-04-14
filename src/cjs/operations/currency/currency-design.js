@@ -64,7 +64,8 @@ class CurrencyDesign extends IBytesDict {
 		};
 	}
 }
-exports.CurrencyDesign = CurrencyDesign
+exports.CurrencyDesign = CurrencyDesign;
+
 class CurrencyPolicy extends IBytesDict {
 	constructor(newAccountMinBalance, feeer) {
 		super();
@@ -93,7 +94,8 @@ class CurrencyPolicy extends IBytesDict {
 		};
 	}
 }
-exports.CurrencyPolicy = CurrencyPolicy
+exports.CurrencyPolicy = CurrencyPolicy;
+
 class CurrencyFeeer extends IBytesDict {
 	constructor(ht) {
 		super();
@@ -125,7 +127,8 @@ class NilFeeer extends CurrencyFeeer {
 		};
 	}
 }
-exports.NilFeeer = NilFeeer
+exports.NilFeeer = NilFeeer;
+
 class FixedFeeer extends CurrencyFeeer {
 	constructor(receiver, amount) {
 		super(HINT_CURRENCY_FEEER_FIXED);
@@ -157,7 +160,8 @@ class FixedFeeer extends CurrencyFeeer {
 		return feeer;
 	}
 }
-exports.FixedFeeer = FixedFeeer
+exports.FixedFeeer = FixedFeeer;
+
 class RatioFeeer extends CurrencyFeeer {
 	constructor(receiver, ratio, min, max) {
 		super(HINT_CURRENCY_FEEER_RATIO);
@@ -204,4 +208,4 @@ class RatioFeeer extends CurrencyFeeer {
 		return feeer;
 	}
 }
-exports.RatioFeeer = RatioFeeer
+exports.RatioFeeer = RatioFeeer;

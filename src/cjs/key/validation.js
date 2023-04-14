@@ -22,10 +22,10 @@ exports.isKeySuffix = (s) => {
 	);
 };
 
-isAddressSuffix = (s) => {
+const isAddressSuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_ACCOUNT_ADDRESS;
 };
-exports.isAddressSuffix = isAddressSuffix
+exports.isAddressSuffix = isAddressSuffix;
 
 exports.isNodeAddressSuffix = (s) => {
 	return s === SUFFIX_NODE_ADDRESS;
@@ -121,7 +121,7 @@ exports.isNodeAddress = (s) => {
 	}
 
 	return exports.isNodeAddressSuffix(s.substring(s.length - SUFFIX_LENGTH));
-}
+};
 
 exports.parseKey = (s) => {
 	assert(

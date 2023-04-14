@@ -28,9 +28,9 @@ class ID extends IBytes {
 		return this.s;
 	}
 }
+exports.ID = ID;
 
-exports.ID = ID
-class CurrencyID extends ID {
+exports.CurrencyID = class CurrencyID extends ID {
 	constructor(s) {
 		super(s, EC_INVALID_CURRENCY_ID);
 		assert(
@@ -42,10 +42,9 @@ class CurrencyID extends ID {
 			)
 		);
 	}
-}
-exports.CurrencyID = CurrencyID
+};
 
-class ContractID extends ID {
+exports.ContractID = class ContractID extends ID {
 	constructor(s) {
 		super(s, EC_INVALID_CONTRACT_ID);
 		assert(
@@ -57,5 +56,4 @@ class ContractID extends ID {
 			)
 		);
 	}
-}
-exports.ContractID = ContractID
+};

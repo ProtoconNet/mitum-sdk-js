@@ -43,7 +43,8 @@ class FactSign extends IBytesDict {
 		return fs;
 	}
 }
-exports.FactSign = FactSign
+exports.FactSign = FactSign;
+
 class M1FactSign extends FactSign {
 	constructor(signer, sign, signedAt) {
 		super(signer, sign, signedAt);
@@ -57,13 +58,15 @@ class M1FactSign extends FactSign {
 		};
 	}
 }
-exports.M1FactSign = M1FactSign
+exports.M1FactSign = M1FactSign;
+
 class M2FactSign extends FactSign {
 	constructor(signer, sign, signedAt) {
 		super(signer, sign, signedAt);
 	}
 }
-exports.M2FactSign = M2FactSign
+exports.M2FactSign = M2FactSign;
+
 class M2NodeFactSign extends FactSign {
 	constructor(node, signer, sign, signedAt) {
 		super(signer, sign, signedAt);
@@ -86,4 +89,4 @@ class M2NodeFactSign extends FactSign {
 		};
 	}
 }
-exports.M2NodeFactSign = M2NodeFactSign
+exports.M2NodeFactSign = M2NodeFactSign;

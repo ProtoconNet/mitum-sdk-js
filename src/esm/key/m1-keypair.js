@@ -3,7 +3,7 @@ import bs58check from "bs58check";
 import secureRandom from "secure-random";
 
 import { hmac } from "@noble/hashes/hmac";
-import { sha256 as nobleSha256} from "@noble/hashes/sha256";
+import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
 import * as secp256k1 from "@noble/secp256k1";
 
 import { Key } from "./key.js";

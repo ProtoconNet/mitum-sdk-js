@@ -48,7 +48,7 @@ class TransfersItem extends CurrencyItem {
 		return this.receiver.toString();
 	}
 }
-exports.TransfersItem = TransfersItem
+exports.TransfersItem = TransfersItem;
 
 class TransfersFact extends OperationFact {
 	constructor(token, sender, items) {
@@ -66,4 +66,4 @@ class TransfersFact extends OperationFact {
 		return HINT_TRANSFERS_OPERATION;
 	}
 }
-exports.TransfersFact = TransfersFact
+exports.TransfersFact = TransfersFact;

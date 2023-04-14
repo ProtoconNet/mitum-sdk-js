@@ -11,7 +11,7 @@ const {
 	EC_INVALID_ITEM,
 } = require("../../base/error.js");
 
-class CurrencyItem extends Item {
+exports.CurrencyItem = class CurrencyItem extends Item {
 	constructor(hint, amounts) {
 		super(hint);
 
@@ -44,5 +44,4 @@ class CurrencyItem extends Item {
 
 		this.amounts = amounts;
 	}
-}
-exports.CurrencyItem = CurrencyItem
+};

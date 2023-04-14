@@ -1,17 +1,24 @@
 exports.SUFFIX_LENGTH = 3;
+
 exports.MIN_CURRENCY_ID_LENGTH = 3;
 exports.MAX_CURRENCY_ID_LENGTH = 10;
+
 exports.MIN_CONTRACT_ID_LENGTH = 3;
 exports.MAX_CONTRACT_ID_LENGTH = 10;
+
 exports.MIN_SEED_LENGTH = 36;
+
 exports.MIN_THRESHOLD = 1;
 exports.MAX_THRESHOLD = 100;
+
 exports.MIN_WEIGHT = 1;
 exports.MAX_WEIGHT = 100;
+
 exports.MAX_KEYS_IN_ADDRESS = 10;
 exports.MAX_AMOUNTS_IN_ITEM = 10;
 exports.MAX_ITEMS_IN_FACT = 10;
 exports.MAX_OPERATIONS_IN_SEAL = 10;
+
 exports.TEST_NODE = {
 	m1: "KxaTHDAQnmFeWWik5MqWXBYkhvp5EpWbsZzXeHDdTDb5NE1dVw8wmpr",
 	m2: "EYc4WdFjP9qkgfwJZfnsVXeh827rsNppm5HUSjSDeMFFmpr",

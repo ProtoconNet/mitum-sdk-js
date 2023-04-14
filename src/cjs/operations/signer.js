@@ -19,7 +19,7 @@ const { sum256 } = require("../utils/hash.js");
 const { exist, findKeyPair } = require("../utils/tools.js");
 const { FullTimeStamp, TimeStamp } = require("../utils/time.js");
 
-class Signer {
+exports.Signer = class Signer {
     constructor(privateKey) {
         this.kp = findKeyPair(privateKey);
         this.id = new ID(id(), EC_INVALID_NETWORK_ID);
@@ -240,4 +240,3 @@ class Signer {
         }
     }
 }
-exports.Signer = Signer

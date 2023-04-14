@@ -55,7 +55,7 @@ class CreateContractAccountsItem extends CurrencyItem {
 		return this.keys.address.toString();
 	}
 }
-exports.CreateContractAccountsItem = CreateContractAccountsItem
+exports.CreateContractAccountsItem = CreateContractAccountsItem;
 
 class CreateContractAccountsFact extends OperationFact {
 	constructor(token, sender, items) {
@@ -76,4 +76,4 @@ class CreateContractAccountsFact extends OperationFact {
 		return HINT_CREATE_CONTRACT_ACCOUNTS_OPERATION;
 	}
 }
-exports.CreateContractAccountsFact = CreateContractAccountsFact
+exports.CreateContractAccountsFact = CreateContractAccountsFact;

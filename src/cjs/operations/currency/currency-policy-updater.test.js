@@ -7,6 +7,7 @@ const {
 	RatioFeeer,
 } = require("./currency-design");
 const { CurrencyPolicyUpdaterFact } = require("./currency-policy-updater");
+
 const { Operation } = require("../operation");
 
 const { TEST_GENESIS, TEST_NODE } = require("../../mitum.config");
@@ -68,9 +69,9 @@ describe("test: currency-policy-updater", () => {
 		);
 	});
 
-	it("case: m2; nil feeer", () => {});
+	// it("case: m2; nil feeer", () => {});
 
-	it("case: m2; fixed feeer", () => {});
+	// it("case: m2; fixed feeer", () => {});
 
-	it("case: m2; ratio feeer", () => {});
+	// it("case: m2; ratio feeer", () => {});
 });

@@ -73,7 +73,7 @@ class TimeStamp extends IBytes {
 		return iso.substring(0, t) + " " + rtime + " +0000 UTC";
 	}
 }
-exports.TimeStamp = TimeStamp
+exports.TimeStamp = TimeStamp;
 
 class FullTimeStamp extends TimeStamp {
 	constructor(s) {
@@ -110,4 +110,4 @@ class FullTimeStamp extends TimeStamp {
 		return utc;
 	}
 }
-exports.FullTimeStamp = FullTimeStamp
+exports.FullTimeStamp = FullTimeStamp;

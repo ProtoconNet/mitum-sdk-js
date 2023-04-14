@@ -10,7 +10,7 @@ const {
 
 const { assert, error, EC_INVALID_CURRENCY_DESIGN } = require("../../base/error.js");
 
-class CurrencyRegisterFact extends NodeFact {
+exports.CurrencyRegisterFact = class CurrencyRegisterFact extends NodeFact {
 	constructor(token, design) {
 		super(HINT_CURRENCY_REGISTER_OPERATION_FACT, token);
 		assert(
@@ -40,5 +40,4 @@ class CurrencyRegisterFact extends NodeFact {
 	get opHint() {
 		return HINT_CURRENCY_REGISTER_OPERATION;
 	}
-}
-exports.CurrencyRegisterFact = CurrencyRegisterFact
+};

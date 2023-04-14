@@ -285,7 +285,7 @@ class Operation extends IBytesDict {
 		return axios.post(url, this.dict());
 	}
 }
-exports.Operation = Operation
+exports.Operation = Operation;
 
 const getM1FactSign = (kp, hash, id) => {
 	try {

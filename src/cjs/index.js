@@ -122,36 +122,38 @@ const util = {
 	sortBuf,
 };
 
-exports.usev = useV
-exports.useId = useId
-exports.SIG_TYPE = SIG_TYPE
-exports.alias = alias
-exports.err =err
-exports.base = base
-exports.util = util
-exports.TimeStamp = TimeStamp
-exports.FullTimeStamp = FullTimeStamp
-exports.KPGen = KPGen
-exports.PubKey = PubKey
-exports.Keys = Keys
-exports.Amount = Amount
-exports.Token = Token
-exports.Address = Address
-exports.Hint = Hint
-exports.Fact = Fact
-exports.OperationFact = OperationFact
-exports.NodeFact = NodeFact
-exports.FactSign = FactSign
-exports.M1FactSign = M1FactSign
-exports.M2FactSign = M2FactSign
-exports.M2NodeFactSign = M2NodeFactSign
-exports.Item = Item
-exports.ID = ID
-exports.Big = Big
-exports.Float = Float
-exports.CurrencyID = CurrencyID
-exports.ContractID = ContractID
-exports.Operation = Operation
-exports.Seal = Seal
-exports.Signer = Signer
-exports.Currency = Currency
+module.exports = {
+	useV,
+	useId,
+	SIG_TYPE,
+	alias,
+	err,
+	base,
+	util,
+	TimeStamp,
+	FullTimeStamp,
+	KPGen,
+	PubKey,
+	Keys,
+	Amount,
+	Token,
+	Address,
+	Hint,
+	Fact,
+	OperationFact,
+	NodeFact,
+	FactSign,
+	M1FactSign,
+	M2FactSign,
+	M2NodeFactSign,
+	Item,
+	ID,
+	Big,
+	Float,
+	CurrencyID,
+	ContractID,
+	Operation,
+	Seal,
+	Signer,
+	Currency,
+};

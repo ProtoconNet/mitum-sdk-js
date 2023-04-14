@@ -166,7 +166,7 @@ export const isNodeAddress = (s) => {
 	}
 
 	return isNodeAddressSuffix(s.substring(s.length - SUFFIX_LENGTH));
-}
+};
 
 export const isZeroAddress = (s) => {
 	if (typeof s !== "string" || s.length < 8 || s.length > 15) {
@@ -174,7 +174,7 @@ export const isZeroAddress = (s) => {
 	}
 
 	return isZeroAddressSuffix(s.substring(s.length - SUFFIX_ZERO_ADDRESS_LENGTH));
-}
+};
 
 export const parseKey = (s) => {
 	assert(
