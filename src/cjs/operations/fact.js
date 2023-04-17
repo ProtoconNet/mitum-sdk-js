@@ -40,7 +40,6 @@ class Fact extends IBytesDict {
 		);
 	}
 }
-exports.Fact = Fact;
 
 class OperationFact extends Fact {
 	constructor(hint, token, sender, items) {
@@ -90,11 +89,15 @@ class OperationFact extends Fact {
 		};
 	}
 }
-exports.OperationFact = OperationFact;
 
 class NodeFact extends Fact {
 	constructor(hint, token) {
 		super(hint, token);
 	}
 }
-exports.NodeFact = NodeFact;
+
+module.exports = {
+	Fact,
+	OperationFact,
+	NodeFact,
+};

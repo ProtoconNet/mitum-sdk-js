@@ -6,9 +6,9 @@ const { Hint } = require("../base/hint.js");
 const { IBytesDict } = require("../base/interface.js");
 const { assert, error, EC_INVALID_PUBLIC_KEY } = require("../base/error.js");
 
-const Key = require("../key/key.js");
+const { Key } = require("../key/key.js");
 const { Address } = require("../key/address.js");
-const { isPublicKey } = require("../key/validation.js");
+const { isM2EtherPublicKey, isMitumPublicKey } = require("../key/validation.js");
 
 const { FullTimeStamp } = require("../utils/time.js");
 
@@ -19,10 +19,10 @@ class FactSign extends IBytesDict {
 		this.signedAt = new FullTimeStamp(signedAt);
 
 		assert(
-			isPublicKey(signer),
+			isMitumPublicKey(signer) || isM2EtherPublicKey(signer),
 			error.format(EC_INVALID_PUBLIC_KEY, "not public key")
 		);
-		this.signer = new Key.Key(signer);
+		this.signer = new Key(signer);
 	}
 
 	bytes() {
@@ -43,7 +43,6 @@ class FactSign extends IBytesDict {
 		return fs;
 	}
 }
-exports.FactSign = FactSign;
 
 class M1FactSign extends FactSign {
 	constructor(signer, sign, signedAt) {
@@ -58,14 +57,12 @@ class M1FactSign extends FactSign {
 		};
 	}
 }
-exports.M1FactSign = M1FactSign;
 
 class M2FactSign extends FactSign {
 	constructor(signer, sign, signedAt) {
 		super(signer, sign, signedAt);
 	}
 }
-exports.M2FactSign = M2FactSign;
 
 class M2NodeFactSign extends FactSign {
 	constructor(node, signer, sign, signedAt) {
@@ -89,4 +86,10 @@ class M2NodeFactSign extends FactSign {
 		};
 	}
 }
-exports.M2NodeFactSign = M2NodeFactSign;
+
+module.exports = {
+	FactSign,
+	M1FactSign,
+	M2FactSign,
+	M2NodeFactSign,
+};

@@ -38,53 +38,18 @@ You can test __mitum-sdk__ using this command:
 ```sh
 $ npm test
 
-> mitum-sdk@0.0.4 test
+> mitum-sdk@0.1.0 test
 > jest
 
- PASS  src/cjs/key/m1-keypair.test.js
- PASS  src/cjs/key/m2-keypair.test.js
- PASS  src/esm/key/key.test.js
- PASS  src/cjs/key/key.test.js
- PASS  src/esm/key/m2-keypair.test.js
- PASS  src/esm/key/m2-ether-keypair.test.js
- PASS  src/esm/key/m1-keypair.test.js
- PASS  src/cjs/operations/currency/currency-register.test.js
- PASS  src/esm/operations/currency/create-accounts.test.js
- PASS  src/esm/key/address.test.js
- PASS  src/esm/operations/signer.test.js
- PASS  src/esm/operations/currency/currency-register.test.js
- PASS  src/cjs/utils/config.test.js
- PASS  src/esm/operations/currency/transfers.test.js
- PASS  src/esm/operations/currency/key-updater.test.js
- PASS  src/cjs/operations/signer.test.js
- PASS  src/esm/operations/currency/create-contract-accounts.test.js
- PASS  src/esm/operations/seal.test.js
- PASS  src/esm/operations/currency/currency-policy-updater.test.js
- PASS  src/esm/utils/config.test.js
- PASS  src/esm/operations/currency/withdraws.test.js
- PASS  src/cjs/operations/currency/withdraws.test.js
- PASS  src/cjs/operations/currency/create-contract-accounts.test.js
- PASS  src/esm/operations/currency/suffrage-inflation.test.js
- PASS  src/cjs/operations/currency/transfers.test.js
- PASS  src/cjs/operations/seal.test.js
- PASS  src/cjs/operations/currency/create-accounts.test.js
- PASS  src/esm/operations/factsign.test.js
- PASS  src/cjs/operations/currency/currency-policy-updater.test.js
- PASS  src/cjs/operations/currency/suffrage-inflation.test.js
- PASS  src/cjs/operations/factsign.test.js
- PASS  src/cjs/operations/currency/key-updater.test.js
- PASS  src/esm/operations/operation.test.js
- PASS  src/cjs/key/address.test.js
- PASS  src/cjs/operations/operation.test.js
- PASS  src/cjs/operations/currency/item.test.js
- PASS  src/esm/operations/currency/item.test.js
- PASS  src/cjs/utils/time.test.js
- PASS  src/esm/utils/time.test.js
+ PASS  ...
+ PASS  ...
+ ...
+ PASS  ...
 
-Test Suites: 39 passed, 39 total
-Tests:       128 passed, 128 total
+Test Suites: 42 passed, 42 total
+Tests:       123 passed, 123 total
 Snapshots:   0 total
-Time:        5.156 s
+Time:        3.995 s, estimated 4 s
 Ran all test suites.
 ```
 
@@ -289,10 +254,10 @@ const threshold = 60;
 const mpubs = pubs.map(pub => new PubKey(pub.key, pub.weight));
 const mkeys = new Keys(mpubs, threshold); // Keys[Keys] instance
 
-const address = mkeys.address // (btc) Address instance
+const address = mkeys.address; // (btc) Address instance
 const stringAddress = address.toString(); // btc type string address
 
-const etherAddress = mkeys.etherAddress // (ether) Address instance
+const etherAddress = mkeys.etherAddress; // (ether) Address instance
 const etherStringAddress = etherAddress.toString(); // ether type string address
 ```
 
@@ -340,7 +305,7 @@ First, suppose you create an account with the following settings:
 const { TimeStamp, KPGen, Amount, Currency, Operation } from "mitum-sdk";
 
 // create 5 new public keys
-const { keys, keypairs } = KPGen.randomN(5); // use KPGen.m2.randomN(5) for m2 key pairs
+const { keys, keypairs } = KPGen.randomN(5);
 
 const mccAmount = new Amount("MCC", "1000");
 const penAmount = new Amount("PEN", "500");
@@ -353,7 +318,7 @@ const item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount]);
 const fact = new Currency.CreateAccountsFact(token, senderAddress, [item]);
 
 const operation = new Operation(fact);
-operation.sign(senderPrivate, null);
+operation.sign(senderPrivate);
 
 // see appendix
 // operation.export(/* file path; string */);
@@ -425,7 +390,7 @@ const targetPrivate = "KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr";
 const fact = new Currency.KeyUpdaterFact(token, targetAddress, new Keys(keys, 100), "MCC");
 
 const operation = new Operation(fact);
-operation.sign(targetPrivate, null);
+operation.sign(targetPrivate);
 ```
 
 ### transfer
@@ -454,7 +419,7 @@ const item = new Currency.TransfersItem(receiver, [mccAmount, penAmount]);
 const fact = new Currency.TransfersFact(token, senderAddress, [item]);
 
 const operation = new Operation(fact);
-operation.sign(senderPrivate, null);
+operation.sign(senderPrivate);
 ```
 
 ### currency-register
@@ -615,7 +580,7 @@ const item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount
 const fact = new Currency.CreateContractAccountsFact(token, senderAddress, [item]);
 
 const operation = new Operation(fact);
-operation.sign(senderPrivate, null);
+operation.sign(senderPrivate);
 ```
 
 Like __create-account__, the item creation method of __create-contact-account__ for mitum1 and mitum2 is distinguished.
@@ -659,7 +624,7 @@ const item = new Currency.WithdrawsItem(contractAccount, [mccAmount, penAmount])
 const fact = new Currency.WithdrawsFact(token, senderAddress, [item]);
 
 const operation = new Operation(fact);
-operation.sign(senderPrivate, null);
+operation.sign(senderPrivate);
 ```
 
 ## Generate Seal
@@ -751,8 +716,12 @@ However, if the operation is a node operation(not account operation) of mitum2, 
 ```js
 const operation = new Operation(/* fact, etc... */);
 
-operation.sign(/* sender's private key */, null); // mitum1(account, node), mitum2(account)
-operation.sign(/* sender's private key */, { node: "node addres" }); // mitum2(node)
+/* mitum1(account, node), mitum2(account) */
+operation.sign(/* sender's private key */);
+operation.sign(/* sender's private key */, null);
+
+/* mitum2(node) */
+operation.sign(/* sender's private key */, { node: "node addres" });
 ```
 
 * Set fact-signs without signing

@@ -20,6 +20,18 @@ class ID extends IBytes {
 		this.s = s;
 	}
 
+	equal(id) {
+		if (!id) {
+			return false;
+		}
+
+		if (!id instanceof ID) {
+			return false;
+		}
+
+		return this.toString() === id.toString();
+	}
+
 	bytes() {
 		return Buffer.from(this.s);
 	}
@@ -28,9 +40,8 @@ class ID extends IBytes {
 		return this.s;
 	}
 }
-exports.ID = ID;
 
-exports.CurrencyID = class CurrencyID extends ID {
+class CurrencyID extends ID {
 	constructor(s) {
 		super(s, EC_INVALID_CURRENCY_ID);
 		assert(
@@ -42,9 +53,9 @@ exports.CurrencyID = class CurrencyID extends ID {
 			)
 		);
 	}
-};
+}
 
-exports.ContractID = class ContractID extends ID {
+class ContractID extends ID {
 	constructor(s) {
 		super(s, EC_INVALID_CONTRACT_ID);
 		assert(
@@ -56,4 +67,10 @@ exports.ContractID = class ContractID extends ID {
 			)
 		);
 	}
+}
+
+module.exports = {
+	ID,
+	CurrencyID,
+	ContractID,
 };

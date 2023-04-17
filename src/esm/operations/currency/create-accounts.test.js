@@ -21,8 +21,8 @@ describe("test: create-account", () => {
 			TEST_GENESIS.m1.address,
 			[new CreateAccountsItem(keys, amounts)]
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m1.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m1.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"3YQ6tUgKBKq6HdjREeFTVBYrTDWiTQEYARv6HX8wyQZP"
@@ -38,7 +38,7 @@ describe("test: create-account", () => {
 			TEST_GENESIS.m2.address,
 			[new CreateAccountsItem(keys, amounts, ADDRESS_TYPE.btc)]
 		);
-		const operation = new Operation(fact, "");
+		const operation = new Operation(fact);
 		operation.sign(TEST_GENESIS.m2.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
@@ -55,8 +55,8 @@ describe("test: create-account", () => {
 			TEST_GENESIS.m2ether.address,
 			[new CreateAccountsItem(keys, amounts, ADDRESS_TYPE.ether)]
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m2ether.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m2ether.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"7QBsdU2pRXc4vTZAdHKtPi4Ct7NyHiEudyGiErZnHNRj"

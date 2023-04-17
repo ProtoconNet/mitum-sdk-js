@@ -17,38 +17,38 @@ describe("test: seal", () => {
 	);
 
 	it("case: operation m1 - seal signed m1", () => {
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m1.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m1.private);
 
 		const seal = new Seal([operation]);
 		expect(() => seal.sign(TEST_NODE.m1)).not.toThrow(Error);
 	});
 
 	it("case: operation m2", () => {
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m2.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m2.private);
 
 		expect(() => new Seal([operation])).toThrow(Error);
 	});
 
 	it("case: operation m2-node", () => {
-		const operation = new Operation(fact, "");
+		const operation = new Operation(fact);
 		operation.sign(TEST_NODE.m2, { node: "node0sas" });
 
 		expect(() => new Seal([operation])).toThrow(Error);
 	});
 
 	it("case: operation m1 - unsigned seal dict", () => {
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m1.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m1.private);
 
 		const seal = new Seal([operation]);
 		expect(() => seal.dict()).toThrow(Error);
 	});
 
 	it("case: duplicate m1 facts", () => {
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m1.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m1.private);
 
 		expect(() => new Seal([operation, operation])).toThrow(Error);
 	});

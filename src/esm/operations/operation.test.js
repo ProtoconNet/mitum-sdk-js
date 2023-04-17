@@ -48,7 +48,7 @@ describe("test: operation", () => {
 			TEST_GENESIS.m1.address,
 			[item]
 		);
-		const op = new Operation(fact, "");
+		const op = new Operation(fact);
 
 		const fs = [];
 		for (let i = 0; i < 2; i++) {

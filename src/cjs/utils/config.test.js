@@ -52,16 +52,16 @@ describe("test: config", () => {
 		);
 
 		useId(id1);
-		const operation1 = new Operation(fact, "");
-		operation1.sign(TEST_GENESIS.m1.private, null);
+		const operation1 = new Operation(fact);
+		operation1.sign(TEST_GENESIS.m1.private);
 
 		useId(id2);
-		const operation2 = new Operation(fact, "");
-		operation2.sign(TEST_GENESIS.m1.private, null);
+		const operation2 = new Operation(fact);
+		operation2.sign(TEST_GENESIS.m1.private);
 
 		useId(id1);
-		const operation3 = new Operation(fact, "");
-		operation3.sign(TEST_GENESIS.m1.private, null);
+		const operation3 = new Operation(fact);
+		operation3.sign(TEST_GENESIS.m1.private);
 
 		expect(operation1.id.toString()).toBe(id1);
 		expect(operation2.id.toString()).toBe(id2);

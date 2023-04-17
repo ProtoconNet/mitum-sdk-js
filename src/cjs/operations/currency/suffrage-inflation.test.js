@@ -28,8 +28,8 @@ describe("test: suffrage-inflation", () => {
 			"2022-11-16T06:55:02.135231Z",
 			items
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_NODE.m1, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_NODE.m1);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"FcP5ciHKkhogkskiYiaVCTP4JZ7zr4UH2cMRJqhhzEgV"

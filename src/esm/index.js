@@ -23,14 +23,17 @@ import { Token } from "./base/token.js";
 import { m1 } from "./key/m1-keypair.js";
 import { m2 } from "./key/m2-keypair.js";
 import { m2ether } from "./key/m2-ether-keypair.js";
+
+import { Address, ZeroAddress, ADDRESS_TYPE } from "./key/address.js";
 import { PublicKey, Keys, KEY_TYPE } from "./key/key.js";
-import { Address, M2RandomN, M1RandomN, M2EtherRandomN, ADDRESS_TYPE } from "./key/address.js";
+import { M1RandomN, M2RandomN, M2EtherRandomN } from "./key/random.js";
 
 import { Item } from "./operations/item.js";
 import { Fact, OperationFact, NodeFact } from "./operations/fact.js";
 import { FactSign, M1FactSign, M2FactSign, M2NodeFactSign } from "./operations/factsign.js";
-import { Operation } from "./operations/operation.js";
+
 import { Seal } from "./operations/seal.js";
+import { Operation } from "./operations/operation.js";
 
 import { Signer } from "./operations/signer.js";
 
@@ -159,6 +162,7 @@ export {
 	Amount,
 	Token,
 	Address,
+	ZeroAddress,
 	Hint,
 	Fact,
     OperationFact,

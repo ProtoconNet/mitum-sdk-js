@@ -62,7 +62,7 @@ describe("test: m2; keypair generation", () => {
 		});
 	});
 
-	it("case: = require(seed", () => {
+	it("case: from seed", () => {
 		const testKps = [
 			{
 				seed: "mitummitummitummitummitummitummitummitum",
@@ -153,6 +153,9 @@ describe("test: m2; sign", () => {
 		tcs.forEach((tc) => {
 			const kp = m2.fromPrivateKey(tc.priv);
 			const sig = bs58.encode(kp.sign(tc.msg));
+
+			expect(kp.verify(sig, tc.msg));
+			expect(kp.verify(tc.sig, tc.msg));
 
 			expect(sig).toBe(tc.sig);
 		});

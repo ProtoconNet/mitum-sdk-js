@@ -2,10 +2,9 @@ const bs58 = require("bs58");
 
 const { Amount } = require("./amount");
 const { TransfersFact, TransfersItem } = require("./transfers");
-
 const { Operation } = require("../operation");
 
-const { TEST_ACCOUNT, TEST_ACCOUNT_R, TEST_GENESIS } = require("../../mitum.config");
+const { TEST_ACCOUNT, TEST_ACCOUNT_R, TEST_CURRENCY, TEST_GENESIS } = require("../../mitum.config");
 const { TimeStamp } = require("../../utils/time");
 
 describe("test: transfers", () => {
@@ -18,8 +17,8 @@ describe("test: transfers", () => {
 			[item]
 		);
 
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m1.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m1.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"GTXjBCvb183KaCtiprpjC4e4XDor6XeBfijZfqwMPsBx"
@@ -35,13 +34,30 @@ describe("test: transfers", () => {
 			[item]
 		);
 
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m2.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m2.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"k1vnR6xnWBPoehfZGcbnfXBD8yZRmT4jsGfquRUPzjx"
 		);
 	});
+
+	it("case: transfer to zero address", () => {
+		const amounts = [new Amount(TEST_CURRENCY.MCC.currency, "1000")];
+		const item = new TransfersItem(TEST_CURRENCY.MCC.zero, amounts);
+		const fact = new TransfersFact(
+			"2022-11-19 23:44:30.883651 +0000 UTC",
+			TEST_GENESIS.m2.address,
+			[item]
+		);
+
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m2.private);
+
+		expect(bs58.encode(fact.hash)).toBe(
+			"5F1hhzhi7rtjJmjdbUjDkio8niGiftKJLCxqAmXWvkDv"
+		);
+	})
 
 	it("case: duplicate items", () => {
 		const items = [
@@ -63,3 +79,4 @@ describe("test: transfers", () => {
 		).toThrow(Error);
 	});
 });
+

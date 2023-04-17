@@ -22,7 +22,7 @@ describe("test: create-contract-account", () => {
 			TEST_GENESIS.m1.address,
 			[item]
 		);
-		const operation = new Operation(fact, "");
+		const operation = new Operation(fact);
 		operation.sign(TEST_GENESIS.m1.private);
 
 		expect(bs58.encode(fact.hash)).toBe(

@@ -7,7 +7,6 @@ const {
 	RatioFeeer,
 } = require("./currency-design");
 const { CurrencyPolicyUpdaterFact } = require("./currency-policy-updater");
-
 const { Operation } = require("../operation");
 
 const { TEST_GENESIS, TEST_NODE } = require("../../mitum.config");
@@ -22,8 +21,8 @@ describe("test: currency-policy-updater", () => {
 			"PEN",
 			policy
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_NODE.m1, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_NODE.m1);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"5Mhz2DfpQ51G3SyNLcLgmCbp8yx5o53ykwre7DidT3Rr"
@@ -39,8 +38,8 @@ describe("test: currency-policy-updater", () => {
 			"PEN",
 			policy
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_NODE.m1, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_NODE.m1);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"4n6AxV17j2oMmQhk1qMqTWzd3dUuEW45v88aLmisoCgy"
@@ -61,8 +60,8 @@ describe("test: currency-policy-updater", () => {
 			"PEN",
 			policy
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_NODE.m1, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_NODE.m1);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"4h8RXMBj9qpEiWe3JrdnazhasuwVcBnyvVVNj8G3usrp"

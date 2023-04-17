@@ -9,7 +9,6 @@ const {
 	RatioFeeer,
 } = require("./currency-design");
 const { CurrencyRegisterFact } = require("./currency-register");
-
 const { Operation } = require("../operation");
 
 const { TEST_GENESIS, TEST_NODE } = require("../../mitum.config");
@@ -30,8 +29,8 @@ describe("test: currency-register", () => {
 			"2022-11-24T02:17:37.256409Z",
 			design
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_NODE.m1, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_NODE.m1);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"3AtsTvXxZ3BYczqAYZAqbV7y76UW4mCEipvV4jWH7B4h"
@@ -53,8 +52,8 @@ describe("test: currency-register", () => {
 			"2022-11-16T06:35:43.649604Z",
 			design
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_NODE.m1, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_NODE.m1);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"6j3PN6oPof46vyoUjDxMnEr5JCdco2b5USapBYLLf1xh"
@@ -79,8 +78,8 @@ describe("test: currency-register", () => {
 			);
 
 			const fact = new CurrencyRegisterFact(token, design);
-			const operation = new Operation(fact, "");
-			operation.sign(TEST_NODE.m1, null);
+			const operation = new Operation(fact);
+			operation.sign(TEST_NODE.m1);
 
 			return bs58.encode(fact.hash);
 		};

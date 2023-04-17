@@ -2,8 +2,9 @@ const { error, assert, EC_INVALID_PRIVATE_KEY } = require("../base/error.js");
 
 const m1 = require("../key/m1-keypair.js");
 const m2 = require("../key/m2-keypair.js");
+const m2ether = require("../key/m2-ether-keypair.js");
 
-const { isM1PrivateKey, isM2PrivateKey } = require("../key/validation.js");
+const { isM1PrivateKey, isM2EtherPrivateKey, isM2PrivateKey } = require("../key/validation.js");
 
 exports.exist = (dic, k) => Object.prototype.hasOwnProperty.call(dic, k);
 
@@ -20,6 +21,9 @@ exports.findKeyPair = (privateKey) => {
 	} else if (isM2PrivateKey(privateKey)) {
 		kp["type"] = "m2";
 		kp["keypair"] = m2.fromPrivateKey(privateKey);
+	} else if (isM2EtherPrivateKey(privateKey)) {
+		kp["type"] = "m2ether";
+		kp["keypair"] = m2ether.fromPrivateKey(privateKey);
 	}
 
 	assert(

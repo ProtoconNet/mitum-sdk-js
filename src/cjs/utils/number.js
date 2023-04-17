@@ -20,7 +20,7 @@ const toBig = (n) => {
 	return BigInt("0x" + big.join(""));
 };
 
-exports.Big = class Big extends IBytes {
+class Big extends IBytes {
 	constructor(n) {
 		super();
 		if (typeof n === "bigint") {
@@ -80,7 +80,7 @@ exports.Big = class Big extends IBytes {
 	}
 };
 
-exports.Float = class Float extends IBytes {
+class Float extends IBytes {
 	constructor(n) {
 		super();
 		assert(
@@ -99,4 +99,9 @@ exports.Float = class Float extends IBytes {
 	toString() {
 		return `${this.n}`;
 	}
+};
+
+module.exports = {
+	Big,
+	Float,
 };

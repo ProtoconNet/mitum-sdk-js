@@ -2,7 +2,6 @@ const bs58 = require("bs58");
 
 const { Amount } = require("./amount");
 const { WithdrawsFact, WithdrawsItem } = require("./withdraws");
-
 const { Operation } = require("../operation");
 
 const { TEST_ACCOUNT, TEST_GENESIS } = require("../../mitum.config");
@@ -18,8 +17,8 @@ describe("test: withdraw", () => {
 			TEST_GENESIS.m1.address,
 			[item]
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m1.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m1.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"ApAZLELnH8iYHtThDJk5dtr4Ni7TvDfJT4XHU4Z8gHM5"

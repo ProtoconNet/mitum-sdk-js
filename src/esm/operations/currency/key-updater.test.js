@@ -17,7 +17,7 @@ describe("test: key-updater", () => {
 			keys,
 			"MCC"
 		);
-		const operation = new Operation(fact, "");
+		const operation = new Operation(fact);
 		operation.sign(TEST_GENESIS.m1.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
@@ -35,8 +35,8 @@ describe("test: key-updater", () => {
 			keys,
 			"MCC"
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m2.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m2.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"6U99URNut8rLxBU5d9taQwP6Dd9LaDUpxq83zffdNAWX"

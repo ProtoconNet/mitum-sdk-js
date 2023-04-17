@@ -11,6 +11,7 @@ export const MIN_SEED_LENGTH = 36;
 
 export const MIN_THRESHOLD = 1;
 export const MAX_THRESHOLD = 100;
+
 export const MIN_WEIGHT = 1;
 export const MAX_WEIGHT = 100;
 
@@ -49,7 +50,7 @@ export const TEST_GENESIS = {
 	m2ether: {
 		address: "cbc14fe342eea61d5922f83a5d3bfcb06d120df9eca",
 		private: "7b7926dc931b88442a5b2e18cf1b149fb673907f072942240416afa773ca03a9epr",
-	}
+	},
 };
 
 export const TEST_ACCOUNT = {

@@ -64,7 +64,6 @@ class CurrencyDesign extends IBytesDict {
 		};
 	}
 }
-exports.CurrencyDesign = CurrencyDesign;
 
 class CurrencyPolicy extends IBytesDict {
 	constructor(newAccountMinBalance, feeer) {
@@ -94,7 +93,6 @@ class CurrencyPolicy extends IBytesDict {
 		};
 	}
 }
-exports.CurrencyPolicy = CurrencyPolicy;
 
 class CurrencyFeeer extends IBytesDict {
 	constructor(ht) {
@@ -127,7 +125,6 @@ class NilFeeer extends CurrencyFeeer {
 		};
 	}
 }
-exports.NilFeeer = NilFeeer;
 
 class FixedFeeer extends CurrencyFeeer {
 	constructor(receiver, amount) {
@@ -160,7 +157,6 @@ class FixedFeeer extends CurrencyFeeer {
 		return feeer;
 	}
 }
-exports.FixedFeeer = FixedFeeer;
 
 class RatioFeeer extends CurrencyFeeer {
 	constructor(receiver, ratio, min, max) {
@@ -208,4 +204,11 @@ class RatioFeeer extends CurrencyFeeer {
 		return feeer;
 	}
 }
-exports.RatioFeeer = RatioFeeer;
+
+module.exports = {
+	CurrencyDesign,
+	CurrencyPolicy,
+	NilFeeer,
+	FixedFeeer,
+	RatioFeeer,
+};

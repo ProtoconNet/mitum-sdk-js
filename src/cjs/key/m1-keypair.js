@@ -2,7 +2,11 @@ const bs58 = require("bs58");
 const bs58check = require("bs58check");
 const secureRandom = require("secure-random");
 
-const keyJ = require("./key.js");
+const { hmac } = require("@noble/hashes/hmac");
+const nobleSha256 = require("@noble/hashes/sha256").sha256;
+const secp256k1 = require("@noble/secp256k1");
+
+const { Key } = require("./key.js");
 const { K, KeyPair } = require("./keypair.js");
 
 const { MIN_SEED_LENGTH } = require("../mitum.config.js");
@@ -22,6 +26,22 @@ const { isM1PrivateKey } = require("./validation.js");
 class M1KeyPair extends KeyPair {
 	constructor(privateKey) {
 		super(privateKey);
+	}
+
+	sign(msg) {
+		secp256k1.utils.hmacSha256Sync = (key, ...msgs) =>
+			hmac(nobleSha256, key, secp256k1.utils.concatBytes(...msgs));
+		secp256k1.utils.sha256Sync = (...msgs) =>
+			nobleSha256(secp256k1.utils.concatBytes(...msgs));
+		return secp256k1.signSync(sha256(sha256(msg)), this.signer);
+	}
+
+	verify(sig, msg) {
+		if (typeof sig === "string") {
+            sig = bs58.decode(sig);
+        }
+
+		return secp256k1.verify(sig, sha256(sha256(msg)), secp256k1.getPublicKey(this.signer));
 	}
 
 	_generateSigner() {
@@ -46,7 +66,7 @@ const fromPrivateKey = (privateKey) => {
 		isM1PrivateKey(privateKey),
 		error.format(EC_INVALID_PRIVATE_KEY, "invalid length or key suffix")
 	);
-	return new M1KeyPair(new keyJ.Key(privateKey));
+	return new M1KeyPair(new Key(privateKey));
 };
 
 const fromSeed = (seed) => {
@@ -56,7 +76,7 @@ const fromSeed = (seed) => {
 		error.range(EC_INVALID_SEED, "seed length out of range")
 	);
 
-	return new M1KeyPair(new keyJ.Key(encK(K(seed)) + SUFFIX_KEY_PRIVATE));
+	return new M1KeyPair(new Key(encK(K(seed)) + SUFFIX_KEY_PRIVATE));
 };
 
 const encK = (k) => {

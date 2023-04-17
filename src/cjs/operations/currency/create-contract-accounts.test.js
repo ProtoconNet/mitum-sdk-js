@@ -22,8 +22,8 @@ describe("test: create-contract-account", () => {
 			TEST_GENESIS.m1.address,
 			[item]
 		);
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m1.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m1.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"79MQkuRZW26k4YXT7xhADF2JwJW4geMfFCVmwNcLsp4Q"
@@ -31,7 +31,7 @@ describe("test: create-contract-account", () => {
 		expect(keys.address.toString()).toBe(TEST_ACCOUNT.address);
 	});
 
-	it("case: m2; operation", () => {});
+	// it("case: m2; operation", () => {});
 
 	it("case: duplicate items", () => {
 		const amounts = [new Amount("MCC", "1000")];

@@ -2,10 +2,11 @@ import fs from "fs";
 import axios from "axios";
 import bs58 from "bs58";
 
+import { HINT_BASE_SEAL } from "../alias/sign.js";
+
 import { ID } from "../base/ID.js";
 import { Hint } from "../base/hint.js";
 import { IBytesDict } from "../base/interface.js";
-import { HINT_BASE_SEAL } from "../alias/sign.js";
 import {
 	assert,
 	error,

@@ -17,8 +17,8 @@ describe("test: transfers", () => {
 			[item]
 		);
 
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m1.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m1.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"GTXjBCvb183KaCtiprpjC4e4XDor6XeBfijZfqwMPsBx"
@@ -34,8 +34,8 @@ describe("test: transfers", () => {
 			[item]
 		);
 
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m2.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m2.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"k1vnR6xnWBPoehfZGcbnfXBD8yZRmT4jsGfquRUPzjx"
@@ -51,8 +51,8 @@ describe("test: transfers", () => {
 			[item]
 		);
 
-		const operation = new Operation(fact, "");
-		operation.sign(TEST_GENESIS.m2.private, null);
+		const operation = new Operation(fact);
+		operation.sign(TEST_GENESIS.m2.private);
 
 		expect(bs58.encode(fact.hash)).toBe(
 			"5F1hhzhi7rtjJmjdbUjDkio8niGiftKJLCxqAmXWvkDv"

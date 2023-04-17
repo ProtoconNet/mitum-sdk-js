@@ -170,4 +170,4 @@ exports.Seal = class Seal extends IBytesDict {
 		}
 		return axios.post(url, this.dict());
 	}
-};
+}

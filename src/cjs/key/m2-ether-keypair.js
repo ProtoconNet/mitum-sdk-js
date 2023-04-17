@@ -1,20 +1,20 @@
-import bs58 from "bs58";
-import ethWallet from "ethereumjs-wallet";
+const bs58 = require("bs58");
+const ethWallet = require("ethereumjs-wallet").default;
 
-import { hmac } from "@noble/hashes/hmac";
-import { sha256 } from "@noble/hashes/sha256";
-import * as secp256k1 from "@noble/secp256k1";
+const { hmac } = require("@noble/hashes/hmac");
+const { sha256 } = require("@noble/hashes/sha256");
+const secp256k1 = require("@noble/secp256k1");
 
-import { MIN_SEED_LENGTH } from "../mitum.config.js";
+const { MIN_SEED_LENGTH } = require("../mitum.config.js");
 
-import { EC_INVALID_PRIVATE_KEY, EC_INVALID_SEED, assert, error } from "../base/error.js";
-import { SUFFIX_KEY_ETHER_PRIVATE } from "../alias/key.js";
+const { EC_INVALID_PRIVATE_KEY, EC_INVALID_SEED, assert, error } = require("../base/error.js");
+const { SUFFIX_KEY_ETHER_PRIVATE } = require("../alias/key.js");
 
-import { Key } from "./key.js";
-import { K, KeyPair } from "./keypair.js";
-import { isM2EtherPrivateKey } from "./validation.js";
+const keyJ = require("./key.js");
+const { K, KeyPair } = require("./keypair.js");
+const { isM2EtherPrivateKey } = require("./validation.js");
 
-import { Big } from "../utils/number.js";
+const { Big } = require("../utils/number.js");
 
 class M2EtherKeyPair extends KeyPair {
     constructor(privateKey) {
@@ -82,7 +82,7 @@ class M2EtherKeyPair extends KeyPair {
 
 const random = () => {
     return new M2EtherKeyPair(
-        new Key(
+        new keyJ.Key(
             ethWallet.generate().getPrivateKeyString().substring(2) + SUFFIX_KEY_ETHER_PRIVATE
         )
     );
@@ -98,7 +98,7 @@ const fromPrivateKey = (privateKey) => {
         error.format(EC_INVALID_PRIVATE_KEY, "invalid length or key suffix")
     );
 
-    return new M2EtherKeyPair(new Key(privateKey));
+    return new M2EtherKeyPair(new keyJ.Key(privateKey));
 };
 
 const fromSeed = (seed) => {
@@ -109,13 +109,13 @@ const fromSeed = (seed) => {
     );
 
     return new M2EtherKeyPair(
-        new Key(
+        new keyJ.Key(
             K(seed).toString(16) + SUFFIX_KEY_ETHER_PRIVATE
         )
     );
 };
 
-export const m2ether = {
+module.exports = {
     random,
     fromPrivateKey,
     fromSeed,

@@ -1,7 +1,7 @@
 const bs58 = require("bs58");
 
-const addrJ = require("./address.js");
-const { parseKey } = require("./validation.js");
+const { Address } = require("./address.js");
+const { isM2EtherKeySuffix, isMitumKeySuffix, parseKey } = require("./validation.js");
 
 const {
 	MAX_KEYS_IN_ADDRESS,
@@ -10,7 +10,7 @@ const {
 	MIN_THRESHOLD,
 	MIN_WEIGHT,
 } = require("../mitum.config.js");
-const { HINT_KEY, HINT_KEYS, SUFFIX_ACCOUNT_ADDRESS } = require("../alias/key.js");
+const { HINT_KEY, HINT_KEYS, SUFFIX_ACCOUNT_ADDRESS, SUFFIX_ETHER_ACCOUNT_ADDRESS } = require("../alias/key.js");
 
 const { Hint } = require("../base/hint.js");
 const { IBytes, IBytesDict } = require("../base/interface.js");
@@ -20,18 +20,32 @@ const {
 	EC_INVALID_KEYS,
 	EC_INVALID_THRESHOLD,
 	EC_INVALID_WEIGHT,
+	EC_INVALID_KEY,
 } = require("../base/error.js");
 
 const { Big } = require("../utils/number.js");
-const { sum256 } = require("../utils/hash.js");
+const { keccak256, sum256 } = require("../utils/hash.js");
 const { sortStringAsBuf } = require("../utils/string.js");
 
-exports.Key = class Key extends IBytes {
+const KEY_TYPE = {
+	btc: "key/btc",
+	ether: "key/ether",
+};
+
+class Key extends IBytes {
 	constructor(s) {
 		super();
 		const { key, suffix } = parseKey(s);
 		this.key = key;
 		this.suffix = suffix;
+
+		if (isMitumKeySuffix(suffix)) {
+			this.keyType = KEY_TYPE.btc;
+		} else if (isM2EtherKeySuffix(suffix)) {
+			this.keyType = KEY_TYPE.ether;
+		} else {
+			throw error.format(EC_INVALID_KEY, "invalid key");
+		}
 	}
 
 	toString() {
@@ -41,9 +55,9 @@ exports.Key = class Key extends IBytes {
 	bytes() {
 		return Buffer.from(this.toString());
 	}
-};
+}
 
-exports.PublicKey = class PublicKey extends exports.Key {
+class PublicKey extends Key {
 	constructor(s, weight) {
 		super(s);
 		assert(
@@ -69,9 +83,9 @@ exports.PublicKey = class PublicKey extends exports.Key {
 			key: this.toString(),
 		};
 	}
-};
+}
 
-exports.Keys = class Keys extends IBytesDict {
+class Keys extends IBytesDict {
 	constructor(keys, threshold) {
 		super();
 		assert(
@@ -90,7 +104,7 @@ exports.Keys = class Keys extends IBytesDict {
 
 		const karr = keys.map((key) => {
 			assert(
-				key instanceof exports.PublicKey,
+				key instanceof PublicKey,
 				error.instance(EC_INVALID_KEYS, "not PublicKey instance")
 			);
 
@@ -111,11 +125,14 @@ exports.Keys = class Keys extends IBytesDict {
 		this.hint = new Hint(HINT_KEYS);
 		this.keys = keys;
 		this.threshold = new Big(threshold);
-		this.hash = sum256(this.bytes());
 	}
 
 	get address() {
-		return new addrJ.Address(bs58.encode(this.hash) + SUFFIX_ACCOUNT_ADDRESS);
+		return new Address(bs58.encode(sum256(this.bytes())) + SUFFIX_ACCOUNT_ADDRESS);
+	}
+
+	get etherAddress() {
+		return new Address(keccak256(this.bytes()).subarray(12).toString('hex') + SUFFIX_ETHER_ACCOUNT_ADDRESS);
 	}
 
 	bytes() {
@@ -130,9 +147,16 @@ exports.Keys = class Keys extends IBytesDict {
 	dict() {
 		return {
 			_hint: this.hint.toString(),
-			hash: bs58.encode(this.hash),
+			hash: bs58.encode(sum256(this.bytes())),
 			keys: this.keys.map((k) => k.dict()),
 			threshold: this.threshold.v,
 		};
 	}
+}
+
+module.exports = {
+	KEY_TYPE,
+	Key,
+	PublicKey,
+	Keys,
 };

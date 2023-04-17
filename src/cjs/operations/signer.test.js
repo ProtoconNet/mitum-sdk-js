@@ -23,7 +23,7 @@ describe("test: signer", () => {
             [item]
         );
 
-        const operation = new Operation(fact, "");
+        const operation = new Operation(fact);
 
         const signer = new Signer(TEST_GENESIS.m1.private);
         expect(() => signer.sign(operation.dict())).not.toThrow(Error);
@@ -38,8 +38,8 @@ describe("test: signer", () => {
             [item]
         );
 
-        const operation = new Operation(fact, "");
-        operation.sign(TEST_GENESIS.m1.private, null);
+        const operation = new Operation(fact);
+        operation.sign(TEST_GENESIS.m1.private);
 
         const signer = new Signer(m1.random().privateKey.toString());
         expect(() => signer.sign(operation.dict())).not.toThrow(Error);
@@ -54,7 +54,7 @@ describe("test: signer", () => {
             [item]
         );
 
-        const operation = new Operation(fact, "");
+        const operation = new Operation(fact);
 
         const signer = new Signer(TEST_GENESIS.m2.private);
         expect(() => signer.sign(operation.dict())).not.toThrow(Error);
@@ -69,8 +69,8 @@ describe("test: signer", () => {
             [item]
         );
 
-        const operation = new Operation(fact, "");
-        operation.sign(TEST_GENESIS.m2.private, null);
+        const operation = new Operation(fact);
+        operation.sign(TEST_GENESIS.m2.private);
 
         const signer = new Signer(m2.random().privateKey.toString());
         expect(() => signer.sign(operation.dict())).not.toThrow(Error);
@@ -92,7 +92,7 @@ describe("test: signer", () => {
             "2022-11-16T06:55:02.135231Z",
             items
         );
-        const operation = new Operation(fact, "");
+        const operation = new Operation(fact);
 
         const signer = new Signer(TEST_NODE.m2);
         expect(() =>
@@ -116,7 +116,7 @@ describe("test: signer", () => {
             "2022-11-16T06:55:02.135231Z",
             items
         );
-        const operation = new Operation(fact, "");
+        const operation = new Operation(fact);
         operation.sign(TEST_NODE.m2, { node: "node0sas" });
 
         const signer = new Signer(m2.random().privateKey.toString());

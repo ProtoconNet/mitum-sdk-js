@@ -1,4 +1,5 @@
 import { CurrencyItem } from "./item.js";
+import { OperationFact } from "../fact.js";
 
 import {
 	HINT_TRANSFERS_ITEM_MUL_AMOUNTS,
@@ -15,10 +16,9 @@ import {
 } from "../../base/error.js";
 
 import { Address, ZeroAddress } from "../../key/address.js";
+import { isZeroAddress } from "../../key/validation.js";
 
 import { sortBuf } from "../../utils/string.js";
-import { OperationFact } from "../fact.js";
-import { isZeroAddress } from "../../key/validation.js";
 
 export class TransfersItem extends CurrencyItem {
 	constructor(receiver, amounts) {

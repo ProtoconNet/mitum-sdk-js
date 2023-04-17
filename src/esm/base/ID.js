@@ -21,6 +21,14 @@ export class ID extends IBytes {
 	}
 
 	equal(id) {
+		if (!id) {
+			return false;
+		}
+
+		if (!id instanceof ID) {
+			return false;
+		}
+
 		return this.toString() === id.toString();
 	}
 

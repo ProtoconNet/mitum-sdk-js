@@ -1,15 +1,17 @@
-const m1 = require("./m1-keypair.js");
-const m2 = require("./m2-keypair.js");
+const { isAddress, isNodeAddress, isZeroAddress } = require("./validation.js");
 
-const keyJ = require("./key.js");
-const { isAddress, isNodeAddress } = require("./validation.js");
-
-const { MAX_KEYS_IN_ADDRESS, MAX_THRESHOLD } = require("../mitum.config.js");
+const { SUFFIX_ZERO_ADDRESS_LENGTH } = require("../mitum.config.js");
 
 const { IBytes } = require("../base/interface.js");
+const { CurrencyID } = require("../base/ID.js");
 const { assert, error, EC_INVALID_ADDRESS } = require("../base/error.js");
 
-exports.Address = class Address extends IBytes {
+const ADDRESS_TYPE = {
+	btc: "address/btc",
+	ether: "address/ether",
+};
+
+class BaseAddress extends IBytes {
 	constructor(s) {
 		super();
 		assert(
@@ -17,7 +19,7 @@ exports.Address = class Address extends IBytes {
 			error.type(EC_INVALID_ADDRESS, "not string")
 		);
 		assert(
-			isAddress(s) || isNodeAddress(s),
+			isAddress(s) || isNodeAddress(s) || isZeroAddress(s),
 			error.format(EC_INVALID_ADDRESS, "invalid length or address suffix")
 		);
 
@@ -31,39 +33,30 @@ exports.Address = class Address extends IBytes {
 	toString() {
 		return this.s;
 	}
-};
+}
 
-const randomN = (n, f) => {
-	if (typeof n !== "number") {
-		return null;
+class Address extends BaseAddress {
+	constructor(s) {
+		super(s);
+		assert(
+			isAddress(s) || isNodeAddress(s),
+			error.format(EC_INVALID_ADDRESS, "invalid length or address suffix")
+		);
 	}
+}
 
-	if (n < 1 || n > MAX_KEYS_IN_ADDRESS) {
-		return null;
+class ZeroAddress extends BaseAddress {
+	constructor(s) {
+		super(s);
+
+		assert(isZeroAddress(s), error.format(EC_INVALID_ADDRESS, "not zero address"));
+		
+		this.currency = new CurrencyID(this.s.substring(0, this.s.length - SUFFIX_ZERO_ADDRESS_LENGTH));s
 	}
+}
 
-	let weight = Math.floor(MAX_THRESHOLD / n);
-	if (MAX_THRESHOLD % n) {
-		weight += 1;
-	}
-
-	const ks = [];
-	const kps = [];
-	for (let i = 0; i < n; i++) {
-		kps.push(f());
-		ks.push(new keyJ.PublicKey(kps[i].publicKey.toString(), weight));
-	}
-
-	return {
-		keys: new keyJ.Keys(ks, MAX_THRESHOLD),
-		keypairs: kps,
-	};
-};
-
-exports.M1RandomN = (n) => {
-	return randomN(n, m1.random);
-};
-
-exports.M2RandomN = (n) => {
-	return randomN(n, m2.random);
+module.exports = {
+	ADDRESS_TYPE,
+	Address,
+	ZeroAddress,
 };

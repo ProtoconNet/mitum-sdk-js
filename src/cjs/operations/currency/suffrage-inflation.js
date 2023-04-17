@@ -44,7 +44,6 @@ class SuffrageInflationItem extends IBytesDict {
 		};
 	}
 }
-exports.SuffrageInflationItem = SuffrageInflationItem;
 
 class SuffrageInflationFact extends NodeFact {
 	constructor(token, items) {
@@ -104,4 +103,8 @@ class SuffrageInflationFact extends NodeFact {
 		return HINT_SUFFRAGE_INFLATION_OPERATION;
 	}
 }
-exports.SuffrageInflationFact = SuffrageInflationFact;
+
+module.exports = {
+	SuffrageInflationItem,
+	SuffrageInflationFact,
+};

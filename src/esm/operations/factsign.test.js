@@ -4,7 +4,7 @@ import { m2 } from "../key/m2-keypair";
 import { TimeStamp } from "../utils/time";
 
 describe("test: factsign", () => {
-	it("case: m1", () => {});
+	// it("case: m1", () => {});
 
 	it("case: m2", () => {
 		const tcs = [

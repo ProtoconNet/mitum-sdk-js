@@ -4,25 +4,25 @@ const {
 	EC_NOT_IMPLEMENTED_DICT,
 } = require("./error.js");
 
-exports.IBytes = class IBytes {
+class IBytes {
 	bytes() {
 		throw error.nimplement(
 			EC_NOT_IMPLEMENTED_BYTES,
 			"unimplemented method bytes()"
 		);
 	}
-};
+}
 
-exports.IDict = class IDict {
+class IDict {
 	dict() {
 		throw error.nimplement(
 			EC_NOT_IMPLEMENTED_DICT,
 			"unimplemented method dict()"
 		);
 	}
-};
+}
 
-exports.IBytesDict = class IBytesDict {
+class IBytesDict {
 	bytes() {
 		throw error.nimplement(
 			EC_NOT_IMPLEMENTED_BYTES,
@@ -36,4 +36,10 @@ exports.IBytesDict = class IBytesDict {
 			"unimplemented method dict()"
 		);
 	}
+}
+
+module.exports = {
+	IBytes,
+	IDict,
+	IBytesDict,
 };
