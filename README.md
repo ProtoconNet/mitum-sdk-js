@@ -31,7 +31,7 @@ $ npm i mitum-sdk
 
 ## Test
 
-Before testing, check `TEST_ID`, `TEST_NODE`, `TEST_GENESIS`, `TEST_ACCOUNT`, and etc in [mitum.config.js](mitum.config.js).
+Before testing, check `TEST_ID`, `TEST_NODE`, `TEST_GENESIS`, `TEST_ACCOUNT`, and etc in [esm/mitum.config.js](src/esm/mitum.config.js) or [csj/mitum.config.js](src/csj/mitum.config.js).
 
 You can test __mitum-sdk__ using this command:
 
@@ -100,7 +100,7 @@ You can generate key pairs in the following ways:
 The following functions are prepared for key pair generation.
 
 ```js
-const { KPGen } from "mitum-sdk";
+import { KPGen } from "mitum-sdk";
 
 // m1 btc key pair
 var ekp1 = KPGen.random();
@@ -130,7 +130,7 @@ _If you need a key pair for m2 and m2-ether signatures, use `KPGen.m2.(function)
 #### Get a random KeyPair
 
 ```js
-const { KPGen } from "mitum-sdk";
+import { KPGen } from "mitum-sdk";
 
 const keypair = KPGen.random(); // KeyPair instance
 
@@ -144,7 +144,7 @@ const pubStr = pub.toString(); // 22PVZv7Cizt7T2VUkL4QuR7pmfrprMqnFDEXFkDuJdWhSm
 #### Get N random KeyPairs with an address
 
 ```js
-const { KPGen } from "mitum-sdk";
+import { KPGen } from "mitum-sdk";
 
 const n = 5
 
@@ -158,7 +158,7 @@ const address = keys.address // Address instance
 ### From private key
 
 ```js
-const { KPGen } from "mitum-sdk";
+import { KPGen } from "mitum-sdk";
 
 const keypair = KPGen.fromPrivateKey("KwkuLfcHsxY3yGLT2wYWNgbuGD3Q1j3c7DJvaRLfmT8ujmayJUaJmpr"); // KeyPair instance
 
@@ -174,7 +174,7 @@ const pubStr = pub.toString(); // r3W57ffVSjnyMFQ6132ZoPj1jnbFhoSFCnDYYRq2tXQVmp
 The seed string length must be at least __36__.
 
 ```js
-const { KPGen } from "mitum-sdk";
+import { KPGen } from "mitum-sdk";
 
 const keypair = KPGen.fromSeed("Hello, world! ㅍㅅㅍ~ Hello, world! ㅍㅅㅍ~"); // KeyPair instance
 
@@ -208,7 +208,7 @@ An account can have up to __10 public keys__.
 To obtain an address from public keys, you must use the following classes:
 
 ```js
-const { PubKey, Keys } from "mitum-sdk";
+import { PubKey, Keys } from "mitum-sdk";
 
 var pub = new PubKey(/* public key; string */, /* weight; number */);
 var keys = new Keys(/* pub keys; PubKey Array */, /* threshold; number */);
@@ -225,7 +225,7 @@ Let's do the following as an example.
 Since __20 * 3 = 60__, you must sign the operation with at least __three keys__ when using this account to transfer the operation.
 
 ```js
-const { PubKey, Keys } from "mitum-sdk";
+import { PubKey, Keys } from "mitum-sdk";
 
 const pubs = [
   	{
@@ -248,7 +248,7 @@ const pubs = [
 	  	weight: 20,
 		key: "bkPHGdsHSzRGe3NZ2hkzTSPyJx42BRaXetzy1bgBmbaAmpu",
 	},
-]¸
+];
 const threshold = 60;
 
 const mpubs = pubs.map(pub => new PubKey(pub.key, pub.weight));
@@ -302,7 +302,7 @@ First, suppose you create an account with the following settings:
 * initial balance: 1000 MCC, 500 PEN
 
 ```js
-const { TimeStamp, KPGen, Amount, Currency, Operation } from "mitum-sdk";
+import { TimeStamp, KPGen, Amount, Currency, Operation } from "mitum-sdk";
 
 // create 5 new public keys
 const { keys, keypairs } = KPGen.randomN(5);
@@ -330,7 +330,7 @@ operation.sign(senderPrivate);
 To generate `Keys` with thresholds and weights, use `PubKey` and `Keys` as follows:
 
 ```js
-const { /* KPGen, */ PubKey, Keys, Currency } from "mitum-sdk";
+import { /* KPGen, */ PubKey, Keys, Currency } from "mitum-sdk";
 
 // const randomPub = KPGen.random().publicKey.toString();
 
@@ -354,7 +354,7 @@ When creating an item for sending to __mitum2__, you must specify the `address-t
 If you are creating an item for __mitum1__, put emtpy string in the `address-type` or leave it blank at all.
 
 ```js
-const { ..., Currency, ADDRESS_TYPE } from "mitum-sdk";
+import { ..., Currency, ADDRESS_TYPE } from "mitum-sdk";
 
 const m1Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount]); // m1 btc type account
 // const m1Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], '');
@@ -377,7 +377,7 @@ First, suppose you add a new key to your account as follows:
 * currency to pay the fee: MCC
 
 ```js
-const { TimeStamp, PubKey, Keys, Currency, Operation } from "mitum-sdk";
+import { TimeStamp, PubKey, Keys, Currency, Operation } from "mitum-sdk";
 
 const pub1 = "22PVZv7Cizt7T2VUkL4QuR7pmfrprMqnFDEXFkDuJdWhSmpu"; // new pub1
 const pub2 = "yX3YBvu597eNgwuuJpsnZunZcDkABVeqfmiyveKuNregmpu"; // new pub2
@@ -405,7 +405,7 @@ Suppose you transfer tokens to a general account as follows:
 * tokens to transfer: 1000 MCC, 100 PEN
 
 ```js
-const { TimeStamp, Amount, Currency, Operation } from "mitum-sdk";
+import { TimeStamp, Amount, Currency, Operation } from "mitum-sdk";
 
 const receiver = "8iRVFAPiHKaeznfN3CmNjtFtjYSPMPKLuL6qkaJz8RLumca";
 const mccAmount = new Amount("MCC", "1000");
@@ -437,7 +437,7 @@ __(1) Feeer__
 First, you need to create a `feeer` that contains the contents of each fee policy.
 
 ```js
-const { Currency } from "mitum-sdk";
+import { Currency } from "mitum-sdk";
 
 const feeReceiver = "DBa8N5of7LZkx8ngH4mVbQmQ2NHDd6gL2mScGfhAEqddmca"; // receiver address to receive fees;
 
@@ -460,7 +460,7 @@ __(2) Operation__
 Then, create an operation.
 
 ```js
-const { TimeStamp, Amount, Currency, Operation, SIG_TYPE } from "mitum-sdk";
+import { TimeStamp, Amount, Currency, Operation, SIG_TYPE } from "mitum-sdk";
 
 // creating feeer
 // ...
@@ -489,7 +489,7 @@ __currency-policy-updater__ is an operation that allows you to update policies o
 Here, the way to create a feeer is the same as [currency-register](#currency-register).
 
 ```js
-const { TimeStamp, Currency, Operation, SIG_TYPE } from "mitum-sdk";
+import { TimeStamp, Currency, Operation, SIG_TYPE } from "mitum-sdk";
 
 const currency = "MCC"; // currency id to update `policy`
 
@@ -522,7 +522,7 @@ Assume that you supply tokens as follows:
 * supply TST: receiver5, 999991888 tokens
 
 ```js
-const { TimeStamp, Amount, Currency, Operation, SIG_TYPE } from "mitum-sdk";
+import { TimeStamp, Amount, Currency, Operation, SIG_TYPE } from "mitum-sdk";
 
 const receiver1 = "receiver1's account address";
 ...
@@ -564,7 +564,7 @@ First, suppose you create a contract account with the following settings:
 Here, the weight and threshold are only used to generate the account address and do not affect the behavior of the account at all after the account is registered.
 
 ```js
-const { TimeStamp, KPGen, Amount, Currency, Operation } from "mitum-sdk";
+import { TimeStamp, KPGen, Amount, Currency, Operation } from "mitum-sdk";
 
 // create 5 new public keys
 const { keys, keypairs } = KPGen.randomN(5); // use KPGen.m2.randomN(5) for m2 key pairs
@@ -610,7 +610,7 @@ Suppose your contract account is __DBa8N5of7LZkx8ngH4mVbQmQ2NHDd6gL2mScGfhAEqdmc
 * tokens to transfer: 1000 MCC, 100 PEN
 
 ```js
-const { TimeStamp, Amount, Currency, Operation } from "mitum-sdk";
+import { TimeStamp, Amount, Currency, Operation } from "mitum-sdk";
 
 const contractAccount = "8iRVFAPiHKaeznfN3CmNjtFtjYSPMPKLuL6qkaJz8RLumca";
 const mccAmount = new Amount("MCC", "1000");
@@ -634,7 +634,7 @@ __seal__ is not used in mitum2. Therefore, only operations with __sig-type: DEFA
 Here's how to create a seal:
 
 ```js
-const { Seal } from "mitum-sdk";
+import { Seal } from "mitum-sdk";
 
 const nodePrivateKey = "KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr";
 
@@ -649,7 +649,7 @@ seal.sign(nodePrivateKey);
 You can add a new signature to a operation json using __Signer__ class.
 
 ```js
-const { Signer } from "mitum-sdk";
+import { Signer } from "mitum-sdk";
 
 const json = { /* your operation json */ };
 
@@ -689,7 +689,7 @@ To change the mitum version of every objects, add the following code to the part
 The default version is `v0.0.1`.
 
 ```js
-const { useV } from "mitum-sdk";
+import { useV } from "mitum-sdk";
 
 useV("v0.0.2");
 ```
@@ -701,7 +701,7 @@ To apply your network id to operations, add the following code to the part where
 The default id is `mitum`.
 
 ```js
-const { useId } from "mitum-sdk";
+import { useId } from "mitum-sdk";
 
 useId("mainnet");
 ```
@@ -735,7 +735,7 @@ operation.setFactSigns(/* FactSign instances */);
 `FactSign` can be created by...
 
 ```js
-const { FactSign } from "mitum-sdk";
+import { FactSign } from "mitum-sdk";
 
 const m1fs = new M1FactSign(/* signer */, /* signature; buffer */, /* signed_at */);
 const m2fs = new M2FactSign(/* signer */, /* signature; buffer */, /* signed_at */);
