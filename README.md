@@ -23,7 +23,7 @@ You can install this package locally using this command:
 $ npm i
 ```
 
-~~You can install __mitum-sdk__ using this command:~~ Not yet published
+You can install __mitum-sdk__ using this command:
 
 ```sh
 $ npm i mitum-sdk
