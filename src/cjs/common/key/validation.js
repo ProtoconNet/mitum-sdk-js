@@ -1,5 +1,5 @@
-import { SUFFIX_LENGTH, SUFFIX_ZERO_ADDRESS_LENGTH } from "../mitum.config.js";
-import {
+const { SUFFIX_LENGTH, SUFFIX_ZERO_ADDRESS_LENGTH  } = require("../../mitum.config.js");
+const {
 	SUFFIX_ACCOUNT_ADDRESS,
 	SUFFIX_ETHER_ACCOUNT_ADDRESS,
 	SUFFIX_KEY_ETHER_PRIVATE,
@@ -8,67 +8,67 @@ import {
 	SUFFIX_KEY_PUBLIC,
 	SUFFIX_NODE_ADDRESS,
 	SUFFIX_ZERO_ADDRESS,
-} from "../alias/key.js";
+} = require("../../alias/key.js");
 
-import { assert, error, EC_INVALID_KEY } from "../base/error.js";
+const { assert, error, EC_INVALID_KEY } = require("../../base/error.js");
 
-export const isPrivateKeySuffix = (s) => {
+const isPrivateKeySuffix = (s) => {
 	return typeof s === "string" && (s === SUFFIX_KEY_PRIVATE || s === SUFFIX_KEY_ETHER_PRIVATE);
 };
 
-export const isPublicKeySuffix = (s) => {
+const isPublicKeySuffix = (s) => {
 	return typeof s === "string" && (s === SUFFIX_KEY_PUBLIC || s === SUFFIX_KEY_ETHER_PUBLIC);
 };
 
-export const isMitumPrivateKeySuffix = (s) => {
+const isMitumPrivateKeySuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_KEY_PRIVATE;
 };
 
-export const isMitumPublicKeySuffix = (s) => {
+const isMitumPublicKeySuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_KEY_PUBLIC;
 };
 
-export const isM2EtherPrivateKeySuffix = (s) => {
+const isM2EtherPrivateKeySuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_KEY_ETHER_PRIVATE;
 };
 
-export const isM2EtherPublicKeySuffix = (s) => {
+const isM2EtherPublicKeySuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_KEY_ETHER_PUBLIC;
 };
 
-export const isMitumKeySuffix = (s) => {
+const isMitumKeySuffix = (s) => {
 	return isMitumPrivateKeySuffix(s) || isMitumPublicKeySuffix(s);
 };
 
-export const isM2EtherKeySuffix = (s) => {
+const isM2EtherKeySuffix = (s) => {
 	return isM2EtherPrivateKeySuffix(s) || isM2EtherPublicKeySuffix(s);
 };
 
-export const isKeySuffix = (s) => {
+const isKeySuffix = (s) => {
 	return isPrivateKeySuffix(s) || isPublicKeySuffix(s);
 };
 
-export const isMitumAddressSuffix = (s) => {
+const isMitumAddressSuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_ACCOUNT_ADDRESS;
 };
 
-export const isM2EtherAddressSuffix = (s) => {
+const isM2EtherAddressSuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_ETHER_ACCOUNT_ADDRESS;
 };
 
-export const isZeroAddressSuffix = (s) => {
+const isZeroAddressSuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_ZERO_ADDRESS;
 }
 
-export const isAddressSuffix = (s) => {
+const isAddressSuffix = (s) => {
 	return isMitumAddressSuffix(s) || isM2EtherAddressSuffix(s);
 };
 
-export const isNodeAddressSuffix = (s) => {
+const isNodeAddressSuffix = (s) => {
 	return typeof s === "string" && s === SUFFIX_NODE_ADDRESS;
 };
 
-export const isM1PrivateKey = (s) => {
+const isM1PrivateKey = (s) => {
 	if (typeof s !== "string") {
 		return false;
 	}
@@ -84,7 +84,7 @@ export const isM1PrivateKey = (s) => {
 	return isMitumPrivateKeySuffix(s.substring(s.length - SUFFIX_LENGTH));
 };
 
-export const isM2PrivateKey = (s) => {
+const isM2PrivateKey = (s) => {
 	if (typeof s !== "string") {
 		return false;
 	}
@@ -96,7 +96,7 @@ export const isM2PrivateKey = (s) => {
 	return isMitumPrivateKeySuffix(s.substring(s.length - SUFFIX_LENGTH));
 };
 
-export const isM2EtherPrivateKey = (s) => {
+const isM2EtherPrivateKey = (s) => {
 	if (typeof s !== "string") {
 		return false;
 	}
@@ -108,7 +108,7 @@ export const isM2EtherPrivateKey = (s) => {
 	return isM2EtherPrivateKeySuffix(s.substring(s.length - SUFFIX_LENGTH));
 };
 
-export const isMitumPublicKey = (s) => {
+const isMitumPublicKey = (s) => {
 	if (typeof s !== "string") {
 		return false;
 	}
@@ -120,7 +120,7 @@ export const isMitumPublicKey = (s) => {
 	return isMitumPublicKeySuffix(s.substring(s.length - SUFFIX_LENGTH));
 };
 
-export const isM2EtherPublicKey = (s) => {
+const isM2EtherPublicKey = (s) => {
 	if (typeof s !== "string") {
 		return false;
 	}
@@ -132,23 +132,23 @@ export const isM2EtherPublicKey = (s) => {
 	return isM2EtherPublicKeySuffix(s.substring(s.length - SUFFIX_LENGTH));
 };
 
-export const isM1Key = (s) => {
+const isM1Key = (s) => {
 	return isM1PrivateKey(s) || isMitumPublicKey(s);
 };
 
-export const isM2Key = (s) => {
+const isM2Key = (s) => {
 	return isM2PrivateKey(s) || isMitumPublicKey(s);
 };
 
-export const isM2EtherKey = (s) => {
+const isM2EtherKey = (s) => {
 	return isM2EtherPrivateKey(s) || isM2EtherPublicKey(s);
 };
 
-export const isKey = (s) => {
+const isKey = (s) => {
 	return isM2Key(s) || isM1Key(s) || isM2EtherKey(s);
 };
 
-export const isAddress = (s) => {
+const isAddress = (s) => {
 	if (typeof s !== "string") {
 		return false;
 	}
@@ -160,7 +160,7 @@ export const isAddress = (s) => {
 	return isAddressSuffix(s.substring(s.length - SUFFIX_LENGTH));
 };
 
-export const isNodeAddress = (s) => {
+const isNodeAddress = (s) => {
 	if (typeof s !== "string" || s.length < 3) {
 		return false;
 	}
@@ -168,7 +168,7 @@ export const isNodeAddress = (s) => {
 	return isNodeAddressSuffix(s.substring(s.length - SUFFIX_LENGTH));
 };
 
-export const isZeroAddress = (s) => {
+const isZeroAddress = (s) => {
 	if (typeof s !== "string" || s.length < 8 || s.length > 15) {
 		return false;
 	}
@@ -176,7 +176,7 @@ export const isZeroAddress = (s) => {
 	return isZeroAddressSuffix(s.substring(s.length - SUFFIX_ZERO_ADDRESS_LENGTH));
 };
 
-export const parseKey = (s) => {
+const parseKey = (s) => {
 	assert(
 		isKey(s),
 		error.format(EC_INVALID_KEY, "invalid type, length or key suffix")
@@ -189,4 +189,34 @@ export const parseKey = (s) => {
 		key,
 		suffix,
 	};
+};
+
+module.exports = {
+	isPrivateKeySuffix,
+	isPublicKeySuffix,
+	isMitumPrivateKeySuffix,
+	isMitumPublicKeySuffix,
+	isM2EtherPrivateKeySuffix,
+	isM2EtherPublicKeySuffix,
+	isMitumKeySuffix,
+	isM2EtherKeySuffix,
+	isKeySuffix,
+	isMitumAddressSuffix,
+	isM2EtherAddressSuffix,
+	isZeroAddressSuffix,
+	isAddressSuffix,
+	isNodeAddressSuffix,
+	isM1PrivateKey,
+	isM2PrivateKey,
+	isM2EtherPrivateKey,
+	isMitumPublicKey,
+	isM2EtherPublicKey,
+	isM1Key,
+	isM2Key,
+	isM2EtherKey,
+	isKey,
+	isAddress,
+	isNodeAddress,
+	isZeroAddress,
+	parseKey,
 };

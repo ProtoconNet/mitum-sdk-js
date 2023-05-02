@@ -1,6 +1,6 @@
 const bs58 = require("bs58");
 
-const { Amount } = require("./amount");
+const { Amount } = require("../../common/amount/amount");
 const { TransfersFact, TransfersItem } = require("./transfers");
 const { Operation } = require("../operation");
 

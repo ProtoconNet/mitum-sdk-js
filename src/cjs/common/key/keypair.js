@@ -1,22 +1,22 @@
-import bs58 from "bs58";
-import * as secp256k1 from "@noble/secp256k1";
-import { getPublicCompressed } from "eccrypto-js";
+const bs58 = require("bs58");
+const secp256k1 = require("@noble/secp256k1");
+const { getPublicCompressed } = require("eccrypto-js");
 
-import { Key, KEY_TYPE } from "./key.js";
+const { Key, KEY_TYPE } = require("./key.js");
 
-import { SUFFIX_KEY_ETHER_PUBLIC, SUFFIX_KEY_PUBLIC } from "../alias/key.js";
-import {
+const { SUFFIX_KEY_ETHER_PUBLIC, SUFFIX_KEY_PUBLIC } = require("../../alias/key.js");
+const {
 	assert,
 	error,
 	EC_INVALID_KEY_PAIR,
 	EC_NOT_IMPLEMENTED_METHOD,
 	EC_INVALID_SEED,
-} from "../base/error.js";
+} = require("../../base/error.js");
 
-import { Big } from "../utils/number.js";
-import { sum256 } from "../utils/hash.js";
+const { Big } = require("../../utils/number.js");
+const { sum256 } = require("../../utils/hash.js");
 
-export class KeyPair {
+class KeyPair {
 	constructor(privateKey) {
 		assert(
 			privateKey instanceof Key,
@@ -59,7 +59,7 @@ export class KeyPair {
 	}
 }
 
-export const K = (seed) => {
+const K = (seed) => {
 	seed = Buffer.from(bs58.encode(sum256(Buffer.from(seed))));
 
 	assert(seed.length >= 40, error.format(EC_INVALID_SEED, "invalid length"))
@@ -73,3 +73,8 @@ export const K = (seed) => {
 
 	return k;
 };
+
+module.exports = {
+	KeyPair,
+	K,
+}

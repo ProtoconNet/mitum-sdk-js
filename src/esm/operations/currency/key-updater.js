@@ -10,8 +10,8 @@ import {
 import { assert, error, EC_INVALID_KEYS } from "../../base/error.js";
 import { CurrencyID } from "../../base/ID.js";
 
-import { Keys } from "../../key/key.js";
-import { Address } from "../../key/address.js";
+import { Keys } from "../../common/key/key.js";
+import { Address } from "../../common/key/address.js";
 
 export class KeyUpdaterFact extends Fact {
 	constructor(token, target, keys, currency) {

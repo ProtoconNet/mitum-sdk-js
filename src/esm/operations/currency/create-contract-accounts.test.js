@@ -1,6 +1,6 @@
 import bs58 from "bs58";
 
-import { Amount } from "./amount";
+import { Amount } from "../../common/amount/amount";
 import {
 	CreateContractAccountsFact,
 	CreateContractAccountsItem,
@@ -9,7 +9,7 @@ import { Operation } from "../operation";
 
 import { TEST_ACCOUNT, TEST_GENESIS } from "../../mitum.config";
 
-import { Keys, PublicKey } from "../../key/key";
+import { Keys, PublicKey } from "../../common/key/key";
 import { TimeStamp } from "../../utils/time";
 
 describe("test: create-contract-account", () => {

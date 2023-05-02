@@ -1,6 +1,6 @@
 const bs58 = require("bs58");
 
-const { Amount } = require("./amount.js");
+const { Amount } = require("../../common/amount/amount.js");
 const { NodeFact } = require("../fact.js");
 
 const { MAX_ITEMS_IN_FACT } = require("../../mitum.config.js");
@@ -20,7 +20,7 @@ const {
 } = require("../../base/error.js");
 const { Item } = require("../item.js");
 
-const { Address } = require("../../key/address.js");
+const { Address } = require("../../common/key/address.js");
 const { sortBuf } = require("../../utils/string.js");
 
 class SuffrageInflationItem extends Item {

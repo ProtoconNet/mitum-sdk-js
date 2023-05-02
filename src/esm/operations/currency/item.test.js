@@ -1,4 +1,4 @@
-import { Amount } from "./amount";
+import { Amount } from "../../common/amount/amount";
 import { CurrencyItem } from "./item";
 
 describe("test: currency item", () => {

@@ -1,4 +1,4 @@
-const { Amount } = require("./amount.js");
+const { Amount } = require("../../common/amount/amount.js");
 
 const { Item } = require("../item.js");
 

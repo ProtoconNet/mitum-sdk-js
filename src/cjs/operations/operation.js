@@ -34,7 +34,7 @@ const { TimeStamp } = require("../utils/time.js");
 const { id, SIG_TYPE } = require("../utils/config.js");
 const { exist, findKeyPair } = require("../utils/tools.js");
 
-const { Address } = require("../key/address.js");
+const { Address } = require("../common/key/address.js");
 
 const { CreateAccountsFact } = require("./currency/create-accounts.js");
 const { CreateContractAccountsFact } = require("../../cjs/operations/currency/create-contract-accounts.js");

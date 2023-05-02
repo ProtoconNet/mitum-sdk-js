@@ -1,4 +1,4 @@
-const { Amount } = require("./amount");
+const { Amount } = require("../../common/amount/amount");
 const { CurrencyItem } = require("./item");
 
 describe("test: currency item", () => {

@@ -5,7 +5,7 @@ import { Operation } from "../operation";
 
 import { TEST_GENESIS, TEST_ACCOUNT } from "../../mitum.config";
 
-import { Keys, PublicKey } from "../../key/key";
+import { Keys, PublicKey } from "../../common/key/key";
 
 describe("test: key-updater", () => {
 	it("case: m1; operation", () => {

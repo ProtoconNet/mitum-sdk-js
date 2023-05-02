@@ -1,10 +1,10 @@
-const m1 = require("./m1-keypair.js");
-const m2 = require("./m2-keypair.js");
-const m2ether = require("./m2-ether-keypair.js");
+import { m1 } from "./m1-keypair.js";
+import { m2 } from "./m2-keypair.js";
+import { m2ether } from "./m2-ether-keypair.js";
 
-const { Keys, PublicKey } = require("./key.js");
+import { Keys, PublicKey } from "./key.js";
 
-const { MAX_KEYS_IN_ADDRESS, MAX_THRESHOLD } = require("../mitum.config.js");
+import { MAX_KEYS_IN_ADDRESS, MAX_THRESHOLD } from "../../mitum.config.js";
 
 const randomN = (n, f) => {
     if (typeof n !== "number") {
@@ -33,14 +33,14 @@ const randomN = (n, f) => {
     };
 };
 
-exports.M1RandomN = (n) => {
+export const M1RandomN = (n) => {
     return randomN(n, m1.random);
 };
 
-exports.M2RandomN = (n) => {
+export const M2RandomN = (n) => {
     return randomN(n, m2.random);
 };
 
-exports.M2EtherRandomN = (n) => {
+export const M2EtherRandomN = (n) => {
     return randomN(n, m2ether.random);
 };

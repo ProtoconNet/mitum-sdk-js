@@ -16,7 +16,7 @@ const {
 	error,
 } = require("../base/error.js");
 
-const { Address } = require("../key/address.js");
+const { Address } = require("../common/key/address.js");
 
 const { sum256 } = require("../utils/hash.js");
 const { sortBuf } = require("../utils/string.js");

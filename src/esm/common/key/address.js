@@ -1,12 +1,12 @@
-const { isAddress, isNodeAddress, isZeroAddress } = require("./validation.js");
+import { isAddress, isNodeAddress, isZeroAddress } from "./validation.js";
 
-const { SUFFIX_ZERO_ADDRESS_LENGTH } = require("../mitum.config.js");
+import { SUFFIX_ZERO_ADDRESS_LENGTH } from "../../mitum.config.js";
 
-const { IBytes } = require("../base/interface.js");
-const { CurrencyID } = require("../base/ID.js");
-const { assert, error, EC_INVALID_ADDRESS } = require("../base/error.js");
+import { IBytes } from "../../base/interface.js";
+import { CurrencyID } from "../../base/ID.js";
+import { assert, error, EC_INVALID_ADDRESS } from "../../base/error.js";
 
-const ADDRESS_TYPE = {
+export const ADDRESS_TYPE = {
 	btc: "address/btc",
 	ether: "address/ether",
 };
@@ -35,7 +35,7 @@ class BaseAddress extends IBytes {
 	}
 }
 
-class Address extends BaseAddress {
+export class Address extends BaseAddress {
 	constructor(s) {
 		super(s);
 		assert(
@@ -45,7 +45,7 @@ class Address extends BaseAddress {
 	}
 }
 
-class ZeroAddress extends BaseAddress {
+export class ZeroAddress extends BaseAddress {
 	constructor(s) {
 		super(s);
 
@@ -54,9 +54,3 @@ class ZeroAddress extends BaseAddress {
 		this.currency = new CurrencyID(this.s.substring(0, this.s.length - SUFFIX_ZERO_ADDRESS_LENGTH));s
 	}
 }
-
-module.exports = {
-	ADDRESS_TYPE,
-	Address,
-	ZeroAddress,
-};

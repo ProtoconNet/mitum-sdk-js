@@ -34,7 +34,7 @@ import { TimeStamp } from "../utils/time.js";
 import { id, SIG_TYPE } from "../utils/config.js";
 import { exist, findKeyPair } from "../utils/tools.js";
 
-import { Address } from "../key/address.js";
+import { Address } from "../common/key/address.js";
 
 import { CreateAccountsFact } from "./currency/create-accounts.js";
 import { CreateContractAccountsFact } from "../../cjs/operations/currency/create-contract-accounts.js";

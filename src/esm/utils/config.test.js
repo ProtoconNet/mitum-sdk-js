@@ -5,9 +5,9 @@ import { useId, useV } from "./config";
 
 import { TEST_ACCOUNT, TEST_GENESIS } from "../mitum.config";
 
-import { Keys, PublicKey } from "../key/key";
+import { Keys, PublicKey } from "../common/key/key";
 
-import { Amount } from "../operations/currency/amount";
+import { Amount } from "../common/amount/amount";
 import {
 	CreateAccountsFact,
 	CreateAccountsItem,

@@ -20,13 +20,13 @@ const { Hint } = require("./base/hint.js");
 const { IBytes, IDict, IBytesDict } = require("./base/interface.js");
 const { Token } = require("./base/token.js");
 
-const m1 = require("./key/m1-keypair.js");
-const m2 = require("./key/m2-keypair.js");
-const m2ether = require("./key/m2-ether-keypair.js");
+const m1 = require("./common/key/m1-keypair.js");
+const m2 = require("./common/key/m2-keypair.js");
+const m2ether = require("./common/key/m2-ether-keypair.js");
 
-const { Address, ZeroAddress, ADDRESS_TYPE } = require("./key/address.js");
-const { PublicKey, Keys, KEY_TYPE } = require("./key/key.js");
-const { M1RandomN, M2RandomN, M2EtherRandomN } = require("./key/random.js");
+const { Address, ZeroAddress, ADDRESS_TYPE } = require("./common/key/address.js");
+const { PublicKey, Keys, KEY_TYPE } = require("./common/key/key.js");
+const { M1RandomN, M2RandomN, M2EtherRandomN } = require("./common/key/random.js");
 
 const { Item } = require("./operations/item.js");
 const { Fact, OperationFact, NodeFact } = require("./operations/fact.js");
@@ -37,7 +37,7 @@ const { Operation } = require("./operations/operation.js");
 
 const { Signer } = require("./operations/signer.js");
 
-const { Amount } = require("./operations/currency/amount.js");
+const { Amount } = require("./common/amount/amount.js");
 const {
 	CreateAccountsItem,
 	CreateAccountsFact,

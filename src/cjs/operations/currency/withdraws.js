@@ -14,7 +14,7 @@ const {
 	EC_INVALID_ITEM,
 } = require("../../base/error.js");
 
-const { Address } = require("../../key/address.js");
+const { Address } = require("../../common/key/address.js");
 
 const { sortBuf } = require("../../utils/string.js");
 

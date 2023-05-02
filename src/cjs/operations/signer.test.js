@@ -1,7 +1,7 @@
 const { Signer } = require("./signer");
 const { Operation } = require("./operation");
 
-const { Amount } = require("./currency/amount");
+const { Amount } = require("../common/amount/amount");
 const { TransfersFact, TransfersItem } = require("./currency/transfers");
 const {
     SuffrageInflationFact,
@@ -10,8 +10,8 @@ const {
 
 const { TEST_ACCOUNT, TEST_GENESIS, TEST_NODE } = require("../mitum.config");
 
-const m1 = require("../key/m1-keypair");
-const m2 = require("../key/m2-keypair");
+const m1 = require("../common/key/m1-keypair");
+const m2 = require("../common/key/m2-keypair");
 
 describe("test: signer", () => {
     it("case: m1; no sign", () => {

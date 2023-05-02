@@ -6,9 +6,9 @@ const { Hint } = require("../base/hint.js");
 const { IBytesDict } = require("../base/interface.js");
 const { assert, error, EC_INVALID_PUBLIC_KEY } = require("../base/error.js");
 
-const { Key } = require("../key/key.js");
-const { Address } = require("../key/address.js");
-const { isM2EtherPublicKey, isMitumPublicKey } = require("../key/validation.js");
+const { Key } = require("../common/key/key.js");
+const { Address } = require("../common/key/address.js");
+const { isM2EtherPublicKey, isMitumPublicKey } = require("../common/key/validation.js");
 
 const { FullTimeStamp } = require("../utils/time.js");
 

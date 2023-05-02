@@ -4,9 +4,9 @@ const { TimeStamp } = require("./time");
 const { useId, useV } = require("./config");
 
 const { TEST_ACCOUNT, TEST_GENESIS } = require("../mitum.config");
-const { Keys, PublicKey } = require("../key/key");
+const { Keys, PublicKey } = require("../common/key/key");
 
-const { Amount } = require("../operations/currency/amount");
+const { Amount } = require("../common/amount/amount");
 const {
 	CreateAccountsFact,
 	CreateAccountsItem,

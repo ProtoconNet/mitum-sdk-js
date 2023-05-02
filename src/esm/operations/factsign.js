@@ -6,9 +6,9 @@ import { Hint } from "../base/hint.js";
 import { IBytesDict } from "../base/interface.js";
 import { assert, error, EC_INVALID_PUBLIC_KEY } from "../base/error.js";
 
-import { Key } from "../key/key.js";
-import { Address } from "../key/address.js";
-import { isM2EtherPublicKey, isMitumPublicKey } from "../key/validation.js";
+import { Key } from "../common/key/key.js";
+import { Address } from "../common/key/address.js";
+import { isM2EtherPublicKey, isMitumPublicKey } from "../common/key/validation.js";
 
 import { FullTimeStamp } from "../utils/time.js";
 

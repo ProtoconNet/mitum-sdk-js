@@ -15,8 +15,8 @@ const {
 	EC_INVALID_AMOUNT,
 } = require("../../base/error.js");
 
-const { Address, ZeroAddress } = require("../../key/address.js");
-const { isZeroAddress } = require("../../key/validation.js");
+const { Address, ZeroAddress } = require("../../common/key/address.js");
+const { isZeroAddress } = require("../../common/key/validation.js");
 
 const { sortBuf } = require("../../utils/string.js");
 

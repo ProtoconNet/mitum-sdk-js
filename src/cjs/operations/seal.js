@@ -18,8 +18,8 @@ const {
 	EC_INVALID_SEAL,
 } = require("../base/error.js");
 
-const m1 = require("../key/m1-keypair.js");
-const { isM1PrivateKey } = require("../key/validation.js");
+const m1 = require("../common/key/m1-keypair.js");
+const { isM1PrivateKey } = require("../common/key/validation.js");
 
 const { exist } = require("../utils/tools.js");
 const { sum256 } = require("../utils/hash.js");

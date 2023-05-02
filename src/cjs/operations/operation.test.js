@@ -5,7 +5,7 @@ const { TEST_ACCOUNT, TEST_GENESIS } = require("../mitum.config");
 const { M1FactSign, M2FactSign } = require("./factsign");
 const { Operation } = require("./operation");
 
-const { Amount } = require("./currency/amount");
+const { Amount } = require("../common/amount/amount");
 const { TransfersFact, TransfersItem } = require("./currency/transfers");
 const { TimeStamp } = require("../utils/time");
 

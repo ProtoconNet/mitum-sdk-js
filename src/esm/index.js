@@ -20,13 +20,13 @@ import { Hint } from "./base/hint.js";
 import { IBytes, IDict, IBytesDict } from "./base/interface.js";
 import { Token } from "./base/token.js";
 
-import { m1 } from "./key/m1-keypair.js";
-import { m2 } from "./key/m2-keypair.js";
-import { m2ether } from "./key/m2-ether-keypair.js";
+import { m1 } from "./common/key/m1-keypair.js";
+import { m2 } from "./common/key/m2-keypair.js";
+import { m2ether } from "./common/key/m2-ether-keypair.js";
 
-import { Address, ZeroAddress, ADDRESS_TYPE } from "./key/address.js";
-import { PublicKey, Keys, KEY_TYPE } from "./key/key.js";
-import { M1RandomN, M2RandomN, M2EtherRandomN } from "./key/random.js";
+import { Address, ZeroAddress, ADDRESS_TYPE } from "./common/key/address.js";
+import { PublicKey, Keys, KEY_TYPE } from "./common/key/key.js";
+import { M1RandomN, M2RandomN, M2EtherRandomN } from "./common/key/random.js";
 
 import { Item } from "./operations/item.js";
 import { Fact, OperationFact, NodeFact } from "./operations/fact.js";
@@ -37,7 +37,7 @@ import { Operation } from "./operations/operation.js";
 
 import { Signer } from "./operations/signer.js";
 
-import { Amount } from "./operations/currency/amount.js";
+import { Amount } from "./common/amount/amount.js";
 import {
 	CreateAccountsItem,
 	CreateAccountsFact,

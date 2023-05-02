@@ -1,27 +1,27 @@
-const bs58 = require("bs58");
-const bs58check = require("bs58check");
-const secureRandom = require("secure-random");
+import bs58 from "bs58";
+import bs58check from "bs58check";
+import secureRandom from "secure-random";
 
-const { hmac } = require("@noble/hashes/hmac");
-const nobleSha256 = require("@noble/hashes/sha256").sha256;
-const secp256k1 = require("@noble/secp256k1");
+import { hmac } from "@noble/hashes/hmac";
+import { sha256 as nobleSha256 } from "@noble/hashes/sha256";
+import * as secp256k1 from "@noble/secp256k1";
 
-const { Key } = require("./key.js");
-const { K, KeyPair } = require("./keypair.js");
+import { Key } from "./key.js";
+import { K, KeyPair } from "./keypair.js";
 
-const { MIN_SEED_LENGTH } = require("../mitum.config.js");
+import { MIN_SEED_LENGTH } from "../../mitum.config.js";
 
-const { SUFFIX_KEY_PRIVATE } = require("../alias/key.js");
-const {
+import { SUFFIX_KEY_PRIVATE } from "../../alias/key.js";
+import {
 	assert,
 	error,
 	EC_INVALID_SEED,
 	EC_INVALID_PRIVATE_KEY,
-} = require("../base/error.js");
+} from "../../base/error.js";
 
-const { sha256 } = require("../utils/hash.js");
+import { sha256 } from "../../utils/hash.js";
 
-const { isM1PrivateKey } = require("./validation.js");
+import { isM1PrivateKey } from "./validation.js";
 
 class M1KeyPair extends KeyPair {
 	constructor(privateKey) {
@@ -87,7 +87,7 @@ const encK = (k) => {
 	return bs58.encode(Buffer.concat([priv, checksum]));
 };
 
-module.exports = {
+export const m1 = {
 	random,
 	fromPrivateKey,
 	fromSeed,

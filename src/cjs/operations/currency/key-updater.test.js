@@ -5,7 +5,7 @@ const { Operation } = require("../operation");
 
 const { TEST_GENESIS, TEST_ACCOUNT } = require("../../mitum.config");
 
-const { Keys, PublicKey } = require("../../key/key");
+const { Keys, PublicKey } = require("../../common/key/key");
 
 describe("test: key-updater", () => {
 	it("case: m1; operation", () => {

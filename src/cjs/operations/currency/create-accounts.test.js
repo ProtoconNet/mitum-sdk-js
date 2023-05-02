@@ -1,14 +1,14 @@
 const bs58 = require("bs58");
 
-const { Amount } = require("./amount");
+const { Amount } = require("../../common/amount/amount");
 const { CreateAccountsFact, CreateAccountsItem } = require("./create-accounts");
 
 const { Operation } = require("../operation");
 
 const { TEST_GENESIS, TEST_ACCOUNT, TEST_ACCOUNT_R, TEST_ACCOUNT_ETHER } = require("../../mitum.config");
 
-const { ADDRESS_TYPE } = require("../../key/address");
-const { Keys, PublicKey } = require("../../key/key");
+const { ADDRESS_TYPE } = require("../../common/key/address");
+const { Keys, PublicKey } = require("../../common/key/key");
 
 const { TimeStamp } = require("../../utils/time");
 

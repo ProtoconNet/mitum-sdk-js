@@ -1,6 +1,6 @@
 const bs58 = require("bs58");
 
-const m2 = require("../key/m2-keypair");
+const m2 = require("../common/key/m2-keypair");
 const { TimeStamp } = require("../utils/time");
 
 describe("test: factsign", () => {

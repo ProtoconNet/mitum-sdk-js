@@ -12,7 +12,7 @@ import {
 } from "../base/error.js";
 import { ID } from "../base/ID.js";
 
-import { Address } from "../key/address.js";
+import { Address } from "../common/key/address.js";
 
 import { id } from "../utils/config.js";
 import { sum256 } from "../utils/hash.js";

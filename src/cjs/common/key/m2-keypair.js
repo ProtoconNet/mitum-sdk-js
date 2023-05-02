@@ -5,15 +5,15 @@ const { hmac } = require("@noble/hashes/hmac");
 const { sha256 } = require("@noble/hashes/sha256");
 const secp256k1 = require("@noble/secp256k1");
 
-const { MIN_SEED_LENGTH } = require("../mitum.config.js");
+const { MIN_SEED_LENGTH } = require("../../mitum.config.js");
 
-const { SUFFIX_KEY_PRIVATE } = require("../alias/key.js");
+const { SUFFIX_KEY_PRIVATE } = require("../../alias/key.js");
 const {
 	assert,
 	error,
 	EC_INVALID_PRIVATE_KEY,
 	EC_INVALID_SEED,
-} = require("../base/error.js");
+} = require("../../base/error.js");
 
 const { Key } = require("./key.js");
 const { K, KeyPair } = require("./keypair.js");

@@ -1,10 +1,10 @@
 import { error, assert, EC_INVALID_PRIVATE_KEY } from "../base/error.js";
 
-import { m1 } from "../key/m1-keypair.js";
-import { m2 } from "../key/m2-keypair.js";
-import { m2ether } from "../key/m2-ether-keypair.js";
+import { m1 } from "../common/key/m1-keypair.js";
+import { m2 } from "../common/key/m2-keypair.js";
+import { m2ether } from "../common/key/m2-ether-keypair.js";
 
-import { isM1PrivateKey, isM2EtherPrivateKey, isM2PrivateKey } from "../key/validation.js";
+import { isM1PrivateKey, isM2EtherPrivateKey, isM2PrivateKey } from "../common/key/validation.js";
 
 export const exist = (dic, k) => Object.prototype.hasOwnProperty.call(dic, k);
 

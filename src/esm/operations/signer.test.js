@@ -1,7 +1,7 @@
 import { Signer } from "./signer";
 import { Operation } from "./operation";
 
-import { Amount } from "./currency/amount";
+import { Amount } from "../common/amount/amount";
 import { TransfersFact, TransfersItem } from "./currency/transfers";
 import {
     SuffrageInflationFact,
@@ -10,8 +10,8 @@ import {
 
 import { TEST_ACCOUNT, TEST_GENESIS, TEST_NODE } from "../mitum.config";
 
-import { m1 } from "../key/m1-keypair";
-import { m2 } from "../key/m2-keypair";
+import { m1 } from "../common/key/m1-keypair";
+import { m2 } from "../common/key/m2-keypair";
 
 describe("test: signer", () => {
     it("case: m1; no sign", () => {

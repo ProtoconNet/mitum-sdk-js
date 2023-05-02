@@ -12,7 +12,7 @@ const {
 } = require("../base/error.js");
 const { ID } = require("../base/ID.js");
 
-const { Address } = require("../key/address.js");
+const { Address } = require("../common/key/address.js");
 
 const { id } = require("../utils/config.js");
 const { sum256 } = require("../utils/hash.js");

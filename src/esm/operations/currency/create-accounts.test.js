@@ -1,14 +1,14 @@
 import bs58 from "bs58";
 
-import { Amount } from "./amount";
+import { Amount } from "../../common/amount/amount";
 import { CreateAccountsFact, CreateAccountsItem } from "./create-accounts";
 
 import { Operation } from "../operation";
 
 import { TEST_GENESIS, TEST_ACCOUNT, TEST_ACCOUNT_R, TEST_ACCOUNT_ETHER } from "../../mitum.config";
 
-import { ADDRESS_TYPE } from "../../key/address";
-import { Keys, PublicKey } from "../../key/key";
+import { ADDRESS_TYPE } from "../../common/key/address";
+import { Keys, PublicKey } from "../../common/key/key";
 
 import { TimeStamp } from "../../utils/time";
 

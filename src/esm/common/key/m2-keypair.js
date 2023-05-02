@@ -5,15 +5,15 @@ import { hmac } from "@noble/hashes/hmac";
 import { sha256 } from "@noble/hashes/sha256";
 import * as secp256k1 from "@noble/secp256k1";
 
-import { MIN_SEED_LENGTH } from "../mitum.config.js";
+import { MIN_SEED_LENGTH } from "../../mitum.config.js";
 
-import { SUFFIX_KEY_PRIVATE } from "../alias/key.js";
+import { SUFFIX_KEY_PRIVATE } from "../../alias/key.js";
 import {
 	assert,
 	error,
 	EC_INVALID_PRIVATE_KEY,
 	EC_INVALID_SEED,
-} from "../base/error.js";
+} from "../../base/error.js";
 
 import { Key } from "./key.js";
 import { K, KeyPair } from "./keypair.js";

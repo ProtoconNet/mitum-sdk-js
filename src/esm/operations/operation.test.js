@@ -5,7 +5,7 @@ import { TEST_ACCOUNT, TEST_GENESIS } from "../mitum.config";
 import { M1FactSign, M2FactSign } from "./factsign";
 import { Operation } from "./operation";
 
-import { Amount } from "./currency/amount";
+import { Amount } from "../common/amount/amount";
 import { TransfersFact, TransfersItem } from "./currency/transfers";
 import { TimeStamp } from "../utils/time";
 

@@ -1,6 +1,6 @@
 import bs58 from "bs58";
 
-import { Amount } from "./amount";
+import { Amount } from "../../common/amount/amount";
 
 import {
 	SuffrageInflationFact,

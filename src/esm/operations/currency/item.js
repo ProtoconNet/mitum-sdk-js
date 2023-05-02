@@ -1,4 +1,4 @@
-import { Amount } from "./amount.js";
+import { Amount } from "../../common/amount/amount.js";
 
 import { Item } from "../item.js";
 

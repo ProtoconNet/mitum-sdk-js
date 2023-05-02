@@ -1,6 +1,6 @@
 import bs58 from "bs58";
 
-import { m2 } from "../key/m2-keypair";
+import { m2 } from "../common/key/m2-keypair";
 import { TimeStamp } from "../utils/time";
 
 describe("test: factsign", () => {

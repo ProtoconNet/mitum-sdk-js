@@ -1,7 +1,7 @@
 const { Seal } = require("./seal");
 const { Operation } = require("./operation");
 
-const { Amount } = require("./currency/amount");
+const { Amount } = require("../common/amount/amount");
 const { TransfersFact, TransfersItem } = require("./currency/transfers");
 const { TEST_ACCOUNT, TEST_GENESIS, TEST_NODE } = require("../mitum.config");
 

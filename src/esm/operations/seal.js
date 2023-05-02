@@ -18,8 +18,8 @@ import {
 	EC_INVALID_SEAL,
 } from "../base/error.js";
 
-import { m1 } from "../key/m1-keypair.js";
-import { isM1PrivateKey } from "../key/validation.js";
+import { m1 } from "../common/key/m1-keypair.js";
+import { isM1PrivateKey } from "../common/key/validation.js";
 
 import { exist } from "../utils/tools.js";
 import { sum256 } from "../utils/hash.js";

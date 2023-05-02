@@ -14,7 +14,7 @@ import {
 	EC_INVALID_ITEM,
 } from "../../base/error.js";
 
-import { Address } from "../../key/address.js";
+import { Address } from "../../common/key/address.js";
 
 import { sortBuf } from "../../utils/string.js";
 

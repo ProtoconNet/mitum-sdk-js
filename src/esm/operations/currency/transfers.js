@@ -15,8 +15,8 @@ import {
 	EC_INVALID_AMOUNT,
 } from "../../base/error.js";
 
-import { Address, ZeroAddress } from "../../key/address.js";
-import { isZeroAddress } from "../../key/validation.js";
+import { Address, ZeroAddress } from "../../common/key/address.js";
+import { isZeroAddress } from "../../common/key/validation.js";
 
 import { sortBuf } from "../../utils/string.js";
 

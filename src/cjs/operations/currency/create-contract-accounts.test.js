@@ -1,6 +1,6 @@
 const bs58 = require("bs58");
 
-const { Amount } = require("./amount");
+const { Amount } = require("../../common/amount/amount");
 const {
 	CreateContractAccountsFact,
 	CreateContractAccountsItem,
@@ -9,7 +9,7 @@ const { Operation } = require("../operation");
 
 const { TEST_ACCOUNT, TEST_GENESIS } = require("../../mitum.config");
 
-const { Keys, PublicKey } = require("../../key/key");
+const { Keys, PublicKey } = require("../../common/key/key");
 const { TimeStamp } = require("../../utils/time");
 
 describe("test: create-contract-account", () => {

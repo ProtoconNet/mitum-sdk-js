@@ -10,8 +10,8 @@ const {
 const { assert, error, EC_INVALID_KEYS } = require("../../base/error.js");
 const { CurrencyID } = require("../../base/ID.js");
 
-const { Keys } = require("../../key/key.js");
-const { Address } = require("../../key/address.js");
+const { Keys } = require("../../common/key/key.js");
+const { Address } = require("../../common/key/address.js");
 
 exports.KeyUpdaterFact = class KeyUpdaterFact extends Fact {
 	constructor(token, target, keys, currency) {

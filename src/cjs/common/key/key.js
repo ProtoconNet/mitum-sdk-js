@@ -9,11 +9,11 @@ const {
 	MAX_WEIGHT,
 	MIN_THRESHOLD,
 	MIN_WEIGHT,
-} = require("../mitum.config.js");
-const { HINT_KEY, HINT_KEYS, SUFFIX_ACCOUNT_ADDRESS, SUFFIX_ETHER_ACCOUNT_ADDRESS } = require("../alias/key.js");
+} = require("../../mitum.config.js");
+const { HINT_KEY, HINT_KEYS, SUFFIX_ACCOUNT_ADDRESS, SUFFIX_ETHER_ACCOUNT_ADDRESS } = require("../../alias/key.js");
 
-const { Hint } = require("../base/hint.js");
-const { IBytes, IBytesDict } = require("../base/interface.js");
+const { Hint } = require("../../base/hint.js");
+const { IBytes, IBytesDict } = require("../../base/interface.js");
 const {
 	assert,
 	error,
@@ -21,11 +21,11 @@ const {
 	EC_INVALID_THRESHOLD,
 	EC_INVALID_WEIGHT,
 	EC_INVALID_KEY,
-} = require("../base/error.js");
+} = require("../../base/error.js");
 
-const { Big } = require("../utils/number.js");
-const { keccak256, sum256 } = require("../utils/hash.js");
-const { sortStringAsBuf } = require("../utils/string.js");
+const { Big } = require("../../utils/number.js");
+const { keccak256, sum256 } = require("../../utils/hash.js");
+const { sortStringAsBuf } = require("../../utils/string.js");
 
 const KEY_TYPE = {
 	btc: "key/btc",

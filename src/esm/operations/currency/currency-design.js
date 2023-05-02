@@ -1,4 +1,4 @@
-import { Amount } from "./amount.js";
+import { Amount } from "../../common/amount/amount.js";
 
 import {
 	HINT_CURRENCY_DESIGN,
@@ -19,7 +19,7 @@ import {
 import { Hint } from "../../base/hint.js";
 import { IBytesDict } from "../../base/interface.js";
 
-import { Address } from "../../key/address.js";
+import { Address } from "../../common/key/address.js";
 import { Big, Float } from "../../utils/number.js";
 
 export class CurrencyDesign extends IBytesDict {

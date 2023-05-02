@@ -9,11 +9,11 @@ import {
 	MAX_WEIGHT,
 	MIN_THRESHOLD,
 	MIN_WEIGHT,
-} from "../mitum.config.js";
-import { HINT_KEY, HINT_KEYS, SUFFIX_ACCOUNT_ADDRESS, SUFFIX_ETHER_ACCOUNT_ADDRESS } from "../alias/key.js";
+} from "../../mitum.config.js";
+import { HINT_KEY, HINT_KEYS, SUFFIX_ACCOUNT_ADDRESS, SUFFIX_ETHER_ACCOUNT_ADDRESS } from "../../alias/key.js";
 
-import { Hint } from "../base/hint.js";
-import { IBytes, IBytesDict } from "../base/interface.js";
+import { Hint } from "../../base/hint.js";
+import { IBytes, IBytesDict } from "../../base/interface.js";
 import {
 	assert,
 	error,
@@ -21,11 +21,11 @@ import {
 	EC_INVALID_THRESHOLD,
 	EC_INVALID_WEIGHT,
 	EC_INVALID_KEY,
-} from "../base/error.js";
+} from "../../base/error.js";
 
-import { Big } from "../utils/number.js";
-import { keccak256, sum256 } from "../utils/hash.js";
-import { sortStringAsBuf } from "../utils/string.js";
+import { Big } from "../../utils/number.js";
+import { keccak256, sum256 } from "../../utils/hash.js";
+import { sortStringAsBuf } from "../../utils/string.js";
 
 export const KEY_TYPE = {
 	btc: "key/btc",

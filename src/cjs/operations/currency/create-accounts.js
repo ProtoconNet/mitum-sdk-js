@@ -20,8 +20,8 @@ const {
 	EC_INVALID_ITEMS,
 } = require("../../base/error.js");
 
-const { Keys } = require("../../key/key.js");
-const { ADDRESS_TYPE, Address } = require("../../key/address.js");
+const { Keys } = require("../../common/key/key.js");
+const { ADDRESS_TYPE, Address } = require("../../common/key/address.js");
 
 const { sortBuf } = require("../../utils/string.js");
 

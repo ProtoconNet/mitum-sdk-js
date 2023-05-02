@@ -16,7 +16,7 @@ import {
 	error,
 } from "../base/error.js";
 
-import { Address } from "../key/address.js";
+import { Address } from "../common/key/address.js";
 
 import { sum256 } from "../utils/hash.js";
 import { sortBuf } from "../utils/string.js";

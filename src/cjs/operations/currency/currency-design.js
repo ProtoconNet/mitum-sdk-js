@@ -1,4 +1,4 @@
-const { Amount } = require("./amount.js");
+const { Amount } = require("../../common/amount/amount.js");
 
 const {
 	HINT_CURRENCY_DESIGN,
@@ -19,7 +19,7 @@ const {
 const { Hint } = require("../../base/hint.js");
 const { IBytesDict } = require("../../base/interface.js");
 
-const { Address } = require("../../key/address.js");
+const { Address } = require("../../common/key/address.js");
 const { Big, Float } = require("../../utils/number.js");
 
 class CurrencyDesign extends IBytesDict {

@@ -1,7 +1,7 @@
 import { Seal } from "./seal";
 import { Operation } from "./operation";
 
-import { Amount } from "./currency/amount";
+import { Amount } from "../common/amount/amount";
 import { TransfersFact, TransfersItem } from "./currency/transfers";
 import { TEST_ACCOUNT, TEST_GENESIS, TEST_NODE } from "../mitum.config";
 

@@ -1,6 +1,6 @@
 import bs58 from "bs58";
 
-import { Amount } from "./amount.js";
+import { Amount } from "../../common/amount/amount.js";
 import { NodeFact } from "../fact.js";
 
 import { MAX_ITEMS_IN_FACT } from "../../mitum.config.js";
@@ -20,7 +20,7 @@ import {
 } from "../../base/error.js";
 import { Item } from "../item.js";
 
-import { Address } from "../../key/address.js";
+import { Address } from "../../common/key/address.js";
 import { sortBuf } from "../../utils/string.js";
 
 export class SuffrageInflationItem extends Item {

@@ -20,8 +20,8 @@ import {
 	EC_INVALID_ITEMS,
 } from "../../base/error.js";
 
-import { Keys } from "../../key/key.js";
-import { ADDRESS_TYPE, Address } from "../../key/address.js";
+import { Keys } from "../../common/key/key.js";
+import { ADDRESS_TYPE, Address } from "../../common/key/address.js";
 
 import { sortBuf } from "../../utils/string.js";
 
