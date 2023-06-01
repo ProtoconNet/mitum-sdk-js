@@ -65,4 +65,4 @@ export {
     M1FactSign, M2FactSign, M2NodeFactSign,
     Item, Fact, OperationFact, NodeFact,
     Currency,
-};
+}

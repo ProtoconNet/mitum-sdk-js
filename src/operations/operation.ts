@@ -153,15 +153,15 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
 
         const idx = this._factSigns
             .map((fs) => fs.signer.toString())
-            .indexOf(keypair.publicKey.toString());
+            .indexOf(keypair.publicKey.toString())
 
         if (idx < 0) {
-            this._factSigns.push(factSign);
+            this._factSigns.push(factSign)
         } else {
-            this._factSigns[idx] = factSign;
+            this._factSigns[idx] = factSign
         }
 
-        this._hash = this.hashing();
+        this._hash = this.hashing()
     }
 
     private signWithSigType(sigType: SigType, keypair: M1KeyPair | M2KeyPair, node: Address | undefined) {
@@ -201,13 +201,13 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
         if (sigType) {
             switch (sigType) {
                 case "M1FactSign":
-                    Assert.check(keypair.privateKey.version === "m1", MitumError.detail(ECODE.FAIL_SIGN, "not m1 keypair; factsign type != keypair type"))
+                    Assert.check(keypair.privateKey.version === "m1", MitumError.detail(ECODE.FAIL_SIGN, "not m1 keypair factsign type != keypair type"))
                     return getM1FactSign(keypair as M1KeyPair, hash)
                 case "M2FactSign":
-                    Assert.check(keypair.privateKey.version === "m2", MitumError.detail(ECODE.FAIL_SIGN, "not m2 keypair; factsign type != keypair type"))
+                    Assert.check(keypair.privateKey.version === "m2", MitumError.detail(ECODE.FAIL_SIGN, "not m2 keypair factsign type != keypair type"))
                     return getM2FactSign(keypair as M2KeyPair, hash)
                 case "M2NodeFactSign":
-                    Assert.check(keypair.privateKey.version === "m2", MitumError.detail(ECODE.FAIL_SIGN, "not m2 keypair; factsign type != keypair type"))
+                    Assert.check(keypair.privateKey.version === "m2", MitumError.detail(ECODE.FAIL_SIGN, "not m2 keypair factsign type != keypair type"))
                     Assert.check(node !== undefined, MitumError.detail(ECODE.FAIL_SIGN, "no node address"))
                     return getM2NodeFactSign(node as Address, keypair as M2KeyPair, hash)
                 default:
@@ -219,7 +219,7 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
                     return getM1FactSign(keypair as M1KeyPair, hash)
                 case "m2":
                     if (node) {
-                        return getM2NodeFactSign(node, keypair as M2KeyPair, hash);
+                        return getM2NodeFactSign(node, keypair as M2KeyPair, hash)
                     } else {
                         return getM2FactSign(keypair as M2KeyPair, hash)
                     }

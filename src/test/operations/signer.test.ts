@@ -15,8 +15,8 @@ it("test: signer; m1 - no sign", () => {
 
     const operation = new Operation(fact)
 
-    const signer = new Signer(dummy.genesis.m1.private);
-    expect(() => signer.sign(operation.toHintedObject())).not.toThrow(Error);
+    const signer = new Signer(dummy.genesis.m1.private)
+    expect(() => signer.sign(operation.toHintedObject())).not.toThrow(Error)
 })
 
 test("test: signer; m1 - with sign", () => {
