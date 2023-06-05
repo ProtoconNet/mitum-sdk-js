@@ -1,9 +1,10 @@
 import base58 from "bs58"
 
-import { M1FS, OperationJson } from "./types"
+import { M1FS, OperationJson } from './types';
 import { M1FactSign, M2FactSign, M2NodeFactSign } from "./factsigns"
 
 import { NetworkID } from "../config"
+import { HintedObject } from "../interfaces"
 import { Key, M1KeyPair, M2KeyPair, NodeAddress } from "../key"
 import { Assert, ECODE, MitumError } from "../error"
 import { FullTimeStamp, TimeStamp, sha3 } from "../utils"
@@ -22,7 +23,7 @@ export class Signer {
         this.id = NetworkID.get()
     }
 
-    sign(json: OperationJson, option?: { node: string }) {
+    sign(json: HintedObject, option?: { node: string }) {
         if (json.fact_signs !== undefined) {
             Assert.check(
                 this.keypair.privateKey.version === "m1",
@@ -35,13 +36,21 @@ export class Signer {
             )
         }
 
-        switch(this.keypair.privateKey.version) {
-            case "m1":
-                return this.m1Sign(json)
-            case "m2":
-                return option ? this.nodeSign(json, option.node) : this.m2Sign(json)
-            default:
-                throw MitumError.detail(ECODE.INVALID_PRIVATE_KEY, "unknown version of private key")
+        try {
+            switch (this.keypair.privateKey.version) {
+                case "m1":
+                    return this.m1Sign(json as OperationJson)
+                case "m2":
+                    return option ? this.nodeSign(json as OperationJson, option.node) : this.m2Sign(json as OperationJson)
+                default:
+                    throw MitumError.detail(ECODE.INVALID_PRIVATE_KEY, "unknown version of private key")
+            }
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                throw MitumError.detail(ECODE.FAIL_SIGN, "failed to sign; " + e.message)
+            } else {
+                throw MitumError.detail(ECODE.FAIL_SIGN, "failed to sign; maybe not operation")
+            }
         }
     }
 

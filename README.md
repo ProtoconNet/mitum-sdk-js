@@ -656,7 +656,7 @@ const nodePrivateKey = "KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr"
 const seal = new Seal([operation0, operation1, operation2, ...]); // Operation instances or json objects
 seal.sign(nodePrivateKey);
 
-// seal.dict(); seal object
+// seal.toHintedObject(); seal object
 ```
 
 ## Add sign to operation json

@@ -16,7 +16,7 @@ import { NetworkID } from "../config"
 import { Assert, ECODE, MitumError } from "../error"
 import { SortFunc, TimeStamp, sha3 } from "../utils"
 import { Address, Key, M1KeyPair, M2KeyPair, NodeAddress } from "../key"
-import { IBuffer, IHintedObject } from "../interfaces"
+import { HintedObject, IBuffer, IHintedObject } from "../interfaces"
 
 type FactSignType = M1FactSign | M2FactSign | M2NodeFactSign
 type SigType = "M1FactSign" | "M2FactSign" | "M2NodeFactSign" | null
@@ -242,7 +242,7 @@ export class Operation<T extends Fact> implements IBuffer, IHintedObject {
         ])
     }
 
-    toHintedObject(): OperationJson {
+    toHintedObject(): HintedObject {
         const op = {
             _hint: this.hint.toString(),
             fact: this.fact.toHintedObject(),
