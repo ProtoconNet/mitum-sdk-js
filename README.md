@@ -1,9 +1,11 @@
 # mitum-sdk
 
-__mitum-sdk__ is Javascript SDK that helps create operations for mitum models.
+__mitum-sdk__ is a SDK written in typescript that helps create operations for mitum models.
 
 * Mitum Currency
 * Mitum Currency Extension
+
+__mitum-sdk__ supports both types of cjs and esm.
 
 ## Installation
 
@@ -15,12 +17,20 @@ v19.8.1
 
 $ npm --version
 9.5.1
+
+$ tsc --version
+Version 5.0.4
+
+$ ts-node --version
+v10.9.1
 ```
 
-You can install this package locally using this command:
+You can install and build this package locally using this command:
 
 ```sh
 $ npm i
+
+$ npm run build
 ```
 
 You can install __mitum-sdk__ using this command:
@@ -29,16 +39,23 @@ You can install __mitum-sdk__ using this command:
 $ npm i mitum-sdk
 ```
 
-## Test
+## Publishing
 
-Before testing, check `TEST_ID`, `TEST_NODE`, `TEST_GENESIS`, `TEST_ACCOUNT`, and etc in [esm/mitum.config.js](src/esm/mitum.config.js) or [csj/mitum.config.js](src/csj/mitum.config.js).
+If you want to publish this package on npm, build the package first before publishing.
+
+```sh
+$ npm run build
+
+$ npm publish
+```
+
+## Test
 
 You can test __mitum-sdk__ using this command:
 
 ```sh
-$ npm test
 
-> mitum-sdk@0.1.0 test
+> mitum-sdk@0.2.0 test
 > jest
 
  PASS  ...
@@ -46,10 +63,10 @@ $ npm test
  ...
  PASS  ...
 
-Test Suites: 42 passed, 42 total
-Tests:       123 passed, 123 total
+Test Suites: 18 passed, 18 total
+Tests:       56 passed, 56 total
 Snapshots:   0 total
-Time:        3.995 s, estimated 4 s
+Time:        8.015 s
 Ran all test suites.
 ```
 
@@ -100,39 +117,37 @@ You can generate key pairs in the following ways:
 The following functions are prepared for key pair generation.
 
 ```js
-import { KPGen } from "mitum-sdk";
+import { M1KeyPair, M2KeyPair, M1RandomN, M2RandomN, M2EtherRandomN } from "mitum-sdk";
 
 // m1 btc key pair
-var ekp1 = KPGen.random();
-var ekp2 = KPGen.randomN(/* the number of keypairs */);
-var ekp3 = KPGen.fromPrivateKey(/* string private key */);
-var ekp4 = KPGen.fromSeed(/* string seed */);
+var ekp1 = M1KeyPair.random();
+var ekp2 = M1KeyPair.fromPrivateKey(/* string private key */);
+var ekp3 = M1KeyPair.fromSeed(/* string seed */);
+var ekp4 = M1RandomN(/* the number of keypairs */);
 
 // m2 btc key pair
 const { m2 } = KPGen;
-var skp1 = m2.random();
-var skp2 = m2.randomN(/* the number of keypairs */);
-var skp3 = m2.fromPrivateKey(/* string private key */);
-var skp4 = m2.fromSeed(/* string seed */);
+var skp1 = M2KeyPair.random();
+var skp2 = M2KeyPair.fromPrivateKey(/* string private key */);
+var skp3 = M2KeyPair.fromSeed(/* string seed */);
+var skp4 = M2RandomN(/* the number of keypairs */);
 
 // m2 ether key pair
 const { m2ether } = KPGen;
-var ukp1 = m2ether.random();
-var ukp2 = m2ether.randomN(/* the number of keypairs */);
-var ukp3 = m2ether.fromPrivateKey(/* string private key */);
-var ukp4 = m2ether.fromSeed(/* string seed */);
+var ukp1 = M2KeyPair.random("ether");
+var ukp2 = M2KeyPair.fromPrivateKey(/* string private key */);
+var ukp3 = M2KeyPair.fromSeed(/* string seed */, "ether");
+var ukp4 = M2EtherRandomN(/* the number of keypairs */);
 ```
-
-_If you need a key pair for m2 and m2-ether signatures, use `KPGen.m2.(function)` and `KPGen.m2ether.(function)` instead of `KPGen.(function)`._
 
 ### Random KeyPair
 
 #### Get a random KeyPair
 
 ```js
-import { KPGen } from "mitum-sdk";
+import { M1KeyPair, /* M2KeyPair */ } from "mitum-sdk";
 
-const keypair = KPGen.random(); // KeyPair instance
+const keypair = M1KeyPair.random(); // KeyPair instance
 
 const priv = keypair.privateKey; // Key instance
 const pub = keypair.publicKey; // Key instance
@@ -144,13 +159,13 @@ const pubStr = pub.toString(); // 22PVZv7Cizt7T2VUkL4QuR7pmfrprMqnFDEXFkDuJdWhSm
 #### Get N random KeyPairs with an address
 
 ```js
-import { KPGen } from "mitum-sdk";
+import { M1RandomN, /* M2RandomN, M2EtherRandomN */ } from "mitum-sdk";
 
 const n = 5
 
 // keys: Keys[Keys] instance; with 5 MKey(pub, weight) and threshold
 // keypairs: Array; 5 KeyPair(priv, pub)
-const { keys, keypairs } = KPGen.randomN(5);
+const { keys, keypairs } = M1RandomN(5);
 
 const address = keys.address // Address instance
 ```
@@ -158,9 +173,9 @@ const address = keys.address // Address instance
 ### From private key
 
 ```js
-import { KPGen } from "mitum-sdk";
+import { M1KeyPair, /* M2KeyPair */} from "mitum-sdk";
 
-const keypair = KPGen.fromPrivateKey("KwkuLfcHsxY3yGLT2wYWNgbuGD3Q1j3c7DJvaRLfmT8ujmayJUaJmpr"); // KeyPair instance
+const keypair = M1KeyPair.fromPrivateKey("KwkuLfcHsxY3yGLT2wYWNgbuGD3Q1j3c7DJvaRLfmT8ujmayJUaJmpr"); // KeyPair instance
 
 const priv = keypair.privateKey; // Key instance
 const pub = keypair.publicKey; // Key instance
@@ -174,9 +189,9 @@ const pubStr = pub.toString(); // r3W57ffVSjnyMFQ6132ZoPj1jnbFhoSFCnDYYRq2tXQVmp
 The seed string length must be at least __36__.
 
 ```js
-import { KPGen } from "mitum-sdk";
+import { M1KeyPair, /* M2KeyPair */ } from "mitum-sdk";
 
-const keypair = KPGen.fromSeed("Hello, world! ㅍㅅㅍ~ Hello, world! ㅍㅅㅍ~"); // KeyPair instance
+const keypair = M1KeyPair.fromSeed("Hello, world! ㅍㅅㅍ~ Hello, world! ㅍㅅㅍ~"); // KeyPair instance
 
 const priv = keypair.privateKey; // Key instance
 const pub = keypair.publicKey; // Key instance
@@ -302,10 +317,10 @@ First, suppose you create an account with the following settings:
 * initial balance: 1000 MCC, 500 PEN
 
 ```js
-import { TimeStamp, KPGen, Amount, Currency, Operation } from "mitum-sdk";
+import { TimeStamp, M1RandomN, Amount, Currency, Operation } from "mitum-sdk";
 
 // create 5 new public keys
-const { keys, keypairs } = KPGen.randomN(5);
+const { keys, keypairs } = M1RandomN(5);
 
 const mccAmount = new Amount("MCC", "1000");
 const penAmount = new Amount("PEN", "500");
@@ -325,14 +340,14 @@ operation.sign(senderPrivate);
 // operation.request(/* digest api address; string */, /* headers; obj */);
 ```
 
-`KPGen.randomN(n)` and `KPGen.m2.randomN(n)` always return `Keys` with a threshold __100__.
+`M1RandomN(n)`, `M2RandomN(n)` and `M2EtherRandomN(n)` always return `Keys` with a threshold __100__.
 
 To generate `Keys` with thresholds and weights, use `PubKey` and `Keys` as follows:
 
 ```js
-import { /* KPGen, */ PubKey, Keys, Currency } from "mitum-sdk";
+import { /* M1KeyPair, */ PubKey, Keys, Currency } from "mitum-sdk";
 
-// const randomPub = KPGen.random().publicKey.toString();
+// const randomPub = M1KeyPair.random().publicKey.toString();
 
 const pub1 = "your public key1";
 const pub2 = "your public key2";
@@ -360,8 +375,8 @@ const m1Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount]); //
 // const m1Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], '');
 // const m1Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], null);
 
-const m2Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], ADDRESS_TYPE.btc); // m2 btc type account
-const m2etherItem = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], ADDRESS_TYPE.ether); // m2 ether type account
+const m2Item = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], "btc"); // m2 btc type account
+const m2etherItem = new Currency.CreateAccountsItem(keys, [mccAmount, penAmount], "ether"); // m2 ether type account
 ```
 
 ### key-updater
@@ -460,7 +475,7 @@ __(2) Operation__
 Then, create an operation.
 
 ```js
-import { TimeStamp, Amount, Currency, Operation, SIG_TYPE } from "mitum-sdk";
+import { TimeStamp, Amount, Currency, Operation } from "mitum-sdk";
 
 // creating feeer
 // ...
@@ -489,7 +504,7 @@ __currency-policy-updater__ is an operation that allows you to update policies o
 Here, the way to create a feeer is the same as [currency-register](#currency-register).
 
 ```js
-import { TimeStamp, Currency, Operation, SIG_TYPE } from "mitum-sdk";
+import { TimeStamp, Currency, Operation } from "mitum-sdk";
 
 const currency = "MCC"; // currency id to update `policy`
 
@@ -522,7 +537,7 @@ Assume that you supply tokens as follows:
 * supply TST: receiver5, 999991888 tokens
 
 ```js
-import { TimeStamp, Amount, Currency, Operation, SIG_TYPE } from "mitum-sdk";
+import { TimeStamp, Amount, Currency, Operation } from "mitum-sdk";
 
 const receiver1 = "receiver1's account address";
 ...
@@ -564,10 +579,10 @@ First, suppose you create a contract account with the following settings:
 Here, the weight and threshold are only used to generate the account address and do not affect the behavior of the account at all after the account is registered.
 
 ```js
-import { TimeStamp, KPGen, Amount, Currency, Operation } from "mitum-sdk";
+import { TimeStamp, M1RandomN, Amount, Currency, Operation } from "mitum-sdk";
 
 // create 5 new public keys
-const { keys, keypairs } = KPGen.randomN(5); // use KPGen.m2.randomN(5) for m2 key pairs
+const { keys, keypairs } = M1RandomN(5); // use M2RandomN(5) for m2 key pairs
 
 const mccAmount = new Amount("MCC", "1000");
 const penAmount = new Amount("PEN", "500");
@@ -588,14 +603,14 @@ Like __create-account__, the item creation method of __create-contact-account__ 
 The method of creating an item is exactly the same as __create-account__.
 
 ```js
-const { ..., Currency, ADDRESS_TYPE } from "mitum-sdk";
+import { ..., Currency } from "mitum-sdk";
 
 const m1Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount]); // contract account with m1 btc type address
 // const m1Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], '');
 // const m1Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], null);
 
-const m2Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], ADDRESS_TYPE.btc); // contract account with m2 btc type address
-const m2etherItem = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], ADDRESS_TYPE.ether); // contract account with m2 ether type address
+const m2Item = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], "btc"); // contract account with m2 btc type address
+const m2etherItem = new Currency.CreateContractAccountsItem(keys, [mccAmount, penAmount], "ether"); // contract account with m2 ether type address
 ```
 
 ### withdraw
@@ -629,7 +644,7 @@ operation.sign(senderPrivate);
 
 ## Generate Seal
 
-__seal__ is not used in mitum2. Therefore, only operations with __sig-type: DEFAULT or M1__ can be added to seal.
+__seal__ is not used in mitum2. Therefore, only operations with __sig-type: Mitum1__ can be added to seal.
 
 Here's how to create a seal:
 
@@ -651,12 +666,12 @@ You can add a new signature to a operation json using __Signer__ class.
 ```js
 import { Signer } from "mitum-sdk";
 
-const json = { /* your operation json */ };
+const json = { /* your operation json object */ };
 
 const signer = new Signer("KzFERQKNQbPA8cdsX5tCiCZvR4KgBou41cgtPk69XueFbaEjrczbmpr");
 
 const general = signer.sign(json); // m1 and m2 general operation
-const m2node = signer.M2NodeSign(json, "node address"); // m2 node operation
+const m2node = signer.sign(json, { node: "node address" }); // m2 node operation
 ```
 
 ## Appendix
@@ -689,9 +704,10 @@ To change the mitum version of every objects, add the following code to the part
 The default version is `v0.0.1`.
 
 ```js
-import { useV } from "mitum-sdk";
+import { Version } from "mitum-sdk";
 
-useV("v0.0.2");
+Version.set("v0.0.2");
+// Version.get();
 ```
 
 ### Set network id of operations
@@ -701,9 +717,10 @@ To apply your network id to operations, add the following code to the part where
 The default id is `mitum`.
 
 ```js
-import { useId } from "mitum-sdk";
+import { NetworkID } from "mitum-sdk";
 
-useId("mainnet");
+NetworkID.set("mainnet");
+// NetworkID.get();
 ```
 
 ### Options and other methods for __Operation__
